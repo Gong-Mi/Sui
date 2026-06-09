@@ -1,7 +1,7 @@
 plugins {
-    id 'com.android.application' version '8.0.2' apply false
-    id 'com.android.library' version '8.0.2' apply false
-    id 'org.jetbrains.kotlin.jvm' version '1.8.0' apply false
+    id 'com.android.application' version '8.7.0' apply false
+    id 'com.android.library' version '8.7.0' apply false
+    id 'org.jetbrains.kotlin.jvm' version '1.9.24' apply false
     alias libs.plugins.refine apply false
 }
 
@@ -18,10 +18,10 @@ subprojects {
         plugins.apply('dev.rikka.tools.refine')
 
         android {
-            compileSdk = 33
+            compileSdk = 35
             defaultConfig {
                 minSdk = 23
-                targetSdk = 33
+                targetSdk = 35
             }
             compileOptions {
                 sourceCompatibility = JavaVersion.VERSION_17
@@ -41,7 +41,7 @@ tasks.register('clean', Delete) {
 
 ext {
     minSdkVersion = 23
-    targetSdkVersion = 33
+    targetSdkVersion = 35
     api_min_sdk = 23
-    api_target_sdk = 33
+    api_target_sdk = 35
 }
