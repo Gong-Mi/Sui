@@ -9,6 +9,9 @@ set(CMAKE_CXX_STANDARD 20)
 add_compile_options(-Werror=format -fdata-sections -ffunction-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-char8_t)
 add_link_options(-ffixed-x18 -Wl,--hash-style=both)
 
+# NDK 29: sys/types.h no longer implicitly includes stdint.h
+add_compile_options(-include stdint.h)
+
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("Building Release...")
 
