@@ -10,7 +10,7 @@ add_compile_options(-Werror=format -fdata-sections -ffunction-sections -fno-exce
 add_link_options(-ffixed-x18 -Wl,--hash-style=both)
 
 # NDK 29: sys/types.h no longer implicitly includes stdint.h
-add_compile_options(-include cstdint)
+add_compile_options(-include stdint.h)
 
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("Building Release...")
@@ -24,7 +24,6 @@ else ()
     add_compile_options(-O0)
 endif ()
 
-find_package(cxx REQUIRED CONFIG)
 find_package(riru REQUIRED CONFIG)
 find_package(nativehelper REQUIRED CONFIG)
 
@@ -41,7 +40,7 @@ add_library(util STATIC
         util/memory.cpp
         util/app_process.cpp
         util/socket.cpp)
-target_link_libraries(util cxx::cxx log nativehelper::nativehelper_header_only)
+target_link_libraries(util log nativehelper::nativehelper_header_only)
 
 if (FLAVOR STREQUAL "riru")
     set(CORE_MAIN_SOURCE "main_riru.cpp")
@@ -64,18 +63,18 @@ add_library(sui SHARED
         core/bridge_service.cpp
         core/manager_process.cpp
         core/settings_process.cpp)
-target_link_libraries(sui util cxx::cxx log riru::riru nativehelper::nativehelper_header_only)
+target_link_libraries(sui util log riru::riru nativehelper::nativehelper_header_only)
 
 add_executable(libmain.so main/main.cpp)
-target_link_libraries(libmain.so util cxx::cxx log riru::riru nativehelper::nativehelper_header_only)
+target_link_libraries(libmain.so util log riru::riru nativehelper::nativehelper_header_only)
 
 add_executable(libadbd_wrapper.so
         adbd/adbd_wrapper_main.cpp)
-target_link_libraries(libadbd_wrapper.so cxx::cxx log)
+target_link_libraries(libadbd_wrapper.so log)
 
 add_library(adbd_preload SHARED
         adbd/adbd_preload.cpp)
-target_link_libraries(adbd_preload cxx::cxx log)
+target_link_libraries(adbd_preload log)
 
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_custom_command(TARGET sui POST_BUILD
