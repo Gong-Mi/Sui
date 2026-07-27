@@ -39,6 +39,17 @@ jobs:
           echo 'org.gradle.parallel=true' >> gradle.properties
           echo 'org.gradle.vfs.watch=true' >> gradle.properties
           ./gradlew zipRiruDebug zipRiruRelease zipZygiskDebug zipZygiskRelease
+      - name: Debug intermediates
+        if: always()
+        run: |
+          echo "=== stripped_native_libs ==="
+          find module/build/intermediates/stripped_native_libs -type f 2>/dev/null || echo "NOT FOUND"
+          echo "=== merged_native_libs ==="
+          find module/build/intermediates/merged_native_libs -type f 2>/dev/null || echo "NOT FOUND"
+          echo "=== cmake obj ==="
+          find module/.cxx -name "*.so" -type f 2>/dev/null | head -20 || echo "NOT FOUND"
+          echo "=== out dir ==="
+          find out -type f 2>/dev/null | head -40 || echo "NOT FOUND"
       - name: Prepare artifact
         if: success()
         id: prepareArtifact

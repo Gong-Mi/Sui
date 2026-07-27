@@ -183,7 +183,7 @@ afterEvaluate {
                 include 'classes.dex'
                 rename { 'sui.dex' }
             }
-            from("$buildDir/intermediates/stripped_native_libs/${variant.dirName}/out/lib") {
+            from("$buildDir/intermediates/stripped_native_libs/${flavorLowered}/${buildTypeLowered}/out/lib") {
                 into 'lib'
             }
             from("${rootProject.findProject('ui').buildDir}/outputs/apk/$buildTypeLowered") {
