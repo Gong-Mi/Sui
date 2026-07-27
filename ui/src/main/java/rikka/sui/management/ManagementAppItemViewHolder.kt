@@ -64,7 +64,7 @@ class ManagementAppItemViewHolder(private val binding: ManagementAppItemBinding)
     }
 
     private inline val packageName get() = data.packageInfo.packageName
-    private inline val ai get() = data.packageInfo.applicationInfo
+    private inline val ai get() = data.packageInfo.applicationInfo!!
     private inline val uid get() = ai.uid
 
     private var loadIconJob: Job? = null
@@ -139,7 +139,7 @@ class ManagementAppItemViewHolder(private val binding: ManagementAppItemBinding)
             }
             try {
                 BridgeServiceClient.getService()
-                    .updateFlagsForUid(data.packageInfo.applicationInfo.uid, SuiConfig.MASK_PERMISSION, newValue)
+                    .updateFlagsForUid(data.packageInfo.applicationInfo!!.uid, SuiConfig.MASK_PERMISSION, newValue)
             } catch (e: Throwable) {
                 Log.e("SuiSettings", "updateFlagsForUid", e)
                 return
