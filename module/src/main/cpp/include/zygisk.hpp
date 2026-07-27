@@ -278,8 +278,8 @@ void zygisk_companion_entry(int client) { func(client); }
 
 } // namespace zygisk
 
-[[gnu::visibility("default")]] [[gnu::used]]
+__attribute__((visibility("default"), used))
 extern "C" void zygisk_module_entry(zygisk::internal::api_table *, JNIEnv *);
 
-[[gnu::visibility("default")]] [[gnu::used]]
+__attribute__((visibility("default"), used))
 extern "C" void zygisk_companion_entry(int);
