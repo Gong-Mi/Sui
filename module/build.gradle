@@ -79,7 +79,7 @@ dependencies {
     implementation libs.refine.runtime
 
     implementation 'dev.rikka.ndk:riru:26.0.0'
-    implementation 'dev.rikka.ndk.thirdparty:cxx:1.2.0'
+    implementation 'org.lsposed.libcxx:libcxx:27.0.12077973'
     implementation 'dev.rikka.ndk.thirdparty:nativehelper:1.0.1'
     implementation 'dev.rikka.rikkax.parcelablelist:parcelablelist:2.0.1'
 
