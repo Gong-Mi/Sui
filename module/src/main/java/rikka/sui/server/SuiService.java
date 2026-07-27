@@ -55,7 +55,9 @@ import androidx.annotation.OptIn;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -421,6 +423,54 @@ public class SuiService extends Service<SuiUserServiceManager, SuiClientManager,
         }
     }
 
+    @SuppressWarnings("unchecked")
+    private static List<PackageInfo> getInstalledPackagesFallback(long flags, int user) {
+        try {
+            Class<?> appGlobalsClass = Class.forName("android.app.AppGlobals");
+            Method getPackageManager = appGlobalsClass.getDeclaredMethod("getPackageManager");
+            Object packageManager = getPackageManager.invoke(null);
+            if (packageManager == null) {
+                LOGGER.w("AppGlobals.getPackageManager() returned null for user %d", user);
+                return Collections.emptyList();
+            }
+
+            String[] candidates = {"getInstalledPackagesAsUser", "getInstalledPackages"};
+
+            for (String name : candidates) {
+                try {
+                    Method method = packageManager.getClass().getMethod(name, long.class, int.class);
+                    Object result = method.invoke(packageManager, flags, user);
+                    if (result instanceof android.content.pm.ParceledListSlice) {
+                        List<PackageInfo> list = ((android.content.pm.ParceledListSlice<PackageInfo>) result).getList();
+                        if (list != null) {
+                            LOGGER.i("using AppGlobals.%s(long,int) fallback for user %d", name, user);
+                            return list;
+                        }
+                    }
+                } catch (NoSuchMethodException ignored) {
+                }
+
+                try {
+                    Method method = packageManager.getClass().getMethod(name, int.class, int.class);
+                    Object result = method.invoke(packageManager, (int) flags, user);
+                    if (result instanceof android.content.pm.ParceledListSlice) {
+                        List<PackageInfo> list = ((android.content.pm.ParceledListSlice<PackageInfo>) result).getList();
+                        if (list != null) {
+                            LOGGER.i("using AppGlobals.%s(int,int) fallback for user %d", name, user);
+                            return list;
+                        }
+                    }
+                } catch (NoSuchMethodException ignored) {
+                }
+            }
+
+            LOGGER.w("no compatible AppGlobals package query method found for user %d", user);
+        } catch (Throwable e) {
+            LOGGER.w(e, "AppGlobals package query fallback failed for user %d", user);
+        }
+        return Collections.emptyList();
+    }
+
     private ParcelableListSlice<AppInfo> getApplications(int userId) {
         enforceManagerPermission("getApplications");
 
@@ -436,7 +486,13 @@ public class SuiService extends Service<SuiUserServiceManager, SuiClientManager,
 
         List<AppInfo> list = new ArrayList<>();
         for (int user : users) {
-            for (PackageInfo pi : PackageManagerApis.getInstalledPackagesNoThrow(0x00002000 /*MATCH_UNINSTALLED_PACKAGES*/, user)) {
+            List<PackageInfo> packages = PackageManagerApis.getInstalledPackagesNoThrow(0x00002000 /*MATCH_UNINSTALLED_PACKAGES*/, user);
+            if (packages.isEmpty()) {
+                LOGGER.w("PackageManagerApis.getInstalledPackagesNoThrow returned 0 packages for user %d, trying fallback", user);
+                packages = getInstalledPackagesFallback(0x00002000L, user);
+            }
+
+            for (PackageInfo pi : packages) {
                 if (pi.applicationInfo == null
                         || Refine.<PackageInfoHidden>unsafeCast(pi).overlayTarget != null
                         || (pi.applicationInfo.flags & ApplicationInfo.FLAG_HAS_CODE) == 0)
