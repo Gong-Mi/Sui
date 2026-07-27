@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.31)
 
 project("sui")
 
@@ -6,22 +6,20 @@ message("Build type: ${CMAKE_BUILD_TYPE} ${FLAVOR}")
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(LINKER_FLAGS "-ffixed-x18 -Wl,--hash-style=both")
-set(C_FLAGS "-Werror=format -fdata-sections -ffunction-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-char8_t")
+add_compile_options(-Werror=format -fdata-sections -ffunction-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-char8_t)
+add_link_options(-ffixed-x18 -Wl,--hash-style=both)
 
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(C_FLAGS "${C_FLAGS} -O2 -fvisibility=hidden -fvisibility-inlines-hidden")
-    set(LINKER_FLAGS "${LINKER_FLAGS} -Wl,-exclude-libs,ALL -Wl,--gc-sections")
+    message("Building Release...")
+
+    add_compile_options(-Os -flto -fvisibility=hidden -fvisibility-inlines-hidden)
+    add_link_options(-flto -Wl,--exclude-libs,ALL -Wl,--gc-sections -Wl,--strip-all)
 else ()
+    message("Building Debug...")
+
     add_definitions(-DDEBUG)
-    set(C_FLAGS "${C_FLAGS} -O0")
+    add_compile_options(-O0)
 endif ()
-
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${C_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${C_FLAGS}")
-
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${LINKER_FLAGS}")
-set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${LINKER_FLAGS}")
 
 find_package(cxx REQUIRED CONFIG)
 find_package(riru REQUIRED CONFIG)
@@ -64,21 +62,17 @@ add_library(sui SHARED
         core/manager_process.cpp
         core/settings_process.cpp)
 target_link_libraries(sui util cxx::cxx log riru::riru nativehelper::nativehelper_header_only)
-set_target_properties(sui PROPERTIES LINK_FLAGS_RELEASE -s)
 
 add_executable(libmain.so main/main.cpp)
 target_link_libraries(libmain.so util cxx::cxx log riru::riru nativehelper::nativehelper_header_only)
-set_target_properties(libmain.so PROPERTIES LINK_FLAGS_RELEASE -s)
 
 add_executable(libadbd_wrapper.so
         adbd/adbd_wrapper_main.cpp)
 target_link_libraries(libadbd_wrapper.so cxx::cxx log)
-set_target_properties(libadbd_wrapper.so PROPERTIES LINK_FLAGS_RELEASE -s)
 
 add_library(adbd_preload SHARED
         adbd/adbd_preload.cpp)
 target_link_libraries(adbd_preload cxx::cxx log)
-set_target_properties(adbd_preload PROPERTIES LINK_FLAGS_RELEASE -s)
 
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_custom_command(TARGET sui POST_BUILD

@@ -1,0 +1,66 @@
+name: Bug report
+description: Report a bug of Sui
+
+body:
+  - type: checkboxes
+    id: requirements
+    attributes:
+      label: Requirements
+      options:
+        - label: Sui is downloaded from official channels (GitHub release)
+        - label: Sui is not running in a virtual environment or broken ROM
+        - label: Magisk/KernelSU is working correctly
+
+  - type: input
+    id: version
+    attributes:
+      label: Latest Sui version
+    validations:
+      required: true
+
+  - type: input
+    id: sui_version
+    attributes:
+      label: Version in use
+    validations:
+      required: true
+
+  - type: dropdown
+    id: flavor
+    attributes:
+      label: Flavor
+      options:
+        - zygisk
+        - riru
+    validations:
+      required: true
+
+  - type: input
+    id: android_version
+    attributes:
+      label: Android version
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Device
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: What did you do
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: What happened
+      description: You can upload log and screenshot
+
+  - type: textarea
+    id: expected-behaviour
+    attributes:
+      label: What do you expect
