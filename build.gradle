@@ -1,11 +1,6 @@
 plugins {
-    id 'com.android.application' version '8.7.0' apply false
-    id 'com.android.library' version '8.7.0' apply false
-    id 'org.jetbrains.kotlin.jvm' version '1.9.24' apply false
-    alias libs.plugins.refine apply false
+    id("idea")
 }
-
-apply plugin: 'idea'
 
 idea.module {
     excludeDirs += file('out')
@@ -18,14 +13,16 @@ subprojects {
         plugins.apply('dev.rikka.tools.refine')
 
         android {
-            compileSdk = 35
+            compileSdk = 36
+            buildToolsVersion = "36.0.0"
+            ndkVersion = "29.0.13113456"
             defaultConfig {
-                minSdk = 23
-                targetSdk = 35
+                minSdk = 24
+                targetSdk = 36
             }
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_17
-                targetCompatibility = JavaVersion.VERSION_17
+                sourceCompatibility = JavaVersion.VERSION_21
+                targetCompatibility = JavaVersion.VERSION_21
             }
             buildFeatures {
                 aidl true
@@ -34,14 +31,14 @@ subprojects {
     }
 }
 
-
-tasks.register('clean', Delete) {
-    delete rootProject.buildDir
-}
-
+apply from: 'api/manifest.gradle'
+def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
 ext {
-    minSdkVersion = 23
-    targetSdkVersion = 35
-    api_min_sdk = 23
-    api_target_sdk = 35
+    minSdkVersion = 24
+    targetSdkVersion = 36
+    api_min_sdk = 24
+    api_target_sdk = 36
+    versionCode = gitCommitCount
+    versionName = "${api_version_major}.6.0.r${gitCommitCount}.${gitCommitId}"
 }
