@@ -508,15 +508,21 @@ public class SuiService extends Service<SuiUserServiceManager, SuiClientManager,
                     continue;
 
                 if (flags == 0) {
-                    String dataDir;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        dataDir = pi.applicationInfo.deviceProtectedDataDir;
-                    } else {
-                        dataDir = pi.applicationInfo.dataDir;
-                    }
+                    // Most ordinary apps have credential-protected storage only. Checking
+                    // deviceProtectedDataDir alone makes every such app look uninstalled.
+                    String dataDir = pi.applicationInfo.dataDir;
+                    String deviceProtectedDataDir = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                            ? pi.applicationInfo.deviceProtectedDataDir : null;
 
-                    boolean hasApk = MapUtil.getOrPut(existenceCache, pi.applicationInfo.sourceDir, () -> new File(pi.applicationInfo.sourceDir).exists());
-                    boolean hasData = MapUtil.getOrPut(existenceCache, dataDir, () -> new File(dataDir).exists());
+                    boolean hasApk = pi.applicationInfo.sourceDir != null
+                            && MapUtil.getOrPut(existenceCache, pi.applicationInfo.sourceDir,
+                            () -> new File(pi.applicationInfo.sourceDir).exists());
+                    boolean hasData = dataDir != null
+                            && MapUtil.getOrPut(existenceCache, dataDir, () -> new File(dataDir).exists());
+                    if (!hasData && deviceProtectedDataDir != null) {
+                        hasData = MapUtil.getOrPut(existenceCache, deviceProtectedDataDir,
+                                () -> new File(deviceProtectedDataDir).exists());
+                    }
 
                     // Installed (or hidden): hasApk && hasData
                     // Uninstalled but keep data: !hasApk && hasData
