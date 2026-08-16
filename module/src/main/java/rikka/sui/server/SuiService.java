@@ -486,10 +486,10 @@ public class SuiService extends Service<SuiUserServiceManager, SuiClientManager,
 
         List<AppInfo> list = new ArrayList<>();
         for (int user : users) {
-            List<PackageInfo> packages = PackageManagerApis.getInstalledPackagesNoThrow(0x00002000 /*MATCH_UNINSTALLED_PACKAGES*/, user);
+            List<PackageInfo> packages = PackageManagerApis.getInstalledPackagesNoThrow(0 /* currently installed packages */, user);
             if (packages.isEmpty()) {
                 LOGGER.w("PackageManagerApis.getInstalledPackagesNoThrow returned 0 packages for user %d, trying fallback", user);
-                packages = getInstalledPackagesFallback(0x00002000L, user);
+                packages = getInstalledPackagesFallback(0L, user);
             }
 
             for (PackageInfo pi : packages) {
