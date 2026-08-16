@@ -424,6 +424,51 @@ public class SuiService extends Service<SuiUserServiceManager, SuiClientManager,
     }
 
     @SuppressWarnings("unchecked")
+    private static List<ApplicationInfo> getInstalledApplicationsFallback(long flags, int user) {
+        try {
+            Class<?> appGlobalsClass = Class.forName("android.app.AppGlobals");
+            Method getPackageManager = appGlobalsClass.getDeclaredMethod("getPackageManager");
+            Object packageManager = getPackageManager.invoke(null);
+            if (packageManager == null) {
+                LOGGER.w("AppGlobals.getPackageManager() returned null for applications of user %d", user);
+                return Collections.emptyList();
+            }
+
+            String[] candidates = {"getInstalledApplicationsAsUser", "getInstalledApplications"};
+            for (String name : candidates) {
+                try {
+                    Method method = packageManager.getClass().getMethod(name, long.class, int.class);
+                    Object result = method.invoke(packageManager, flags, user);
+                    if (result instanceof android.content.pm.ParceledListSlice) {
+                        List<ApplicationInfo> list = ((android.content.pm.ParceledListSlice<ApplicationInfo>) result).getList();
+                        if (list != null) {
+                            LOGGER.i("using AppGlobals.%s(long,int) application fallback for user %d", name, user);
+                            return list;
+                        }
+                    }
+                } catch (NoSuchMethodException ignored) {
+                }
+
+                try {
+                    Method method = packageManager.getClass().getMethod(name, int.class, int.class);
+                    Object result = method.invoke(packageManager, (int) flags, user);
+                    if (result instanceof android.content.pm.ParceledListSlice) {
+                        List<ApplicationInfo> list = ((android.content.pm.ParceledListSlice<ApplicationInfo>) result).getList();
+                        if (list != null) {
+                            LOGGER.i("using AppGlobals.%s(int,int) application fallback for user %d", name, user);
+                            return list;
+                        }
+                    }
+                } catch (NoSuchMethodException ignored) {
+                }
+            }
+        } catch (Throwable e) {
+            LOGGER.w(e, "AppGlobals application query fallback failed for user %d", user);
+        }
+        return Collections.emptyList();
+    }
+
+    @SuppressWarnings("unchecked")
     private static List<PackageInfo> getInstalledPackagesFallback(long flags, int user) {
         try {
             Class<?> appGlobalsClass = Class.forName("android.app.AppGlobals");
@@ -488,8 +533,19 @@ public class SuiService extends Service<SuiUserServiceManager, SuiClientManager,
         for (int user : users) {
             List<PackageInfo> packages = PackageManagerApis.getInstalledPackagesNoThrow(0x00002000 /*MATCH_UNINSTALLED_PACKAGES*/, user);
             if (packages.isEmpty()) {
-                LOGGER.w("PackageManagerApis.getInstalledPackagesNoThrow returned 0 packages for user %d, trying fallback", user);
-                packages = getInstalledPackagesFallback(0x00002000L, user);
+                LOGGER.w("PackageManagerApis.getInstalledPackagesNoThrow returned 0 packages for user %d, trying installed applications", user);
+                List<ApplicationInfo> applications = getInstalledApplicationsFallback(0x00002000L, user);
+                packages = new ArrayList<>(applications.size());
+                for (ApplicationInfo application : applications) {
+                    PackageInfo packageInfo = new PackageInfo();
+                    packageInfo.packageName = application.packageName;
+                    packageInfo.applicationInfo = application;
+                    packages.add(packageInfo);
+                }
+                if (packages.isEmpty()) {
+                    LOGGER.w("installed applications also returned 0 for user %d, trying package fallback", user);
+                    packages = getInstalledPackagesFallback(0x00002000L, user);
+                }
             }
 
             for (PackageInfo pi : packages) {
