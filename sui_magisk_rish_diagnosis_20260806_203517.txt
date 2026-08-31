@@ -1,0 +1,881 @@
+
+=== Active Magisk modules ===
+CMD: su -c 'ls -la /data/adb/modules/'
+EXIT: 0
+total 39
+drwxr-xr-x 13 root root 3452 2026-08-06 20:25 .
+drwx------ 11 root root 3452 2026-08-06 20:25 ..
+drwxrwxrwx  3 root root 3452 2026-07-31 06:47 adb-fastboot
+drwxr-xr-x  3 root root 3452 2026-05-23 08:02 adb-ndk
+drwxr-xr-x  6 root root 3452 2026-08-02 00:43 angelbeats_kernel
+drwxr-xr-x  2 root root 3452 2026-06-20 10:50 asoul_affinity_opt
+drwxr-xr-x  3 root root 3452 2026-05-23 08:02 busybox-ndk
+drwxr-xr-x  3 root root 3452 2026-07-21 16:52 disable_cn_google_services
+drwxr-xr-x  4 root root 3452 2026-07-19 01:48 playintegrityfix
+drwxr-xr-x  2 root root 3452 2026-05-21 19:38 tricky_store
+drwxr-xr-x  5 root root 3452 2026-08-06 20:25 zygisk-sui
+drwxr-xr-x  3 root root 3452 2026-05-21 19:52 zygisk_shamiko
+drwxr-xr-x  6 root root 3452 2026-05-21 19:51 zygisksu
+
+
+=== Module enable/disable status ===
+CMD: su -c 'for d in /data/adb/modules/*; do [ -e "$d/disable" ] && echo "DISABLED: $d" || echo "ENABLED: $d"; done'
+EXIT: 0
+ENABLED: /data/adb/modules/adb-fastboot
+ENABLED: /data/adb/modules/adb-ndk
+ENABLED: /data/adb/modules/angelbeats_kernel
+ENABLED: /data/adb/modules/asoul_affinity_opt
+ENABLED: /data/adb/modules/busybox-ndk
+ENABLED: /data/adb/modules/disable_cn_google_services
+ENABLED: /data/adb/modules/playintegrityfix
+ENABLED: /data/adb/modules/tricky_store
+ENABLED: /data/adb/modules/zygisk-sui
+ENABLED: /data/adb/modules/zygisk_shamiko
+DISABLED: /data/adb/modules/zygisksu
+
+
+=== Sui module.prop ===
+CMD: su -c 'cat /data/adb/modules/zygisk-sui/module.prop'
+EXIT: 0
+id=zygisk-sui
+name=Zygisk - Sui
+version=v13.6.0
+versionCode=341
+author=Rikka
+description=Modern superuser interface implementation. This module requires Magisk 24.0+ and Zygisk enabled. DO NOT add SystemUI and Settings to DenyList.
+updateJson=https://rikkaapps.github.io/release/sui_zygisk.json
+
+
+=== Sui module contents ===
+CMD: su -c 'ls -la /data/adb/modules/zygisk-sui/'
+EXIT: 0
+total 2115
+drwxr-xr-x  5 root root     3452 2026-08-06 20:25 .
+drwxr-xr-x 13 root root     3452 2026-08-06 20:25 ..
+drwxr-xr-x  2 root root     3452 2026-08-06 20:25 bin
+-rw-rw-rw-  1 root root       25 2026-08-06 19:21 com.android.settings
+-rw-rw-rw-  1 root root       25 2026-08-06 19:21 com.android.systemui
+drwxr-xr-x  2 root root     3452 2026-08-06 19:21 lib
+-rw-r--r--  1 root root    19512 2026-08-06 19:21 librish.so
+-rw-r--r--  1 root root      295 2026-08-06 19:21 module.prop
+-rw-r--r--  1 root root     2118 2026-08-06 19:21 post-fs-data.sh
+-rwxrwx---  1 root shell     383 2026-08-06 19:21 rish
+-rw-r--r--  1 root root      237 2026-08-06 19:21 sepolicy.rule
+-rw-r-xr-x  1 root root  1145628 2026-08-06 19:21 sui.apk
+-rw-------  1 root root   951632 2026-08-06 19:21 sui.dex
+-rw-r--r--  1 root root      361 2026-08-06 19:21 uninstall.sh
+drwxr-xr-x  2 root root     3452 2026-08-06 19:21 zygisk
+
+
+=== Sui post-fs-data.sh ===
+CMD: su -c 'cat /data/adb/modules/zygisk-sui/post-fs-data.sh'
+EXIT: 0
+#!/system/bin/sh
+MODDIR=${0%/*}
+MODULE_ID=$(basename "$MODDIR")
+FLAVOR=zygisk
+
+if [ "$ZYGISK_ENABLED" = false ] && [ "$FLAVOR" = "zygisk" ]; then
+  log -p w -t "Sui" "Zygisk is disabled, skip zygisk-flavor script"
+  exit 1
+fi
+
+if [ "$ZYGISK_ENABLED" = true ] && [ "$FLAVOR" = "riru" ]; then
+  log -p w -t "Sui" "Zygisk is enabled, skip riru-flavor script"
+  exit 1
+fi
+
+MAGISK_VER_CODE=$(magisk -V)
+if [ "$MAGISK_VER_CODE" -ge 21000 ]; then
+  MAGISK_PATH="$(magisk --path)/.magisk/modules/$MODULE_ID"
+else
+  MAGISK_PATH=/sbin/.magisk/modules/$MODULE_ID
+fi
+
+log -p i -t "Sui" "Magisk version $MAGISK_VER_CODE"
+log -p i -t "Sui" "Magisk module path $MAGISK_PATH"
+
+enable_once="/data/adb/sui/enable_adb_root_once"
+enable_forever="/data/adb/sui/enable_adb_root"
+adb_root_exit=0
+
+if [ -f $enable_once ]; then
+  log -p i -t "Sui" "adb root support is enabled for this time of boot"
+  rm $enable_once
+  enable_adb_root=true
+fi
+
+if [ -f $enable_forever ]; then
+  log -p i -t "Sui" "adb root support is enabled forever"
+  enable_adb_root=true
+fi
+
+if [ "$enable_adb_root" = true ]; then
+  log -p i -t "Sui" "Setup adb root support"
+
+  # Run magiskpolicy manually if Magisk does not load sepolicy.rule
+  if [ ! -e "$(magisk --path)/.magisk/mirror/sepolicy.rules/$MODULE_ID/sepolicy.rule" ]; then
+    log -p e -t "Sui" "Magisk does not load sepolicy.rule..."
+    log -p e -t "Sui" "Exec magiskpolicy --live --apply $MAGISK_PATH/sepolicy.rule..."
+    magiskpolicy --live --apply "$MAGISK_PATH"/sepolicy.rule
+    log -p i -t "Sui" "Apply finished"
+  else
+    log -p i -t "Sui" "Magisk should have loaded sepolicy.rule correctly"
+  fi
+
+  # Setup adb root support
+  rm "$MODDIR/bin/adb_root"
+  ln -s "$MODDIR/bin/sui" "$MODDIR/bin/adb_root"
+  chmod 700 "$MODDIR/bin/adb_root"
+  "$MODDIR/bin/adb_root" "$MAGISK_PATH"
+  adb_root_exit=$?
+  log -p i -t "Sui" "Exited with $adb_root_exit"
+else
+  log -p i -t "Sui" "adb root support is disabled"
+fi
+
+# Setup uninstaller
+rm "$MODDIR/bin/uninstall"
+ln -s "$MODDIR/bin/sui" "$MODDIR/bin/uninstall"
+
+# Run Sui server
+chmod 700 "$MODDIR"/bin/sui
+exec "$MODDIR"/bin/sui "$MODDIR" "$adb_root_exit"
+
+
+=== Sui sepolicy.rule ===
+CMD: su -c 'cat /data/adb/modules/zygisk-sui/sepolicy.rule'
+EXIT: 0
+# Allow adbd to transition to magisk:s0 context
+allow adbd adbd process setcurrent
+allow adbd magisk process dyntransition
+
+# Fix "adb install" under "adb root"
+allow system_server magisk unix_stream_socket { getopt getattr read write }
+
+
+=== Sui uninstall.sh ===
+CMD: su -c 'cat /data/adb/modules/zygisk-sui/uninstall.sh'
+EXIT: 0
+#!/sbin/sh
+MODDIR=${0%/*}
+MODULES=$(dirname "$MODDIR")
+
+uninstall() {
+  chmod 700 "$MODDIR"/bin/uninstall
+  "$MODDIR"/bin/uninstall "$MODDIR"
+  rm -rf "/data/adb/sui"
+}
+
+if [ -d "$MODULES/riru_sui" ] && [ -d "$MODULES/zygisk_sui" ]; then
+  if [ -f "$MODULES/riru_sui/remove" ] && [ -f "$MODULES/zygisk_sui/remove" ]; then
+    uninstall
+  fi
+else
+  uninstall
+fi
+
+
+=== Sui/Shizuku/zygiskd processes ===
+CMD: su -c 'ps -A -o PID,PPID,UID,USER,PCPU,PMEM,NAME,CMDLINE | grep -E "sui|zygiskd|shizuku"'
+EXIT: 0
+  RUID    Real (before suid) user ID     RUSER   Real (before suid) user name
+ps: bad -o 'PID,PPID,UID,USER,PCPU,PMEM,NAME,CMDLINE'
+                                   ^
+
+
+=== Top processes (head) ===
+CMD: su -c 'ps -A -o PID,PPID,UID,USER,NAME,ARGS | head -50'
+EXIT: 0
+  PID  PPID   UID USER         NAME                        ARGS                       
+    1     0     0 root         init                        init second_stage
+    2     0     0 root         [kthreadd]                  [kthreadd]
+    3     2     0 root         [rcu_gp]                    [rcu_gp]
+    4     2     0 root         [slub_flushwq]              [slub_flushwq]
+    5     2     0 root         [netns]                     [netns]
+    6     2     0 root         [kworker/0:0-mm_percpu_wq]  [kworker/0:0-mm_percpu_wq]
+    8     2     0 root         [kworker/u16:0-cmdq_pkt_destroy_wq] [kworker/u16:0-cmdq_pkt_destroy_wq]
+    9     2     0 root         [mm_percpu_wq]              [mm_percpu_wq]
+   10     2     0 root         [rcu_tasks_kthread]         [rcu_tasks_kthread]
+   11     2     0 root         [rcu_tasks_trace_kthread]   [rcu_tasks_trace_kthread]
+   12     2     0 root         [ksoftirqd/0]               [ksoftirqd/0]
+   13     2     0 root         [rcu_preempt]               [rcu_preempt]
+   14     2     0 root         [rcuog/0]                   [rcuog/0]
+   15     2     0 root         [rcuop/0]                   [rcuop/0]
+   16     2     0 root         [rcub/0]                    [rcub/0]
+   17     2     0 root         [rcu_exp_gp_kthread_worker] [rcu_exp_gp_kthread_worker]
+   18     2     0 root         [rcu_exp_par_gp_kthread_worker] [rcu_exp_par_gp_kthread_worker]
+   19     2     0 root         [migration/0]               [migration/0]
+   20     2     0 root         [cpuhp/0]                   [cpuhp/0]
+   21     2     0 root         [cpuhp/1]                   [cpuhp/1]
+   22     2     0 root         [migration/1]               [migration/1]
+   23     2     0 root         [ksoftirqd/1]               [ksoftirqd/1]
+   25     2     0 root         [kworker/1:0H-kverityd]     [kworker/1:0H-kverityd]
+   26     2     0 root         [rcuop/1]                   [rcuop/1]
+   27     2     0 root         [cpuhp/2]                   [cpuhp/2]
+   28     2     0 root         [migration/2]               [migration/2]
+   29     2     0 root         [ksoftirqd/2]               [ksoftirqd/2]
+   31     2     0 root         [kworker/2:0H-kverityd]     [kworker/2:0H-kverityd]
+   32     2     0 root         [rcuop/2]                   [rcuop/2]
+   33     2     0 root         [cpuhp/3]                   [cpuhp/3]
+   34     2     0 root         [migration/3]               [migration/3]
+   35     2     0 root         [ksoftirqd/3]               [ksoftirqd/3]
+   37     2     0 root         [kworker/3:0H-kverityd]     [kworker/3:0H-kverityd]
+   38     2     0 root         [rcuop/3]                   [rcuop/3]
+   39     2     0 root         [cpuhp/4]                   [cpuhp/4]
+   40     2     0 root         [migration/4]               [migration/4]
+   41     2     0 root         [ksoftirqd/4]               [ksoftirqd/4]
+   43     2     0 root         [kworker/4:0H-kverityd]     [kworker/4:0H-kverityd]
+   44     2     0 root         [rcuog/4]                   [rcuog/4]
+   45     2     0 root         [rcuop/4]                   [rcuop/4]
+   46     2     0 root         [cpuhp/5]                   [cpuhp/5]
+   47     2     0 root         [migration/5]               [migration/5]
+   48     2     0 root         [ksoftirqd/5]               [ksoftirqd/5]
+   51     2     0 root         [rcuop/5]                   [rcuop/5]
+   52     2     0 root         [cpuhp/6]                   [cpuhp/6]
+   53     2     0 root         [migration/6]               [migration/6]
+   54     2     0 root         [ksoftirqd/6]               [ksoftirqd/6]
+   55     2     0 root         [kworker/6:0-events]        [kworker/6:0-events]
+   57     2     0 root         [rcuop/6]                   [rcuop/6]
+
+
+=== Sui data directory ===
+CMD: su -c 'ls -la /data/adb/sui/ 2>/dev/null'
+EXIT: 0
+total 485
+drw-------  3 root root   3452 2026-08-06 19:21 .
+drwx------ 11 root root   3452 2026-08-06 20:25 ..
+-rw-------  1 root root   1474 2026-08-06 19:21 post-install.example.sh
+-rw-------  1 root root    720 2026-08-06 19:21 post-install.sh
+-rw-------  1 root root     27 2026-07-29 21:22 shell_dir_name
+-rw-rw-rw-  1 root root     36 2026-07-29 21:22 shortcut_token
+-rw-------  1 root root  20480 2026-08-06 18:33 sui.db
+-rw-------  1 root root  32768 2026-08-06 20:25 sui.db-shm
+-rw-------  1 root root 412032 2026-08-06 19:26 sui.db-wal
+-rw-rw-rw-  1 root root    263 2026-07-29 21:22 sui.log
+drwxrwxrwx  2 root root   3452 2026-07-29 21:22 watchdog.lock
+
+
+=== Sui database files ===
+CMD: su -c 'ls -la /data/adb/sui/sui.db* 2>/dev/null'
+EXIT: 0
+-rw------- 1 root root  20480 2026-08-06 18:33 /data/adb/sui/sui.db
+-rw------- 1 root root  32768 2026-08-06 20:25 /data/adb/sui/sui.db-shm
+-rw------- 1 root root 412032 2026-08-06 19:26 /data/adb/sui/sui.db-wal
+
+
+=== Sui log file ===
+CMD: su -c 'ls -la /data/adb/sui/sui.log 2>/dev/null'
+EXIT: 0
+-rw-rw-rw- 1 root root 263 2026-07-29 21:22 /data/adb/sui/sui.log
+
+
+=== Sui db stat ===
+CMD: su -c 'stat /data/adb/sui/sui.db 2>/dev/null'
+EXIT: 0
+  File: /data/adb/sui/sui.db
+  Size: 20480	 Blocks: 40	 IO Blocks: 512	 regular file
+Device: fd39h/64825d	 Inode: 246213	 Links: 1	 Device type: 0,0
+Access: (0600/-rw-------)	Uid: (    0/    root)	Gid: (    0/    root)
+Access: 2026-05-21 19:38:41.180000000 +0800
+Modify: 2026-08-06 18:33:16.516000056 +0800
+Change: 2026-08-06 18:33:16.516000056 +0800
+
+
+=== Sui db tables ===
+CMD: su -c '/data/data/com.termux/files/usr/bin/sqlite3 /data/adb/sui/sui.db ".tables" 2>/dev/null'
+EXIT: 0
+uid_configs
+
+
+=== Sui uid_configs recent 50 ===
+CMD: su -c '/data/data/com.termux/files/usr/bin/sqlite3 /data/adb/sui/sui.db "SELECT * FROM uid_configs ORDER BY uid DESC LIMIT 50;" 2>/dev/null'
+EXIT: 0
+10743|0
+10742|0
+10741|0
+10740|0
+10739|0
+10738|0
+10737|0
+10736|0
+10735|0
+10734|0
+10733|0
+10732|0
+10731|0
+10730|0
+10729|0
+10728|0
+10727|0
+10726|0
+10725|0
+10724|0
+10723|0
+10722|0
+10721|0
+10720|0
+10719|0
+10718|0
+10717|2
+10716|0
+10715|0
+10714|0
+10713|0
+10712|0
+10711|0
+10710|0
+10709|0
+10708|0
+10707|0
+10706|0
+10705|0
+10704|0
+10703|0
+10702|0
+10701|0
+10700|0
+10699|0
+10698|0
+10697|0
+10696|0
+10695|0
+10694|0
+
+
+=== Termux rish binary/script ===
+CMD: ls -la /data/data/com.termux/files/usr/bin/rish 2>/dev/null || true
+EXIT: 0
+-rwxr-xr-x. 1 u0_a717 u0_a717 607 Aug  6 19:26 /data/data/com.termux/files/usr/bin/rish
+
+
+=== Termux rish lib directory ===
+CMD: ls -la /data/data/com.termux/files/usr/lib/rish/ 2>/dev/null || true
+EXIT: 0
+total 1243
+drwx------.  3 u0_a717 u0_a717   3452 Aug  6 19:24 .
+drwx------. 57 u0_a717 u0_a717 253952 Aug  5 16:51 ..
+drwx------.  2 u0_a717 u0_a717   3452 Jul 31 09:47 backup-20260731-094727
+-r--------.  1 u0_a717 u0_a717  19512 Aug  6 19:24 librish.so
+-rwx------.  1 u0_a717 u0_a717    480 Aug  6 19:25 rish
+-r--------.  1 u0_a717 u0_a717 951632 Aug  6 19:24 rish.dex
+-r--------.  1 u0_a717 u0_a717  59672 Jul 31 09:47 rish_shizuku.dex
+
+
+=== Termux rish script content ===
+CMD: cat /data/data/com.termux/files/usr/bin/rish 2>/dev/null | head -100 || true
+EXIT: 0
+#!/system/bin/sh
+# rish — Sui shell (dual-backend: Sui daemon primary, Shizuku fallback)
+DEX=/data/data/com.termux/files/usr/lib/rish/rish.dex
+LIBDIR=/data/data/com.termux/files/usr/lib/rish
+
+if [ ! -f "$DEX" ]; then
+  echo "Cannot find $DEX, please check post-install.sh"
+  exit 1
+fi
+
+[ -z "$RISH_APPLICATION_ID" ] && export RISH_APPLICATION_ID="com.termux"
+# Termux linker variables break Android 16's /system/bin/app_process.
+exec env -u LD_LIBRARY_PATH -u LD_PRELOAD /system/bin/app_process -Djava.class.path="$DEX" -Dsui.library.path="$LIBDIR" /system/bin --nice-name=rish rikka.sui.shell.Shell "$@"
+
+
+=== Termux rish dex/so files ===
+CMD: ls -la /data/data/com.termux/files/usr/lib/rish/* 2>/dev/null || true
+EXIT: 0
+-r--------. 1 u0_a717 u0_a717  19512 Aug  6 19:24 /data/data/com.termux/files/usr/lib/rish/librish.so
+-rwx------. 1 u0_a717 u0_a717    480 Aug  6 19:25 /data/data/com.termux/files/usr/lib/rish/rish
+-r--------. 1 u0_a717 u0_a717 951632 Aug  6 19:24 /data/data/com.termux/files/usr/lib/rish/rish.dex
+-r--------. 1 u0_a717 u0_a717  59672 Jul 31 09:47 /data/data/com.termux/files/usr/lib/rish/rish_shizuku.dex
+
+/data/data/com.termux/files/usr/lib/rish/backup-20260731-094727:
+total 19
+drwx------. 2 u0_a717 u0_a717 3452 Jul 31 09:47 .
+drwx------. 3 u0_a717 u0_a717 3452 Aug  6 19:24 ..
+-rwxr-xr-x. 1 u0_a717 u0_a717 1161 Jul 31 09:30 rish
+-r--------. 1 u0_a717 u0_a717 6828 Jul 17 20:00 rish_shizuku.dex
+
+
+=== rish.dex stat ===
+CMD: stat /data/data/com.termux/files/usr/lib/rish/rish.dex 2>/dev/null || true
+EXIT: 0
+  File: /data/data/com.termux/files/usr/lib/rish/rish.dex
+  Size: 951632    	Blocks: 1864       IO Block: 4096   regular file
+Device: 253,57	Inode: 5039112     Links: 1
+Access: (0400/-r--------)  Uid: (10717/ u0_a717)   Gid: (10717/ u0_a717)
+Context: u:object_r:app_data_file:s0
+Access: 2026-08-06 19:22:03.844000158 +0800
+Modify: 2026-08-06 19:24:37.076000168 +0800
+Change: 2026-08-06 19:26:16.520000173 +0800
+ Birth: -
+
+
+=== rish_shizuku.dex stat ===
+CMD: stat /data/data/com.termux/files/usr/lib/rish/rish_shizuku.dex 2>/dev/null || true
+EXIT: 0
+  File: /data/data/com.termux/files/usr/lib/rish/rish_shizuku.dex
+  Size: 59672     	Blocks: 120        IO Block: 4096   regular file
+Device: 253,57	Inode: 2972618     Links: 1
+Access: (0400/-r--------)  Uid: (10717/ u0_a717)   Gid: (10717/ u0_a717)
+Context: u:object_r:app_data_file:s0:c205,c258,c512,c768
+Access: 2026-07-17 20:01:08.000000000 +0800
+Modify: 2026-07-31 09:47:49.120176521 +0800
+Change: 2026-07-31 09:47:49.128176521 +0800
+ Birth: -
+
+
+=== rish processes ===
+CMD: su -c 'ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -i rish'
+EXIT: 0
+ 8689  8236 10717 u0_a717      su                          su -c ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -i rish
+ 8692  8691     0 root         app_process                 app_process /system/bin com.android.commands.content.Content call --uri content://com.topjohnwu.magisk.provider --user 0 --method log --extra from.uid:i:10717 --extra to.uid:i:0 --extra pid:i:8689 --extra policy:i:2 --extra target:i:-1 --extra context:s: --extra gids:s: --extra command:s:ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -i rish --extra notify:b:true
+ 8693   995     0 root         sh                          sh -c ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -i rish
+ 8703  8693     0 root         grep                        grep -i rish
+
+
+=== rish process details ===
+CMD: su -c 'for p in $(pidof rish); do echo "--- PID $p ---"; cat /proc/$p/cmdline 2>/dev/null | tr "\0" " "; echo; cat /proc/$p/status 2>/dev/null | head -20; done'
+EXIT: 0
+
+
+=== Shizuku processes ===
+CMD: su -c 'ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -i shizuku'
+EXIT: 0
+ 8723  8236 10717 u0_a717      su                          su -c ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -i shizuku
+ 8734   995     0 root         sh                          sh -c ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -i shizuku
+ 8735  8733     0 root         app_process                 app_process /system/bin com.android.commands.content.Content call --uri content://com.topjohnwu.magisk.provider --user 0 --method log --extra from.uid:i:10717 --extra to.uid:i:0 --extra pid:i:8723 --extra policy:i:2 --extra target:i:-1 --extra context:s: --extra gids:s: --extra command:s:ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -i shizuku --extra notify:b:true
+ 8739  8734     0 root         grep                        grep -i shizuku
+
+
+=== Shizuku binder services ===
+CMD: su -c 'service list | grep -i shizuku'
+EXIT: 1
+
+
+=== Shizuku settings.xml ===
+CMD: su -c 'cat /data/user_de/0/moe.shizuku.privileged.api/shared_prefs/settings.xml 2>/dev/null'
+EXIT: 0
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <int name="mode" value="0" />
+    <boolean name="black_night_theme" value="false" />
+    <string name="adbkey">bp4NLmNVSLtOAx/NPx9HczUfauUZH0R2rVXVLHRhHOVXVY7D1V3+2MV1DGRnfqOqAnOj7QN2yKOyBgEj5C00qr5wJlotes8AOfwZpIUltEbzNtwyYuR0K/e0plojJ3RpMqAYjBkZCkKT1hxc7ylWR0ABzVMknKkU8se2HwuA9ZPK/0XvqzvovH3W/dZcc5K7LiQwHNs87K1YTdt5T5Qbtcb95xebH+okUwoWMgUVcQQKS8NenSjyeDyDED5HXQQf6zM8yHoac9ipw8GeQgTGzjEHil6K+1zU0nl9d0GE2B/BOaZJy+TgJzwPZ5AV0WdW/3QCNKECA7X9MsEPYJRTvg7oNkh2W5lxyFJiFaZEJQfnYTrYYBf0tDYopuNYxtYrPHYQwE/Ki5MumkVuff+xmvVVv5dSbY80YToeAfnmcWeb5c0ceZXwjQdyfg+r9LdZZD2g6L55wDpft4FFroIZ+3lqype538WpoPQQL+LUoS21u1SiP+DbY3yOHTCZvwkrNn0yOqPb9QbG5FBedQB8rpOJZ/c95+EHeFcayA3qkNw4mFkSuLC8/g7smDUBGY81+6HKTh9GQPopOnMYcjAGqFlwHLcezSYarcyOOtbb5yMXUdLVRXQoCKDKtfMpPSpTHEyDl3Xo/iC8LEFUM4jlNBn651hm79ALNuCH+q3iwH384+fsWEOH4XyJKqAEIVzpSaOrakWLpDjirYasx9qSKq4RWqzeNXTDCN6ZirOVSSryFXYZnd/GWrd8xg4Wwqbz6MpUnD1SqIDwS0WCNTMJfWJQNncgi721V7sZCFKquRfm/ea8FvM7qop619+MpUK62/dP1Fob9THsJ2sAq82FcSVtb6tuTRokKyP4dTwAFuSHQ53KOeM0rIxOmFWCwRjhJ3gQRZWEh0a0Y1x1TLlfF5xPeEPhAimjyVmGOLR8cbISM++vnnfsE2t+RtTALJ2L6s6ruFOSXmiqQlLi0EX8ZK4H3Y+mhJg5OVfB+NGrBKhrTFYISe4woezDZ0w8hD/aabGzlq3+jgfivvZXh3ICYfd2FBK3AVy0+duixltNGu4OLIQoPwZ62w658d+uGhc/t5I7m57ft6xksvjDHtuB0MEBCgZqjI87xn0Ub7zqejccPcM/3pnWIdfZuuq/rNI9sAVIZfjM53O9p+Ypwi3djFCKOE9nEiXUJ+sPO6g1QMiS+xtmwaUF5gvMrXgeB0B+v3eS4MPGk/OIa6ldO9HP+ehU7JVjIQp0OcpuA4sU22QkxmoJpEkuSkHy7L9sl0Mo8LAeC3vvV2Mt8/FIFTACUYKnFieIVnFVYIc/mk28K2tYi1odlM8NLaKx1zJzsq/hBMoXsqCa7++hK4WDJ6F8544VvTGuokEeGHSDJSxtEd1TfQTQbZKxws9szJQSA8oEi1awOCfvUcGYSJdcne/BoPOc/MQQDhsyB3dnbpnObzpzCAadXzZ2h5n1/s1QhYqNlwar48bUHwnVTijEChZSZDLh71R5Eaz4lWAM0kRaq6kEE77kkIeFRtMjXZgyd7YZp9aINl8ejBq2P7WE+xtJvLyj7D/ozpGR3YRyri7XIMKUyreNlZrZLF5YgQ5yWmPmUFDXNxnNKQT/u0vuuI/p2bLUYp3/3irf5VAuRw91qyy6s95eaicniLytR4r1</string>
+    <string name="language">SYSTEM</string>
+    <int name="night_mode" value="-1" />
+    <boolean name="start_on_boot" value="true" />
+</map>
+
+
+=== Wireless adb status ===
+CMD: su -c 'settings get global adb_wifi_enabled; settings get global adb_wifi_port 2>/dev/null'
+EXIT: 0
+0
+null
+
+
+=== Shizuku package info ===
+CMD: su -c 'dumpsys package moe.shizuku.privileged.api 2>/dev/null | grep -E "versionName|versionCode|firstInstallTime|lastUpdateTime|enabled"'
+EXIT: 0
+    versionCode=1086 minSdk=24 targetSdk=36
+    versionName=13.6.0.r1086.2650830c
+    lastUpdateTime=2026-07-27 18:17:08
+    User 0: ceDataInode=45211 deDataInode=46634 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      firstInstallTime=2026-05-21 00:20:29
+
+
+=== Storage/FUSE/vold binder services ===
+CMD: su -c 'service list | grep -E "storage|fuse|vold|mount|Volume|Storaged"'
+EXIT: 0
+119	android.system.vold.IVold/default: [android.system.vold.IVold]
+174	devicestoragemonitor: []
+288	mount: [android.os.storage.IStorageManager]
+372	storaged: [android.os.IStoraged]
+373	storaged_pri: [android.os.storaged.IStoragedPrivate]
+374	storagestats: [android.app.usage.IStorageStatsManager]
+503	vold: [android.os.IVold]
+
+
+=== Storage/FUSE/vold processes ===
+CMD: su -c 'ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -E "vold|storaged|fuse|storage"'
+EXIT: 0
+  504     1     0 root         vold                        vold --blkid_context=u:r:blkid:s0 --blkid_untrusted_context=u:r:blkid_untrusted:s0 --fsck_context=u:r:fsck:s0 --fsck_untrusted_context=u:r:fsck_untrusted:s0
+ 1520     1     0 root         storaged                    storaged
+ 5260     2     0 root         [file-storage]              [file-storage]
+ 6476  1126  1000 system       com.xiaomi.location.fused   com.xiaomi.location.fused
+ 8897  8236 10717 u0_a717      su                          su -c ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -E "vold|storaged|fuse|storage"
+ 8901  8900     0 root         app_process                 app_process /system/bin com.android.commands.content.Content call --uri content://com.topjohnwu.magisk.provider --user 0 --method log --extra from.uid:i:10717 --extra to.uid:i:0 --extra pid:i:8897 --extra policy:i:2 --extra target:i:-1 --extra context:s: --extra gids:s: --extra command:s:ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -E "vold|storaged|fuse|storage" --extra notify:b:true
+ 8902   995     0 root         sh                          sh -c ps -A -o PID,PPID,UID,USER,NAME,ARGS | grep -E "vold|storaged|fuse|storage"
+ 8905  8902     0 root         grep                        grep -E vold|storaged|fuse|storage
+22138  1126 10079 u0_a79       com.android.externalstorage com.android.externalstorage
+
+
+=== dumpsys mount (head) ===
+CMD: su -c 'dumpsys mount 2>/dev/null | head -200'
+EXIT: 0
+Disks:
+
+Volumes:
+  VolumeInfo{emulated;0}:
+    type=EMULATED diskId=null partGuid= mountFlags=PRIMARY|VISIBLE_FOR_WRITE mountUserId=0 state=MOUNTED 
+    fsType=null fsUuid=null fsLabel=null 
+    path=/storage/emulated internalPath=/data/media 
+
+Records:
+
+Primary storage UUID: null
+
+Internal storage (null) total size: 2000000000000 (1907348 MiB)
+
+CE unlocked users: [0]
+System unlocked users: [0]
+
+mObbMounts:
+
+mObbPathToStateMap:
+
+Media cloud providers: {}
+
+ExtM:
+  ExtM not init, nothing to dump
+
+
+Last maintenance: 2026-05-20 14:40:56
+
+
+=== FUSE/storage mounts ===
+CMD: su -c 'cat /proc/mounts | grep -E "fuse|sdcardfs|storage|vold|/data/media"'
+EXIT: 0
+none /sys/fs/fuse/connections fusectl rw,relatime 0 0
+tmpfs /storage tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=11466652k,nr_inodes=2866663,mode=755,gid=1000 0 0
+/dev/block/dm-57 /data_mirror/storage_area f2fs rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,gc_merge,discard,discard_unit=block,user_xattr,inline_xattr,acl,inline_data,inline_dentry,noflush_merge,barrier,extent_cache,age_extent_cache,mode=adaptive,active_logs=6,reserve_root=134217,reserve_node=0,resuid=0,resgid=1065,inlinecrypt,alloc_mode=default,checkpoint_merge,fsync_mode=nobarrier,atgc,memory=normal,lookup_mode=perf 0 0
+/dev/block/dm-9 /system/bin/storaged erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/block/dm-9 /system/bin/vold erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/block/dm-9 /system/bin/vold_prepare_subdirs erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/block/dm-9 /system/lib64/libaconfig_new_storage_flags_rust.dylib.so erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/block/dm-9 /system/lib64/libaconfig_storage_file.dylib.so erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/block/dm-9 /system/lib64/libaconfig_storage_protos.dylib.so erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/block/dm-9 /system/lib64/libaconfig_storage_read_api.dylib.so erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/block/dm-9 /system/lib64/libaconfig_storage_read_api_cc.so erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/block/dm-9 /system/lib64/libaconfig_storage_write_api.dylib.so erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/block/dm-9 /system/lib64/libappfuse.so erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/block/dm-9 /system/lib64/libfusesideload.so erofs ro,seclabel,relatime,user_xattr,acl,cache_strategy=readaround 0 0
+/dev/fuse /mnt/installer/0/emulated fuse rw,lazytime,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,allow_other 0 0
+/dev/fuse /mnt/androidwritable/0/emulated fuse rw,lazytime,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,allow_other 0 0
+/dev/fuse /mnt/user/0/emulated fuse rw,lazytime,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,allow_other 0 0
+/dev/fuse /storage/emulated fuse rw,lazytime,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,allow_other 0 0
+/dev/block/dm-57 /data/media/0/Android/data/com.xiaomi.market/files/.siexternal f2fs rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,gc_merge,discard,discard_unit=block,user_xattr,inline_xattr,acl,inline_data,inline_dentry,noflush_merge,barrier,extent_cache,age_extent_cache,mode=adaptive,active_logs=6,reserve_root=134217,reserve_node=0,resuid=0,resgid=1065,inlinecrypt,alloc_mode=default,checkpoint_merge,fsync_mode=nobarrier,atgc,memory=normal,lookup_mode=perf 0 0
+
+
+=== FUSE proc entries ===
+CMD: su -c 'ls -la /proc/fs/fuse* 2>/dev/null || true'
+EXIT: 0
+
+
+=== FUSE proc info ===
+CMD: su -c 'cat /proc/fs/fuse/info 2>/dev/null || true'
+EXIT: 0
+
+
+=== Binder state (head) ===
+CMD: su -c 'cat /proc/binder/state 2>/dev/null | head -100'
+EXIT: 0
+
+
+=== Binder stats (head) ===
+CMD: su -c 'cat /proc/binder/stats 2>/dev/null | head -100'
+EXIT: 0
+
+
+=== Binder proc entries ===
+CMD: su -c 'ls -la /proc/binder/ 2>/dev/null'
+EXIT: 1
+
+
+=== Recent logcat FUSE/storage/Sui/rish tail 300 ===
+CMD: su -c 'logcat -d -t 5000 | grep -iE "fuse|vold|storage|sui|rish|shizuku|zygisk|mount|remount|volume"' | tail -300
+EXIT: 0
+08-06 20:35:18.252  8526  8526 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:35:18.276  8558  8558 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:18.277  8558  8558 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:35:18.368  8612  8612 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:18.369  8612  8612 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:35:18.528  8692  8692 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:18.638  8735  8735 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:18.673  8755  8755 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: android.system.vold.IVold/default
+08-06 20:35:18.690  8754  8754 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:18.692  8754  8754 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:35:18.715  8755  8755 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: devicestoragemonitor
+08-06 20:35:18.871  8755  8755 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: mount
+08-06 20:35:18.961  8755  8755 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: storaged
+08-06 20:35:18.966  8755  8755 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: storaged_pri
+08-06 20:35:18.966  8755  8755 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: storagestats
+08-06 20:35:19.147  8755  8755 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: vold
+08-06 20:35:19.352  8808  8808 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:19.353  8808  8808 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:35:19.402  8817  8817 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:19.404  8817  8817 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:35:19.418  8845  8858 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~XJ0iiheva4ISG3dW_tCatg==/moe.shizuku.privileged.api-NHcznLq7H7kLJTbtdSmqHw==/oat/arm64/base.odex) is kOatUpToDate with filter 'everything' executable 'false'
+08-06 20:35:19.420  8845  8858 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~XJ0iiheva4ISG3dW_tCatg==/moe.shizuku.privileged.api-NHcznLq7H7kLJTbtdSmqHw==/oat/arm64/base.odex) is kOatUpToDate with filter 'everything' executable 'false'
+08-06 20:35:19.454  8832  8832 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:19.456  8832  8832 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:35:19.533  8880  8880 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: android.system.vold.IVold/default
+08-06 20:35:19.571  8880  8880 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: devicestoragemonitor
+08-06 20:35:19.596  8877  8877 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:19.598  8877  8877 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:35:19.628  8880  8880 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: mount
+08-06 20:35:19.641  3330  4203 D BluetoothDatabase: getProfileConnectionPolicy: device=XX:XX:XX:XX:48:D1 profile=VOLUME_CONTROL connectionPolicy=-1
+08-06 20:35:19.683  8880  8880 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: storaged
+08-06 20:35:19.683  8880  8880 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: storaged_pri
+08-06 20:35:19.684  8880  8880 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: storagestats
+08-06 20:35:19.805  8880  8880 W service : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: vold
+08-06 20:35:19.934  8912  8912 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: mount
+08-06 20:35:20.087  8910  8910 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:20.089  8910  8910 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:35:20.154  8922  8922 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:20.239  8939  8939 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:35:20.240  8939  8939 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:35:20.252  2398  3664 I ScnModule: [GameDetection] requestedPermissions1/2:: com.coolapk.market:: [android.permission.INTERNET, android.permission.ACCESS_NETWORK_STATE, android.permission.READ_PHONE_STATE, android.permission.WRITE_EXTERNAL_STORAGE, android.permission.READ_EXTERNAL_STORAGE, android.permission.READ_MEDIA_IMAGES, android.permission.READ_MEDIA_VIDEO, android.permission.ACCESS_WIFI_STATE, android.permission.CAMERA, android.permission.FLASHLIGHT, android.permission.VIBRATE, android.permission.SET_WALLPAPER, android.permission.KILL_BACKGROUND_PROCESSES, android.permission.WAKE_LOCK, android.permission.FOREGROUND_SERVICE, android.permission.SYSTEM_ALERT_WINDOW, android.permission.MANAGE_EXTERNAL_STORAGE, android.permission.REQUEST_INSTALL_PACKAGES, android.permission.REQUEST_DELETE_PACKAGES, android.permission.QUERY_ALL_PACKAGES, android.permission.POST_NOTIFICATIONS, com.android.permission.GET_INSTALLED_APPS, com.huawei.android.launcher.permission.CHANGE_BADGE, com.hihonor.android.launcher.permission.CHANGE_BADGE, com.vivo.notification.permission.BADGE_ICON, android.permission.ACCESS_COARSE_LOCATION, android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, android.permission.RECORD_AUDIO, com.miui.systemAdSolution.adSwitch.PROVIDER, com.coolapk.market.openadsdk.permission.TT_PANGOLIN, android.permission.CHANGE_NETWORK_STATE, android.permission.CHANGE_WIFI_STATE, com.google.android.gms.permission.AD_ID, android.permission.CHANGE_CONFIGURATION, com.asus.permission.READ_SDID_PROVIDER, com.asus.msa.SupplementaryDID.ACCESS, freemme.permission.msa, freemme.permission.msa.SECURITY_ACCESS, com.miui.systemAdSolution.permission.MSA_CACHE, android.permission.READ_SETTINGS, android.permission.SCHEDULE_EXACT_ALARM, android.permission.RECEIVE_USER_PRESENT, android.permission.RESTART_PACKAGES, com.coolapk.market.permission.XGPUSH_RECEIVE, com.coolapk.market.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION, com.coolapk.market.permission.MIPUSH_RECEIVE, com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE, com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE, com.hihonor.push.permission.READ_PUSH_NOTIFICATION_INFO, com.meizu.flyme.permission.PUSH] 
+
+
+=== Recent events log tail 200 ===
+CMD: su -c 'logcat -d -b events -t 5000 | grep -iE "fuse|vold|storage|mount|volume|sui|shizuku"' | tail -200
+EXIT: 0
+08-06 20:26:57.281  2398  2398 I sysui_multi_action: [757,128,758,5,759,8,793,20110,794,0,795,20110,796,2131296587,806,com.github.metacubex.clash.alpha,857,profile_service_channel,858,2,946,0|com.github.metacubex.clas-c00d0abc,947,0,1500,19908,1688,1]
+08-06 20:27:00.692  2398  2398 I sysui_multi_action: [757,128,758,5,759,8,793,30817,794,0,795,30817,796,1,806,com.xiaomi.mis,857,MisServiceChannel,858,3,947,0,1500,30817,1688,1]
+08-06 20:27:08.879  2398  2556 I sysui_multi_action: [319,28,322,493,325,83,757,761,758,9,759,5,806,com.miui.home,871,com.miui.home.launcher.Launcher,905,0,1320,9,1321,4]
+08-06 20:27:09.823  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,39]
+08-06 20:27:12.393  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,2]
+08-06 20:27:12.918  2398  2556 I sysui_multi_action: [319,527,322,524,325,87,757,761,758,7,759,2,806,com.maxmpz.audioplayer,871,com.maxmpz.audioplayer.standard_adaptive,904,com.miui.home,905,0,945,171,1320,11,1321,26]
+08-06 20:27:13.074  3442  3442 I sysui_multi_action: [757,803,799,panel_open,802,1]
+08-06 20:27:13.075  3442  3442 I sysui_multi_action: [757,1328,758,4,1326,37,1327,2,1329,0]
+08-06 20:27:13.181  2398  3567 I sysui_multi_action: [757,127,758,1]
+08-06 20:27:13.181  2398  3567 I sysui_multi_action: [757,804,799,note_load,801,4,802,1]
+08-06 20:27:13.208  2398  3567 I sysui_multi_action: [757,128,758,1,793,45289,794,0,795,897,796,2131296585,798,16,806,com.github.metacubex.clash.alpha,857,clash_status_channel,858,2,946,0|com.github.metacubex.clas-c00d0abc,947,0,1395,4,1500,897,1688,1]
+08-06 20:27:13.208  2398  3567 I sysui_multi_action: [757,804,799,note_freshness,801,897,802,1]
+08-06 20:27:13.213  2398  3567 I sysui_multi_action: [757,128,758,1,793,49238,794,0,795,49238,796,9363,798,17,806,com.xiaomi.misettings,857,channel_id_minor,858,4,947,0,1395,4,1500,44740,1688,1]
+08-06 20:27:13.213  2398  3567 I sysui_multi_action: [757,1501,758,1,793,49238,794,0,795,49238,796,9363,806,com.xiaomi.misettings,857,channel_id_minor,858,4,947,0,1500,0,1688,1]
+08-06 20:27:13.213  2398  3567 I sysui_multi_action: [757,804,799,note_interruptive,801,0,802,1]
+08-06 20:27:13.213  2398  3567 I sysui_multi_action: [757,804,799,note_freshness,801,49238,802,1]
+08-06 20:27:13.226  2398  3567 I sysui_multi_action: [757,128,758,1,793,50241,794,0,795,49735,796,1337,798,19,806,com.termux,857,termux_notification_channel,858,2,947,0,1395,4,1500,49735,1688,1,1745,2098068913]
+08-06 20:27:13.226  2398  3567 I sysui_multi_action: [757,804,799,note_freshness,801,49735,802,1]
+08-06 20:27:13.227  2398  3567 I sysui_multi_action: [757,128,758,1,793,21768,794,0,795,3404,796,256,798,0,806,com.omarea.vtools,857,scene-scheduler,858,2,947,0,1395,4,1500,3404,1688,1]
+08-06 20:27:13.227  2398  3567 I sysui_multi_action: [757,804,799,note_freshness,801,3404,802,1]
+08-06 20:27:14.870  2398  3703 I sysui_multi_action: [757,128,758,2,793,46954,794,1665,795,565,796,2131296585,798,16,806,com.github.metacubex.clash.alpha,857,clash_status_channel,858,2,946,0|com.github.metacubex.clas-c00d0abc,947,0,1395,4,1500,565,1688,1]
+08-06 20:27:14.870  2398  4257 I sysui_multi_action: [757,127,758,2]
+08-06 20:27:14.870  2398  3703 I sysui_multi_action: [757,128,758,2,793,50895,794,1657,795,50895,796,9363,798,17,806,com.xiaomi.misettings,857,channel_id_minor,858,4,947,0,1395,4,1500,1657,1688,1]
+08-06 20:27:14.871  2398  3703 I sysui_multi_action: [757,128,758,2,793,51899,794,1658,795,51393,796,1337,798,19,806,com.termux,857,termux_notification_channel,858,2,947,0,1395,4,1500,51393,1688,1,1745,2098068913]
+08-06 20:27:14.871  2398  3703 I sysui_multi_action: [757,128,758,2,793,23412,794,1644,795,1319,796,256,798,0,806,com.omarea.vtools,857,scene-scheduler,858,2,947,0,1395,4,1500,1319,1688,1]
+08-06 20:27:15.455  2398  2398 I sysui_multi_action: [757,1501,758,1,793,203,794,0,795,203,796,1,806,com.maxmpz.audioplayer,857,main-1,858,2,947,0,1500,0,1641,transport,1688,1,1745,1043716538]
+08-06 20:27:15.455  2398  2398 I sysui_multi_action: [757,804,799,note_interruptive,801,0,802,1]
+08-06 20:27:16.093  2398  2556 I sysui_multi_action: [319,28,322,64,325,91,757,761,758,9,759,5,806,com.miui.home,871,com.miui.home.launcher.Launcher,905,0,1320,9,1321,4]
+08-06 20:27:16.930  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,5]
+08-06 20:27:17.113  2398  2556 I sysui_multi_action: [319,21,321,30,322,170,325,92,757,761,758,9,759,2,806,com.termux,871,com.termux.app.TermuxActivity,904,com.miui.home,905,0,1320,4,1321,22]
+08-06 20:27:18.578  2398  2556 I sysui_multi_action: [319,25,322,60,325,94,757,761,758,9,759,5,806,com.miui.home,871,com.miui.home.launcher.Launcher,905,0,1320,9,1321,4]
+08-06 20:27:19.512  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,3]
+08-06 20:27:22.172  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,2]
+08-06 20:27:23.219  2398  2556 I sysui_multi_action: [319,24,321,114,322,1062,325,97,757,761,758,7,759,1,806,com.sinovatech.unicom.ui,871,com.sinovatech.unicom.basic.ui.activity.WelcomeClient,904,com.miui.home,905,0,945,198,1320,11,1321,4]
+08-06 20:27:25.375  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,3]
+08-06 20:27:28.569  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,4]
+08-06 20:27:54.597  2398  2601 I am_cpu  : [6476,1000,.location.fused,60309,10,20]
+08-06 20:27:54.597  2398  2601 I am_cpu  : [22138,10079,externalstorage,60294,830,810]
+08-06 20:27:57.083  2398  2556 I sysui_multi_action: [319,36,322,28,325,132,757,761,758,9,759,5,806,com.miui.home,871,com.miui.home.launcher.Launcher,905,0,1320,9,1321,4]
+08-06 20:27:58.171  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,29]
+08-06 20:27:58.299  2398  2556 I sysui_multi_action: [319,18,321,28,322,123,325,133,757,761,758,9,759,2,806,com.termux,871,com.termux.app.TermuxActivity,904,com.miui.home,905,0,1320,4,1321,22]
+08-06 20:27:59.884  2398  2556 I sysui_multi_action: [319,24,322,55,325,135,757,761,758,9,759,5,806,com.miui.home,871,com.miui.home.launcher.Launcher,905,0,1320,9,1321,4]
+08-06 20:28:01.482  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,3]
+08-06 20:28:01.717  2398  2556 I sysui_multi_action: [319,43,321,61,322,229,325,136,757,761,758,8,759,1,806,com.tencent.mobileqq,871,com.tencent.mobileqq.activity.SplashActivity,904,com.miui.home,905,0,1320,11,1321,9]
+08-06 20:28:15.993  2398  3611 I sysui_multi_action: [757,906,758,4,806,com.tencent.mobileqq,871,,908,com.google.android.gms,1452,0,1456,451620357]
+08-06 20:28:16.114  2398  2398 I sysui_multi_action: [757,907,758,10,806,com.tencent.mobileqq,871,,908,com.google.android.gms,909,-1,1454,1,1456,451620357]
+08-06 20:28:16.114  2398  2398 I sysui_multi_action: [757,919,758,4,806,com.tencent.mobileqq,871,,908,com.google.android.gms,1455,1,1456,451620357]
+08-06 20:28:25.491  2398  2398 I sysui_multi_action: [757,1501,758,1,793,205,794,0,795,205,796,887,806,com.miui.misound,857,misound_protect,858,3,946,misound_protect_autogroup,947,0,1500,0,1688,1]
+08-06 20:28:25.491  2398  2398 I sysui_multi_action: [757,804,799,note_interruptive,801,0,802,1]
+08-06 20:29:03.732  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,63]
+08-06 20:29:06.512  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,3]
+08-06 20:29:17.679  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,11]
+08-06 20:29:18.383  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,0]
+08-06 20:29:21.035  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,3]
+08-06 20:29:29.476  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,8]
+08-06 20:29:34.854  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,6]
+08-06 20:29:59.849  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,25]
+08-06 20:30:36.232  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,36]
+08-06 20:30:36.970  2398  2556 I sysui_multi_action: [319,32,322,106,325,292,757,761,758,9,759,5,806,com.miui.home,871,com.miui.home.launcher.Launcher,905,0,1320,9,1321,4]
+08-06 20:30:37.751  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,2]
+08-06 20:30:37.922  2398  2556 I sysui_multi_action: [319,21,321,34,322,161,325,293,757,761,758,9,759,2,806,com.termux,871,com.termux.app.TermuxActivity,904,com.miui.home,905,0,1320,4,1321,22]
+08-06 20:31:01.171  2398  2589 I am_cpu  : [1520,0,storaged,246905,10,0]
+08-06 20:31:01.171  2398  2589 I am_cpu  : [6476,1000,.location.fused,186581,10,30]
+08-06 20:31:32.530  2398  2398 I sysui_multi_action: [757,128,758,5,759,8,793,300058,794,0,795,300058,796,20055,806,com.milink.service,857,hide_foreground,858,2,946,0|com.milink.service|g:Aggr-f43d4b37,947,0,1500,299848,1688,1]
+08-06 20:32:37.697  2398  2556 I sysui_multi_action: [319,25,322,58,325,413,757,761,758,9,759,5,806,com.miui.home,871,com.miui.home.launcher.Launcher,905,0,1320,9,1321,4]
+08-06 20:32:40.323  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,122]
+08-06 20:32:40.410  2398  2556 I sysui_multi_action: [319,31,321,44,322,66,325,415,757,761,758,9,759,2,806,com.maxmpz.audioplayer,871,com.maxmpz.audioplayer.standard_adaptive,904,com.miui.home,905,0,1320,11,1321,26]
+08-06 20:32:41.478  2398  2556 I sysui_multi_action: [319,38,322,24,325,416,757,761,758,9,759,5,806,com.miui.home,871,com.miui.home.launcher.Launcher,905,0,1320,9,1321,4]
+08-06 20:32:42.703  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,3]
+08-06 20:32:44.901  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,2]
+08-06 20:32:46.157  3442  3442 I sysui_multi_action: [757,803,799,panel_open,802,1]
+08-06 20:32:46.157  3442  3442 I sysui_multi_action: [757,1328,758,4,1326,20,1327,6,1329,0]
+08-06 20:32:46.194  2398  3701 I sysui_multi_action: [757,127,758,1]
+08-06 20:32:46.194  2398  3701 I sysui_multi_action: [757,804,799,note_load,801,4,802,1]
+08-06 20:32:46.209  2398  4264 I sysui_multi_action: [757,128,758,1,793,378293,794,0,795,681,796,2131296585,798,17,806,com.github.metacubex.clash.alpha,857,clash_status_channel,858,2,946,0|com.github.metacubex.clas-c00d0abc,947,0,1395,4,1500,681,1688,1]
+08-06 20:32:46.209  2398  4264 I sysui_multi_action: [757,804,799,note_freshness,801,681,802,1]
+08-06 20:32:46.217  2398  4264 I sysui_multi_action: [757,128,758,1,793,382242,794,0,795,382242,796,9363,798,18,806,com.xiaomi.misettings,857,channel_id_minor,858,4,947,0,1395,4,1500,333004,1688,1]
+08-06 20:32:46.217  2398  4264 I sysui_multi_action: [757,1501,758,1,793,382242,794,0,795,382242,796,9363,806,com.xiaomi.misettings,857,channel_id_minor,858,4,947,0,1500,0,1688,1]
+08-06 20:32:46.217  2398  4264 I sysui_multi_action: [757,804,799,note_interruptive,801,0,802,1]
+08-06 20:32:46.217  2398  4264 I sysui_multi_action: [757,804,799,note_freshness,801,382242,802,1]
+08-06 20:32:46.217  2398  4264 I sysui_multi_action: [757,128,758,1,793,383245,794,0,795,382739,796,1337,798,20,806,com.termux,857,termux_notification_channel,858,2,947,0,1395,4,1500,382739,1688,1,1745,2098068913]
+08-06 20:32:46.217  2398  4264 I sysui_multi_action: [757,804,799,note_freshness,801,382739,802,1]
+08-06 20:32:46.221  2398  4264 I sysui_multi_action: [757,128,758,1,793,354762,794,0,795,3771,796,256,798,0,806,com.omarea.vtools,857,scene-scheduler,858,2,947,0,1395,4,1500,3771,1688,1]
+08-06 20:32:46.221  2398  4264 I sysui_multi_action: [757,804,799,note_freshness,801,3771,802,1]
+08-06 20:32:46.419  2398  2556 I sysui_multi_action: [319,40,321,60,322,1524,325,420,757,761,758,7,759,1,806,tv.danmaku.bili,871,tv.danmaku.bili.MainActivityV2,904,com.miui.home,905,0,945,187,1320,11,1321,9]
+08-06 20:32:47.360  2398  2590 I am_proc_start: [0,31953,10579,tv.danmaku.bili:download,content provider,{tv.danmaku.bili/tv.danmaku.bili.provider.StorageProvider}]
+08-06 20:32:47.814  2398  2488 I sysui_multi_action: [757,127,758,2]
+08-06 20:32:47.814  2398  2488 I sysui_multi_action: [757,128,758,2,793,379898,794,1605,795,283,796,2131296585,798,17,806,com.github.metacubex.clash.alpha,857,clash_status_channel,858,2,946,0|com.github.metacubex.clas-c00d0abc,947,0,1395,4,1500,283,1688,1]
+08-06 20:32:47.815  2398  2488 I sysui_multi_action: [757,128,758,2,793,383840,794,1598,795,383840,796,9363,798,18,806,com.xiaomi.misettings,857,channel_id_minor,858,4,947,0,1395,4,1500,1598,1688,1]
+08-06 20:32:47.818  2398  2488 I sysui_multi_action: [757,128,758,2,793,384846,794,1601,795,384340,796,1337,798,20,806,com.termux,857,termux_notification_channel,858,2,947,0,1395,4,1500,384340,1688,1,1745,2098068913]
+08-06 20:32:47.823  2398  2488 I sysui_multi_action: [757,128,758,2,793,356364,794,1602,795,1147,796,256,798,0,806,com.omarea.vtools,857,scene-scheduler,858,2,947,0,1395,4,1500,1147,1688,1]
+08-06 20:32:49.057 30494 31633 I dvm_lock_sample: [tv.danmaku.bili,0,Fresco#IO-1,843,BL,16,com.facebook.binaryresource.BinaryResource com.facebook.cache.disk.DiskStorageCache.insert(com.facebook.cache.common.CacheKey, com.facebook.cache.common.WriterCallback),-,53,void com.facebook.cache.disk.DiskStorageCache.maybeEvictFilesInCacheDir(),31749]
+08-06 20:32:49.058 30494 31754 I dvm_lock_sample: [tv.danmaku.bili,0,Fresco#IO-6,820,BL,16,com.facebook.binaryresource.BinaryResource com.facebook.cache.disk.DiskStorageCache.insert(com.facebook.cache.common.CacheKey, com.facebook.cache.common.WriterCallback),-,53,void com.facebook.cache.disk.DiskStorageCache.maybeEvictFilesInCacheDir(),31749]
+08-06 20:32:49.058 30494 31879 I dvm_lock_sample: [tv.danmaku.bili,0,Fresco#IO-7,786,BL,16,com.facebook.binaryresource.BinaryResource com.facebook.cache.disk.DiskStorageCache.insert(com.facebook.cache.common.CacheKey, com.facebook.cache.common.WriterCallback),-,53,void com.facebook.cache.disk.DiskStorageCache.maybeEvictFilesInCacheDir(),31749]
+08-06 20:32:49.058 30494 31711 I dvm_lock_sample: [tv.danmaku.bili,0,Fresco#IO-2,738,BL,16,com.facebook.binaryresource.BinaryResource com.facebook.cache.disk.DiskStorageCache.insert(com.facebook.cache.common.CacheKey, com.facebook.cache.common.WriterCallback),-,53,void com.facebook.cache.disk.DiskStorageCache.maybeEvictFilesInCacheDir(),31749]
+08-06 20:32:49.058 30494 31752 I dvm_lock_sample: [tv.danmaku.bili,0,Fresco#IO-5,817,BL,16,com.facebook.binaryresource.BinaryResource com.facebook.cache.disk.DiskStorageCache.insert(com.facebook.cache.common.CacheKey, com.facebook.cache.common.WriterCallback),-,53,void com.facebook.cache.disk.DiskStorageCache.maybeEvictFilesInCacheDir(),31749]
+08-06 20:32:49.059 30494 31722 I dvm_lock_sample: [tv.danmaku.bili,0,Fresco#IO-3,776,BL,16,com.facebook.binaryresource.BinaryResource com.facebook.cache.disk.DiskStorageCache.insert(com.facebook.cache.common.CacheKey, com.facebook.cache.common.WriterCallback),-,53,void com.facebook.cache.disk.DiskStorageCache.maybeEvictFilesInCacheDir(),31749]
+08-06 20:32:49.060 30494 31882 I dvm_lock_sample: [tv.danmaku.bili,0,Fresco#IO-8,746,BL,16,com.facebook.binaryresource.BinaryResource com.facebook.cache.disk.DiskStorageCache.insert(com.facebook.cache.common.CacheKey, com.facebook.cache.common.WriterCallback),-,21,com.facebook.binaryresource.BinaryResource com.facebook.cache.disk.DiskStorageCache.insert(com.facebook.cache.common.CacheKey, com.facebook.cache.common.WriterCallback),31749]
+08-06 20:32:49.574  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,5]
+08-06 20:32:50.720  2398  2398 I sysui_multi_action: [757,1501,758,1,793,204,794,0,795,204,796,2333,806,tv.danmaku.bili,857,bili_channel_default,858,3,947,0,1500,0,1641,transport,1688,1,1745,1043716538]
+08-06 20:32:50.720  2398  2398 I sysui_multi_action: [757,804,799,note_interruptive,801,0,802,1]
+08-06 20:33:46.119  2398  2556 I sysui_multi_action: [319,32,322,76,325,481,757,761,758,9,759,5,806,com.miui.home,871,com.miui.home.launcher.Launcher,905,0,1320,9,1321,4]
+08-06 20:33:47.581  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,58]
+08-06 20:33:47.759  2398  2556 I sysui_multi_action: [319,24,321,32,322,166,325,483,757,761,758,9,759,2,806,com.termux,871,com.termux.app.TermuxActivity,904,com.miui.home,905,0,1320,4,1321,22]
+08-06 20:33:49.602  2398  2556 I sysui_multi_action: [319,27,322,55,325,485,757,761,758,9,759,5,806,com.miui.home,871,com.miui.home.launcher.Launcher,905,0,1320,9,1321,4]
+08-06 20:33:50.516  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,3]
+08-06 20:33:55.728  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,5]
+08-06 20:33:58.156  2398  2556 I sysui_multi_action: [319,24,321,54,322,2427,325,491,757,761,758,7,759,1,806,com.coolapk.market,871,com.coolapk.market.view.main.MainActivity,904,com.miui.home,905,0,945,169,1320,11,1321,26]
+08-06 20:34:08.048  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,12]
+08-06 20:34:11.763  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,4]
+08-06 20:34:15.200  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,3]
+08-06 20:34:16.558  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,2]
+08-06 20:34:22.421  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,5]
+08-06 20:34:34.127  2398  2601 I am_cpu  : [6476,1000,.location.fused,212944,20,20]
+08-06 20:34:34.127  2398  2601 I am_cpu  : [22138,10079,externalstorage,399522,10,20]
+08-06 20:34:34.805  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,13]
+08-06 20:34:34.947  2398  4264 I sysui_multi_action: [757,906,758,4,806,com.coolapk.market,871,,908,com.google.android.gms,1452,0,1456,2142157095]
+08-06 20:34:35.019  2398  2398 I sysui_multi_action: [757,907,758,10,806,com.coolapk.market,871,,908,com.google.android.gms,909,-1,1454,1,1456,2142157095]
+08-06 20:34:35.019  2398  2398 I sysui_multi_action: [757,919,758,4,806,com.coolapk.market,871,,908,com.google.android.gms,1455,1,1456,2142157095]
+08-06 20:34:46.352  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,11]
+08-06 20:34:50.975  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,5]
+08-06 20:34:53.248  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,2]
+08-06 20:34:54.210  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,1]
+08-06 20:35:02.041  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,8]
+08-06 20:35:04.013  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,2]
+08-06 20:35:15.914  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,12]
+08-06 20:35:20.265  2398  2556 I sysui_multi_action: [757,803,799,window_time_0,802,4]
+
+
+=== Sui module timestamps ===
+CMD: su -c 'stat /data/adb/modules/zygisk-sui /data/adb/modules/zygisk-sui/sui.dex /data/adb/modules/zygisk-sui/sui.apk'
+EXIT: 0
+  File: /data/adb/modules/zygisk-sui
+  Size: 3452	 Blocks: 7	 IO Blocks: 512	 directory
+Device: fd39h/64825d	 Inode: 5038343	 Links: 5	 Device type: 0,0
+Access: (0755/drwxr-xr-x)	Uid: (    0/    root)	Gid: (    0/    root)
+Access: 2026-08-06 19:21:33.440000157 +0800
+Modify: 2026-08-06 20:25:48.784000000 +0800
+Change: 2026-08-06 20:25:48.784000000 +0800
+  File: /data/adb/modules/zygisk-sui/sui.dex
+  Size: 951632	 Blocks: 1864	 IO Blocks: 512	 regular file
+Device: fd39h/64825d	 Inode: 5038358	 Links: 1	 Device type: 0,0
+Access: (0600/-rw-------)	Uid: (    0/    root)	Gid: (    0/    root)
+Access: 2026-08-06 19:21:33.728000157 +0800
+Modify: 2026-08-06 19:21:33.748000157 +0800
+Change: 2026-08-06 19:21:33.804000157 +0800
+  File: /data/adb/modules/zygisk-sui/sui.apk
+  Size: 1145628	 Blocks: 2240	 IO Blocks: 512	 regular file
+Device: fd39h/64825d	 Inode: 5038359	 Links: 1	 Device type: 0,0
+Access: (0655/-rw-r-xr-x)	Uid: (    0/    root)	Gid: (    0/    root)
+Access: 2026-08-06 19:21:33.768000157 +0800
+Modify: 2026-08-06 19:21:33.788000157 +0800
+Change: 2026-08-06 20:26:03.036000001 +0800
+
+
+=== System uptime / boot time ===
+CMD: su -c 'uptime; cat /proc/stat | grep btime'
+EXIT: 0
+ 20:35:20 up 9 min,  0 users,  load average: 22.07, 18.22, 10.13
+btime 1786019144
+
+
+=== System date ===
+CMD: su -c 'date'
+EXIT: 0
+Thu Aug  6 20:35:20 CST 2026
+
+
+=== Termux date ===
+CMD: date
+EXIT: 0
+Thu Aug  6 20:35:20 CST 2026
+
+
+=== Sui log tail ===
+CMD: su -c 'cat /data/adb/sui/sui.log 2>/dev/null | tail -200'
+EXIT: 0
+[Wed Jul 29 21:21:59 CST 2026] Starting Sui native daemon...
+[Wed Jul 29 21:21:59 CST 2026] Sui daemon launched with PID 1023
+[Wed Jul 29 21:22:01 CST 2026] Sui daemon is not running, restarting...
+[Wed Jul 29 21:22:02 CST 2026] Sui daemon is running (pid: 1029)
+
+
+=== Magisk settings (sqlite) ===
+CMD: su -c 'magisk --sqlite "SELECT * FROM settings;" 2>/dev/null'
+EXIT: 0
+key=zygisk|value=1
+key=denylist|value=0
+key=mnt_ns|value=0
+key=bootloop|value=0
+
+
+=== Magisk db presence ===
+CMD: su -c 'cat /data/adb/magisk.db 2>/dev/null | head -c 0 && echo present || echo absent'
+EXIT: 0
+present
+
+
+=== Sui post-install.sh ===
+CMD: su -c 'ls -la /data/adb/sui/post-install.sh 2>/dev/null; cat /data/adb/sui/post-install.sh 2>/dev/null | head -100'
+EXIT: 0
+-rw------- 1 root root 720 2026-08-06 19:21 /data/adb/sui/post-install.sh
+#!/system/bin/sh
+# This line is required.
+SCRIPT_VERSION=2
+
+# Auto-deploy Sui rish (dual-backend) into Termux.
+copy_rish() {
+  APP_APPLICATION_ID=$1
+  APP_UID=$2
+  DEX_TARGET=$3/$4.dex
+  LIB_TARGET=$3/librish.so
+  SCRIPT_TARGET=$3/$4
+
+  cp "$RISH_DEX" "$DEX_TARGET"
+  cp "$RISH_LIB" "$LIB_TARGET"
+  cp "$RISH_SCRIPT" "$SCRIPT_TARGET"
+  chmod 600 "$DEX_TARGET" "$LIB_TARGET"
+  chmod 700 "$SCRIPT_TARGET"
+  chown "$APP_UID":"$APP_UID" "$DEX_TARGET" "$LIB_TARGET" "$SCRIPT_TARGET"
+  sed -i "s/%%%RISH_APPLICATION_ID%%%/$APP_APPLICATION_ID/g" "$SCRIPT_TARGET"
+}
+
+ui_print "- Copy rish to Termux"
+APP_UID=$(stat -c "%u" /data/user/0/com.termux)
+copy_rish com.termux "$APP_UID" /data/user/0/com.termux/files/usr/lib/rish rish
+
+
+=== Magisk modules_update directory ===
+CMD: su -c 'ls -la /data/adb/modules_update/ 2>/dev/null'
+EXIT: 1
+
+
+=== Sui module file hashes ===
+CMD: su -c 'sha256sum /data/adb/modules/zygisk-sui/sui.dex /data/adb/modules/zygisk-sui/sui.apk /data/adb/modules/zygisk-sui/librish.so 2>/dev/null'
+EXIT: 0
+12a3654341f59b047dbd1a9e57326b30a4471ec2d49044e6b42d068baa0918f6  /data/adb/modules/zygisk-sui/sui.dex
+6773e153e25f62bc8750982af1e1cb773d9a1b9e2567b6a5e0877c3775d9417f  /data/adb/modules/zygisk-sui/sui.apk
+1ac3bc4f8887d9d4caab79b9fcc7a1effc42173fc8f71c217d62880a75684f85  /data/adb/modules/zygisk-sui/librish.so

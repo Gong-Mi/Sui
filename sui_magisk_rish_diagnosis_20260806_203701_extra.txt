@@ -1,0 +1,921 @@
+
+=== All sui/zygiskd/shizuku processes (ps -A) ===
+CMD: su -c 'ps -A | grep -E "sui|zygiskd|shizuku"'
+EXIT: 0
+root          1016     1   14114736 115312 do_epoll_wait       0 S sui
+root          2415     1   10839396   3864 do_sys_poll         0 S zygiskd64
+
+
+=== Exact 'sui' named processes ===
+CMD: su -c 'ps -A | grep -w sui'
+EXIT: 0
+root          1016     1   14114736 115312 do_epoll_wait       0 S sui
+
+
+=== Exact 'zygiskd' named processes ===
+CMD: su -c 'ps -A | grep -w zygiskd'
+EXIT: 1
+
+
+=== Sui daemon details and FDs ===
+CMD: su -c 'for p in $(pidof sui); do echo "=== sui PID $p ==="; cat /proc/$p/cmdline 2>/dev/null | tr "\0" " "; echo; cat /proc/$p/status 2>/dev/null | head -30; echo "--- open fds ---"; ls -la /proc/$p/fd 2>/dev/null | head -50; echo "--- maps grep storage/fuse/emulated ---"; grep -E "storage|fuse|emulated|vold|media" /proc/$p/maps 2>/dev/null | head -30; done'
+EXIT: 0
+=== sui PID 1016 ===
+sui                                                                                                                                                                                                                           
+Name:	main
+Umask:	0000
+State:	S (sleeping)
+Tgid:	1016
+Ngid:	0
+Pid:	1016
+PPid:	1
+TracerPid:	0
+Uid:	0	0	0	0
+Gid:	0	0	0	0
+FDSize:	512
+Groups:	 
+VmPeak:	14181552 kB
+VmSize:	14114736 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	  174324 kB
+VmRSS:	  115312 kB
+RssAnon:	    3308 kB
+RssFile:	  111076 kB
+RssShmem:	     928 kB
+VmData:	 1717584 kB
+VmStk:	    8192 kB
+VmExe:	       8 kB
+VmLib:	   89888 kB
+VmPTE:	    1056 kB
+VmSwap:	   36832 kB
+CoreDumping:	0
+THP_enabled:	1
+Threads:	11
+--- open fds ---
+total 0
+dr-x------ 2 root root  0 2026-08-06 20:37 .
+dr-xr-xr-x 9 root root  0 2026-08-06 20:37 ..
+lrwx------ 1 root root 64 2026-08-06 20:37 0 -> /dev/null
+lrwx------ 1 root root 64 2026-08-06 20:37 1 -> /dev/null
+lr-x------ 1 root root 64 2026-08-06 20:37 10 -> /apex/com.android.art/javalib/bouncycastle.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 11 -> /apex/com.android.art/javalib/apache-xml.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 12 -> /system/framework/framework.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 13 -> /system/framework/framework-graphics.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 14 -> /system/framework/framework-location.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 15 -> /system/framework/ext.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 16 -> /system/framework/telephony-common.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 17 -> /system/framework/voip-common.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 18 -> /system/framework/ims-common.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 19 -> /system/framework/framework-ondeviceintelligence-platform.jar
+lrwx------ 1 root root 64 2026-08-06 20:37 2 -> /dev/null
+lr-x------ 1 root root 64 2026-08-06 20:37 20 -> /system/framework/framework-nfc.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 21 -> /system_ext/framework/miui-framework.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 22 -> /system_ext/framework/miui-telephony-common.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 23 -> /system_ext/framework/miui-enterprise-sdk.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 24 -> /system_ext/framework/mediatek-telephony-base.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 25 -> /system_ext/framework/mediatek-telephony-common.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 26 -> /system_ext/framework/mediatek-carrier-config-manager.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 27 -> /system_ext/framework/mediatek-common.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 28 -> /system_ext/framework/mediatek-framework.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 29 -> /system_ext/framework/mediatek-ims-common.jar
+lrwx------ 1 root root 64 2026-08-06 20:37 3 -> socket:[59360]
+lr-x------ 1 root root 64 2026-08-06 20:37 30 -> /system_ext/framework/mediatek-ims-base.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 31 -> /system_ext/framework/mediatek-telecom-common.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 32 -> /system_ext/framework/xiaomi-framework.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 33 -> /system_ext/framework/xm-telephony-common.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 34 -> /system_ext/framework/xm-telephony-base.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 35 -> /system_ext/framework/vendor.xiaomi.hardware.videoservice-V9-java.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 36 -> /apex/com.android.i18n/javalib/core-icu4j.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 37 -> /apex/com.android.adservices/javalib/framework-adservices.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 38 -> /apex/com.android.adservices/javalib/framework-sdksandbox.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 39 -> /apex/com.android.appsearch/javalib/framework-appsearch.jar
+l-wx------ 1 root root 64 2026-08-06 20:37 4 -> /sys/kernel/tracing/trace_marker
+lr-x------ 1 root root 64 2026-08-06 20:37 40 -> /apex/com.android.bt/javalib/framework-bluetooth.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 41 -> /apex/com.android.configinfrastructure/javalib/framework-configinfrastructure.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 42 -> /apex/com.android.conscrypt/javalib/conscrypt.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 43 -> /apex/com.android.crashrecovery/javalib/framework-crashrecovery.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 44 -> /apex/com.android.devicelock/javalib/framework-devicelock.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 45 -> /apex/com.android.healthfitness/javalib/framework-healthfitness.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 46 -> /apex/com.android.ipsec/javalib/android.net.ipsec.ike.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 47 -> /apex/com.android.media/javalib/updatable-media.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 48 -> /apex/com.android.mediaprovider/javalib/framework-mediaprovider.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 49 -> /apex/com.android.mediaprovider/javalib/framework-pdf.jar
+lr-x------ 1 root root 64 2026-08-06 20:37 5 -> pipe:[61070]
+lr-x------ 1 root root 64 2026-08-06 20:37 50 -> /apex/com.android.mediaprovider/javalib/framework-pdf-v.jar
+--- maps grep storage/fuse/emulated ---
+71074000-71094000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-mediatek-telephony-base.art]
+71094000-71138000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-mediatek-telephony-common.art]
+71138000-7113c000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-mediatek-carrier-config-manager.art]
+7113c000-71150000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-mediatek-common.art]
+71150000-71190000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-mediatek-framework.art]
+71190000-71198000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-mediatek-ims-common.art]
+71198000-711a8000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-mediatek-ims-base.art]
+711a8000-711b0000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-mediatek-telecom-common.art]
+7260c000-72610000 r--p 00000000 fd:09 10085245                           /system/framework/arm64/boot-mediatek-telephony-base.oat
+72610000-72611000 r-xp 00004000 fd:09 10085245                           /system/framework/arm64/boot-mediatek-telephony-base.oat
+72614000-72615000 rw-p 00000000 fd:09 12301374                           /system/framework/boot-mediatek-telephony-base.vdex
+72618000-72624000 r--p 00000000 fd:09 10083427                           /system/framework/arm64/boot-mediatek-telephony-common.oat
+72624000-72647000 r-xp 0000c000 fd:09 10083427                           /system/framework/arm64/boot-mediatek-telephony-common.oat
+7264c000-72651000 rw-p 00000000 fd:09 10090621                           /system/framework/boot-mediatek-telephony-common.vdex
+72654000-72658000 r--p 00000000 fd:09 10084850                           /system/framework/arm64/boot-mediatek-carrier-config-manager.oat
+72658000-72659000 rw-p 00000000 fd:09 10091252                           /system/framework/boot-mediatek-carrier-config-manager.vdex
+7265c000-72660000 r--p 00000000 fd:09 10080599                           /system/framework/arm64/boot-mediatek-common.oat
+72660000-72662000 r-xp 00004000 fd:09 10080599                           /system/framework/arm64/boot-mediatek-common.oat
+72664000-72665000 rw-p 00000000 fd:09 12301514                           /system/framework/boot-mediatek-common.vdex
+72668000-7266c000 r--p 00000000 fd:09 10080616                           /system/framework/arm64/boot-mediatek-framework.oat
+7266c000-72675000 r-xp 00004000 fd:09 10080616                           /system/framework/arm64/boot-mediatek-framework.oat
+7267c000-7267e000 rw-p 00000000 fd:09 14891776                           /system/framework/boot-mediatek-framework.vdex
+72680000-72684000 r--p 00000000 fd:09 10085212                           /system/framework/arm64/boot-mediatek-ims-common.oat
+72684000-72687000 r-xp 00004000 fd:09 10085212                           /system/framework/arm64/boot-mediatek-ims-common.oat
+72688000-72689000 rw-p 00000000 fd:09 10086623                           /system/framework/boot-mediatek-ims-common.vdex
+7268c000-72690000 r--p 00000000 fd:09 10080633                           /system/framework/arm64/boot-mediatek-ims-base.oat
+72690000-72692000 r-xp 00004000 fd:09 10080633                           /system/framework/arm64/boot-mediatek-ims-base.oat
+72694000-72695000 rw-p 00000000 fd:09 10089951                           /system/framework/boot-mediatek-ims-base.vdex
+72698000-7269c000 r--p 00000000 fd:09 10085228                           /system/framework/arm64/boot-mediatek-telecom-common.oat
+7269c000-7269d000 rw-p 00000000 fd:09 10089183                           /system/framework/boot-mediatek-telecom-common.vdex
+
+
+=== zygiskd details ===
+CMD: su -c 'for p in $(pidof zygiskd64 zygiskd32); do echo "=== zygiskd PID $p ==="; cat /proc/$p/cmdline 2>/dev/null | tr "\0" " "; echo; cat /proc/$p/status 2>/dev/null | head -20; done'
+EXIT: 0
+=== zygiskd PID 2415 ===
+zygiskd64            
+Name:	zygiskd64
+Umask:	0000
+State:	S (sleeping)
+Tgid:	2415
+Ngid:	0
+Pid:	2415
+PPid:	1
+TracerPid:	0
+Uid:	0	0	0	0
+Gid:	0	0	0	0
+FDSize:	64
+Groups:	 
+VmPeak:	10839396 kB
+VmSize:	10839396 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	    6080 kB
+VmRSS:	    3864 kB
+RssAnon:	     160 kB
+RssFile:	    2088 kB
+
+
+=== Binder debugfs locations ===
+CMD: su -c 'ls -la /proc/binder* 2>/dev/null; ls -la /sys/kernel/debug/binder/ 2>/dev/null | head -30'
+EXIT: 0
+
+
+=== Binder state from debugfs ===
+CMD: su -c 'cat /sys/kernel/debug/binder/state 2>/dev/null | head -100'
+EXIT: 0
+
+
+=== Binder stats from debugfs ===
+CMD: su -c 'cat /sys/kernel/debug/binder/stats 2>/dev/null | head -100'
+EXIT: 0
+
+
+=== Detailed FUSE/vold/storage log tail 500 ===
+CMD: su -c 'logcat -d -t 10000 | grep -iE "vold|fuse|storage|emulated|remount|mount|sdcardfs|handle|invalidate|abort|restart|storage" | tail -500'
+EXIT: 0
+08-06 20:36:56.032  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:171, period8333333
+08-06 20:36:56.047  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:56.047  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:56.104  3442  3740 D MiuiFreeformModeGestureHandler: start handle MotionEvents:(871.0,1508.0)
+08-06 20:36:56.104  3442  3740 D MiuiFreeformModeGestureHandler: handleMotionEvents mActiveMiuiFreeformTask null x: 871.0 y: 1508.0 current miuiFreeformModeTaskInfo: 
+08-06 20:36:56.105  3442  3740 D MulWinSwitchEventHandler: dispatchToFullOrSplitDecorationDot: touchedTaskId=-1
+08-06 20:36:56.105  3442  3740 D MulWinSwitchEventHandler: handleReceivedMotionEvent: mTouchedBottomTaskId=-1
+08-06 20:36:56.105  2398  3033 D SchedBoost: handleSceneBoost type: 17, active :true
+08-06 20:36:56.123  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :false
+08-06 20:36:56.123  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :true
+08-06 20:36:56.173  2398  3306 D GnssDfsManagerImpl: handleSvStatus: svTrackingCount = 0 svHasAuxCount = 24 svCount = 24
+08-06 20:36:56.221  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :true
+08-06 20:36:56.221  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :false
+08-06 20:36:56.232  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:56.232  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:56.232  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:56.232  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:56.239  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:179, period8333333
+08-06 20:36:56.254  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:56.254  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:56.282  2398  2931 D WakeupController: Attempted to handleScanResults while not enabled
+08-06 20:36:56.439  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:56.439  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:56.440  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:56.440  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:56.446  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9505f0, fence:161, period8333333
+08-06 20:36:56.462  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:56.462  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:56.480  3135  9384 I NearbyPresence: (REDACTED) %s: Rotate BLE mac address by restarting the advertisement!
+08-06 20:36:56.630  2398  3306 D GnssDfsManagerImpl: handleSvStatus: svTrackingCount = 0 svHasAuxCount = 28 svCount = 28
+08-06 20:36:56.647  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:56.647  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:56.648  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:56.648  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:56.654  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:161, period8333333
+08-06 20:36:56.670  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:56.670  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:56.691  3442  3740 D MiuiFreeformModeGestureHandler: start handle MotionEvents:(1022.0,1308.0)
+08-06 20:36:56.691  3442  3740 D MiuiFreeformModeGestureHandler: handleMotionEvents mActiveMiuiFreeformTask null x: 1022.0 y: 1308.0 current miuiFreeformModeTaskInfo: 
+08-06 20:36:56.691  3442  3740 D MulWinSwitchEventHandler: dispatchToFullOrSplitDecorationDot: touchedTaskId=-1
+08-06 20:36:56.691  3442  3740 D MulWinSwitchEventHandler: handleReceivedMotionEvent: mTouchedBottomTaskId=-1
+08-06 20:36:56.692  2398  3033 D SchedBoost: handleSceneBoost type: 17, active :true
+08-06 20:36:56.692  2398  3033 W SchedBoostThread: handleThreadSched, mode: 17 for tid: 22785 is still work
+08-06 20:36:56.692  2398  3033 W SchedBoostThread: handleThreadSched, mode: 17 for tid: 28714 is still work
+08-06 20:36:56.732  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :false
+08-06 20:36:56.732  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :true
+08-06 20:36:56.840  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :true
+08-06 20:36:56.840  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :false
+08-06 20:36:56.848  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:56.848  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:56.848  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:56.848  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:56.855  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:180, period8333333
+08-06 20:36:56.869  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:56.869  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:56.917  3330  3330 D HidDeviceService: handleMessage(): msg.what=8
+08-06 20:36:56.942  3330  3330 D HidDeviceService: handleMessage(): msg.what=8
+08-06 20:36:56.977  3442  3740 D MiuiFreeformModeGestureHandler: start handle MotionEvents:(805.0,1846.0)
+08-06 20:36:56.977  3442  3740 D MiuiFreeformModeGestureHandler: handleMotionEvents mActiveMiuiFreeformTask null x: 805.0 y: 1846.0 current miuiFreeformModeTaskInfo: 
+08-06 20:36:56.978  3442  3740 D MulWinSwitchEventHandler: dispatchToFullOrSplitDecorationDot: touchedTaskId=-1
+08-06 20:36:56.978  3442  3740 D MulWinSwitchEventHandler: handleReceivedMotionEvent: mTouchedBottomTaskId=-1
+08-06 20:36:56.978  2398  3033 D SchedBoost: handleSceneBoost type: 17, active :true
+08-06 20:36:56.978  2398  3033 W SchedBoostThread: handleThreadSched, mode: 17 for tid: 22785 is still work
+08-06 20:36:56.979  2398  3033 W SchedBoostThread: handleThreadSched, mode: 17 for tid: 28714 is still work
+08-06 20:36:57.054  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:57.054  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:57.055  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:57.055  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:57.063  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9505f0, fence:185, period8333333
+08-06 20:36:57.077  2398  3306 D GnssDfsManagerImpl: handleSvStatus: svTrackingCount = 0 svHasAuxCount = 28 svCount = 28
+08-06 20:36:57.078  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:57.078  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:57.255  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:57.255  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:57.256  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:57.256  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:57.262  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:180, period8333333
+08-06 20:36:57.276  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:57.276  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:57.470  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:57.471  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:57.473  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:57.473  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:57.477  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:170, period8333333
+08-06 20:36:57.493  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:57.493  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:57.544  3442  3740 D MiuiFreeformModeGestureHandler: start handle MotionEvents:(878.0,1488.0)
+08-06 20:36:57.544  3442  3740 D MiuiFreeformModeGestureHandler: handleMotionEvents mActiveMiuiFreeformTask null x: 878.0 y: 1488.0 current miuiFreeformModeTaskInfo: 
+08-06 20:36:57.544  3442  3740 D MulWinSwitchEventHandler: dispatchToFullOrSplitDecorationDot: touchedTaskId=-1
+08-06 20:36:57.544  3442  3740 D MulWinSwitchEventHandler: handleReceivedMotionEvent: mTouchedBottomTaskId=-1
+08-06 20:36:57.544  2398  3033 D SchedBoost: handleSceneBoost type: 17, active :true
+08-06 20:36:57.588  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :false
+08-06 20:36:57.589  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :true
+08-06 20:36:57.618  2398  3306 D GnssDfsManagerImpl: handleSvStatus: svTrackingCount = 0 svHasAuxCount = 28 svCount = 28
+08-06 20:36:57.624  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :true
+08-06 20:36:57.625  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :false
+08-06 20:36:57.633 22785 23113 W System.err: 	at android.os.Handler.handleCallback(Handler.java:1029)
+08-06 20:36:57.633 22785 23113 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:107)
+08-06 20:36:57.633 22785 23113 W System.err: 	at android.os.HandlerThread.run(HandlerThread.java:85)
+08-06 20:36:57.633 22785 23113 W System.err: 	at com.tencent.thread.monitor.plugin.proxy.BaseHandlerThread.run(Unknown Source:15)
+08-06 20:36:57.678  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:57.679  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:57.679  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:57.679  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:57.685  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9505f0, fence:191, period8333333
+08-06 20:36:57.700  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:57.700  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:57.884  4419  4600 D MiuiAirPodsFastConnectHelper_Plugin: handleDeviceFound dataStr: 07190127200B778F100005B3E79E118A4E7824D5902D14D817FE9E07190127200B778F100005B3E79E118A4E7824D5902D14D817FE9E
+08-06 20:36:57.887  2398  3127 I NetworkBoostStatusManager: handle: 107
+08-06 20:36:57.893  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:57.893  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:57.893  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:57.893  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:57.901  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:170, period8333333
+08-06 20:36:57.905  3330  3812 I bt_stack: [INFO:bqr_main.cc(111)] PrintBqrLinkQualityEvtWithoutVendor: connection_handle 52
+08-06 20:36:57.905  3330  3812 W bluetooth: [btif_bqr.cc(945)] AddLinkQualityEventToQueue: Monitoring, Handle: 0x0034, Address: 04:34:c3:6e:9d:39, POLL, Central, PwLv: 1, RSSI: -54, SNR: 0, UnusedCh: 38, UnidealCh: 79, ReTx: 0, NoRX: 0, NAK: 0, FlowOff: 0, OverFlow: 0, UndFlow: 0
+08-06 20:36:57.905  3330  3812 I bt_stack: [INFO:bqr_main.cc(111)] PrintBqrLinkQualityEvtWithoutVendor: connection_handle 51
+08-06 20:36:57.905  3330  4203 I BluetoothQualityReportNativeInterface:     mQualityReportId: Quality monitor(0x01), mPacketType: TYPE_POLL(0x03), mConnectionHandle: 0x0034, mConnectionRole: 0(0), mTxPowerLevel: 1, mRssi: -54, mSnr: 0, mUnusedAfhChannelCount: 38,
+08-06 20:36:57.905  3330  3812 W bluetooth: [btif_bqr.cc(945)] AddLinkQualityEventToQueue: Monitoring, Handle: 0x0033, Address: 74:77:86:32:b0:ee, POLL, Central, PwLv: -7, RSSI: -49, SNR: 0, UnusedCh: 29, UnidealCh: 79, ReTx: 13, NoRX: 12, NAK: 0, FlowOff: 0, OverFlow: 0, UndFlow: 0
+08-06 20:36:57.906  3330  4203 I BluetoothQualityReportNativeInterface:     mQualityReportId: Quality monitor(0x01), mPacketType: TYPE_POLL(0x03), mConnectionHandle: 0x0033, mConnectionRole: 0(0), mTxPowerLevel: 249, mRssi: -49, mSnr: 0, mUnusedAfhChannelCount: 29,
+08-06 20:36:57.916  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:57.916  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:57.926  2398  2570 D MediaProjectionManagerServiceStubImpl: handleForegroundServicesChanged
+08-06 20:36:57.927  3330  3330 D HidDeviceService: handleMessage(): msg.what=8
+08-06 20:36:57.938  6461  8866 I NotifySyncService_6461_8866: handle MSG_NOTIFY_REMOVE size = 1
+08-06 20:36:58.095  2398  3306 D GnssDfsManagerImpl: handleSvStatus: svTrackingCount = 0 svHasAuxCount = 28 svCount = 28
+08-06 20:36:58.102  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:58.102  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.103  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:58.103  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:58.108  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:170, period8333333
+08-06 20:36:58.124  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:58.124  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:58.171  3442  3740 D MiuiFreeformModeGestureHandler: start handle MotionEvents:(873.0,1801.0)
+08-06 20:36:58.172  3442  3740 D MiuiFreeformModeGestureHandler: handleMotionEvents mActiveMiuiFreeformTask null x: 873.0 y: 1801.0 current miuiFreeformModeTaskInfo: 
+08-06 20:36:58.172  3442  3740 D MulWinSwitchEventHandler: dispatchToFullOrSplitDecorationDot: touchedTaskId=-1
+08-06 20:36:58.172  3442  3740 D MulWinSwitchEventHandler: handleReceivedMotionEvent: mTouchedBottomTaskId=-1
+08-06 20:36:58.173  2398  3033 D SchedBoost: handleSceneBoost type: 17, active :true
+08-06 20:36:58.173  2398  3033 W SchedBoostThread: handleThreadSched, mode: 17 for tid: 22785 is still work
+08-06 20:36:58.173  2398  3033 W SchedBoostThread: handleThreadSched, mode: 17 for tid: 28714 is still work
+08-06 20:36:58.189  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.189  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.189  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.189  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.200  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9505f0, fence:191, period8333333
+08-06 20:36:58.201  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.201  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.202  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :false
+08-06 20:36:58.203  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :true
+08-06 20:36:58.221  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.221  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.222  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.222  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.227  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9527b0, fence:179, period8333333
+08-06 20:36:58.229  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.229  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.249  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.250  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.251  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.251  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.251  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9520f0, fence:189, period8333333
+08-06 20:36:58.254  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.254  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.274  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.274  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.275  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.275  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.275  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9505f0, fence:180, period8333333
+08-06 20:36:58.276  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.276  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.282  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :true
+08-06 20:36:58.283  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :false
+08-06 20:36:58.296  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.297  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.297  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.297  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.300  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9527b0, fence:189, period8333333
+08-06 20:36:58.301  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.301  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.309  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:58.309  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.310  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:58.310  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:58.317  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:193, period8333333
+08-06 20:36:58.321  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.321  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, reject diff client, client(2),             m_client_handle(1)  
+08-06 20:36:58.332  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:58.332  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:58.342  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.342  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.343  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.343  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.351  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9505f0, fence:193, period8333333
+08-06 20:36:58.352  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.352  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.373  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.373  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.373  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.373  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.376  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9527b0, fence:180, period8333333
+08-06 20:36:58.376  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.377  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.398  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.398  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.399  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.399  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.401  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9520f0, fence:189, period8333333
+08-06 20:36:58.402  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.402  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.423  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.423  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.424  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.424  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.425  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9505f0, fence:180, period8333333
+08-06 20:36:58.426  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.426  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.446  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.446  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.446  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.447  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.450  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9527b0, fence:189, period8333333
+08-06 20:36:58.452  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.452  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.473  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.473  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.474  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.474  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.475  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9520f0, fence:180, period8333333
+08-06 20:36:58.477  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.477  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.497  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.497  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.498  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 2
+08-06 20:36:58.498  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.500  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:2, buffer:0xb40000784c9505f0, fence:189, period8333333
+08-06 20:36:58.502  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 2
+08-06 20:36:58.502  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(2),                 m_client_handle(2)  
+08-06 20:36:58.510  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:58.510  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.511  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:58.511  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:58.517  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:192, period8333333
+08-06 20:36:58.532  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:58.532  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:58.624  2398  3306 D GnssDfsManagerImpl: handleSvStatus: svTrackingCount = 0 svHasAuxCount = 18 svCount = 18
+08-06 20:36:58.700  3442  3740 D MiuiFreeformModeGestureHandler: start handle MotionEvents:(909.0,1560.0)
+08-06 20:36:58.700  3442  3740 D MiuiFreeformModeGestureHandler: handleMotionEvents mActiveMiuiFreeformTask null x: 909.0 y: 1560.0 current miuiFreeformModeTaskInfo: 
+08-06 20:36:58.700  3442  3740 D MulWinSwitchEventHandler: dispatchToFullOrSplitDecorationDot: touchedTaskId=-1
+08-06 20:36:58.700  3442  3740 D MulWinSwitchEventHandler: handleReceivedMotionEvent: mTouchedBottomTaskId=-1
+08-06 20:36:58.701  2398  3033 D SchedBoost: handleSceneBoost type: 17, active :true
+08-06 20:36:58.718  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:58.718  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.718  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:58.718  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:58.725  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:180, period8333333
+08-06 20:36:58.740  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:58.741  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:58.769  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(17), client_handle: 0
+08-06 20:36:58.881  1296  1296 I SurfaceFlinger: onHandleDestroyed: layerId=1055, name=WindowToken{f1d2154 type=2005 android.os.Binder@e41e8a7}-topChild=null#1055
+08-06 20:36:58.924  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:58.924  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:58.925  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:58.925  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:58.932  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9505f0, fence:182, period8333333
+08-06 20:36:58.940  3423  5615 W System.err: 	at android.os.Handler.handleCallback(Handler.java:1029)
+08-06 20:36:58.940  3423  5615 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:107)
+08-06 20:36:58.940  3423  5615 W System.err: 	at android.os.HandlerThread.run(HandlerThread.java:85)
+08-06 20:36:58.947  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:58.947  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:59.092  2398  3306 D GnssDfsManagerImpl: handleSvStatus: svTrackingCount = 1 svHasAuxCount = 28 svCount = 28
+08-06 20:36:59.124  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:59.124  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:59.125  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:59.125  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:59.131  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:170, period8333333
+08-06 20:36:59.147  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:59.147  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:59.230  3442  3740 D MiuiFreeformModeGestureHandler: start handle MotionEvents:(1027.0,1254.0)
+08-06 20:36:59.230  3442  3740 D MiuiFreeformModeGestureHandler: handleMotionEvents mActiveMiuiFreeformTask null x: 1027.0 y: 1254.0 current miuiFreeformModeTaskInfo: 
+08-06 20:36:59.230  3442  3740 D MulWinSwitchEventHandler: dispatchToFullOrSplitDecorationDot: touchedTaskId=-1
+08-06 20:36:59.230  3442  3740 D MulWinSwitchEventHandler: handleReceivedMotionEvent: mTouchedBottomTaskId=-1
+08-06 20:36:59.231  2398  3033 D SchedBoost: handleSceneBoost type: 17, active :true
+08-06 20:36:59.231  2398  3033 W SchedBoostThread: handleThreadSched, mode: 17 for tid: 22785 is still work
+08-06 20:36:59.231  2398  3033 W SchedBoostThread: handleThreadSched, mode: 17 for tid: 28714 is still work
+08-06 20:36:59.257  6939  7671 I AiCrEngine_GeekResultHandler: handleGeekEvent event=112, geekSwitch=true
+08-06 20:36:59.257  6939  7671 I AiCrEngine_GeekResultHandler: event=112 handleGeekScene jsonData={"result":12012}
+08-06 20:36:59.333  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:59.333  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:59.333  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:59.333  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:59.337 22785 23113 W System.err: 	at android.os.Handler.handleCallback(Handler.java:1029)
+08-06 20:36:59.337 22785 23113 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:107)
+08-06 20:36:59.337 22785 23113 W System.err: 	at android.os.HandlerThread.run(HandlerThread.java:85)
+08-06 20:36:59.337 22785 23113 W System.err: 	at com.tencent.thread.monitor.plugin.proxy.BaseHandlerThread.run(Unknown Source:15)
+08-06 20:36:59.339  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:191, period8333333
+08-06 20:36:59.350 22785 10510 D QCoroutine_Log: launchBlock:TroopAIOTitleIconHelper_handleTroopHonorRequest
+08-06 20:36:59.354  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:59.354  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:59.358 22785 22785 D QCoroutine_Log: asyncBlock:TroopAIOTitleIconHelper_handleTroopHonorRequest
+08-06 20:36:59.358 22785 22785 D QCoroutine_Log: onRunnableFinish type:e, name:TroopAIOTitleIconHelper_handleTroopHonorRequest,allTime:7,runTime:0,blockTime:0
+08-06 20:36:59.359 22785 25730 D QCoroutine_Log: onRunnableFinish type:f, name:TroopAIOTitleIconHelper_handleTroopHonorRequest,allTime:10,runTime:8,blockTime:8
+08-06 20:36:59.540  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:59.540  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:59.541  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:59.541  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:59.547  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9505f0, fence:170, period8333333
+08-06 20:36:59.562  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:59.562  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:59.756  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:59.757  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:59.757  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:59.757  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:59.764  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:171, period8333333
+08-06 20:36:59.779  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:59.779  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:59.800  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(17), client_handle: 0
+08-06 20:36:59.833  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(17), client_handle: 0
+08-06 20:36:59.867  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(17), client_handle: 0
+08-06 20:36:59.900  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(17), client_handle: 0
+08-06 20:36:59.925  3330  3812 I bt_stack: [INFO:bqr_main.cc(111)] PrintBqrLinkQualityEvtWithoutVendor: connection_handle 52
+08-06 20:36:59.925  3330  3812 W bluetooth: [btif_bqr.cc(945)] AddLinkQualityEventToQueue: Monitoring, Handle: 0x0034, Address: 04:34:c3:6e:9d:39, POLL, Central, PwLv: 1, RSSI: -54, SNR: 0, UnusedCh: 38, UnidealCh: 79, ReTx: 0, NoRX: 0, NAK: 0, FlowOff: 0, OverFlow: 0, UndFlow: 0
+08-06 20:36:59.925  3330  3812 I bt_stack: [INFO:bqr_main.cc(111)] PrintBqrLinkQualityEvtWithoutVendor: connection_handle 51
+08-06 20:36:59.926  3330  3812 W bluetooth: [btif_bqr.cc(945)] AddLinkQualityEventToQueue: Monitoring, Handle: 0x0033, Address: 74:77:86:32:b0:ee, POLL, Central, PwLv: -7, RSSI: -50, SNR: 0, UnusedCh: 29, UnidealCh: 79, ReTx: 2, NoRX: 2, NAK: 0, FlowOff: 0, OverFlow: 0, UndFlow: 0
+08-06 20:36:59.926  3330  4203 I BluetoothQualityReportNativeInterface:     mQualityReportId: Quality monitor(0x01), mPacketType: TYPE_POLL(0x03), mConnectionHandle: 0x0034, mConnectionRole: 0(0), mTxPowerLevel: 1, mRssi: -54, mSnr: 0, mUnusedAfhChannelCount: 38,
+08-06 20:36:59.927  3330  4203 I BluetoothQualityReportNativeInterface:     mQualityReportId: Quality monitor(0x01), mPacketType: TYPE_POLL(0x03), mConnectionHandle: 0x0033, mConnectionRole: 0(0), mTxPowerLevel: 249, mRssi: -50, mSnr: 0, mUnusedAfhChannelCount: 29,
+08-06 20:36:59.933  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(17), client_handle: 0
+08-06 20:36:59.965  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:59.965  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:36:59.966  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:36:59.966  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:36:59.972  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:176, period8333333
+08-06 20:36:59.988  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:36:59.988  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:00.065  3442  3740 D MiuiFreeformModeGestureHandler: start handle MotionEvents:(948.0,1365.0)
+08-06 20:37:00.065  3442  3740 D MiuiFreeformModeGestureHandler: handleMotionEvents mActiveMiuiFreeformTask null x: 948.0 y: 1365.0 current miuiFreeformModeTaskInfo: 
+08-06 20:37:00.066  3442  3740 D MulWinSwitchEventHandler: dispatchToFullOrSplitDecorationDot: touchedTaskId=-1
+08-06 20:37:00.066  3442  3740 D MulWinSwitchEventHandler: handleReceivedMotionEvent: mTouchedBottomTaskId=-1
+08-06 20:37:00.066  2398  3033 D SchedBoost: handleSceneBoost type: 17, active :true
+08-06 20:37:00.108  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(17), client_handle: 0
+08-06 20:37:00.119  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :false
+08-06 20:37:00.120  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :true
+08-06 20:37:00.133  2398  3306 D GnssDfsManagerImpl: handleSvStatus: svTrackingCount = 3 svHasAuxCount = 28 svCount = 28
+08-06 20:37:00.175  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:00.175  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:00.176  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:00.176  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:00.176  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :true
+08-06 20:37:00.177  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :false
+08-06 20:37:00.180  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9505f0, fence:195, period8333333
+08-06 20:37:00.184 22785 23113 W System.err: 	at android.os.Handler.handleCallback(Handler.java:1029)
+08-06 20:37:00.184 22785 23113 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:107)
+08-06 20:37:00.184 22785 23113 W System.err: 	at android.os.HandlerThread.run(HandlerThread.java:85)
+08-06 20:37:00.184 22785 23113 W System.err: 	at com.tencent.thread.monitor.plugin.proxy.BaseHandlerThread.run(Unknown Source:15)
+08-06 20:37:00.195  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:00.195  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:00.380  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:00.380  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:00.381  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:00.381  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:00.387  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:185, period8333333
+08-06 20:37:00.402  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:00.403  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:00.497  4419  4600 D MiuiAirPodsFastConnectHelper_Plugin: handleDeviceFound dataStr: 07190127200B778F100005B3E79E118A4E7824D5902D14D817FE9E07190127200B778F100005B3E79E118A4E7824D5902D14D817FE9E
+08-06 20:37:00.606  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:00.606  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:00.606  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:00.606  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:00.612  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:179, period8333333
+08-06 20:37:00.628  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:00.628  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:00.812  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:00.812  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:00.813  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:00.813  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:00.819  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9505f0, fence:194, period8333333
+08-06 20:37:00.834  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:00.835  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:00.874  3442  3740 D MiuiFreeformModeGestureHandler: start handle MotionEvents:(992.0,1336.0)
+08-06 20:37:00.874  3442  3740 D MiuiFreeformModeGestureHandler: handleMotionEvents mActiveMiuiFreeformTask null x: 992.0 y: 1336.0 current miuiFreeformModeTaskInfo: 
+08-06 20:37:00.874  3442  3740 D MulWinSwitchEventHandler: dispatchToFullOrSplitDecorationDot: touchedTaskId=-1
+08-06 20:37:00.874  3442  3740 D MulWinSwitchEventHandler: handleReceivedMotionEvent: mTouchedBottomTaskId=-1
+08-06 20:37:00.875  2398  3033 D SchedBoost: handleSceneBoost type: 17, active :true
+08-06 20:37:00.875  2398  3033 W SchedBoostThread: handleThreadSched, mode: 17 for tid: 22785 is still work
+08-06 20:37:00.875  2398  3033 W SchedBoostThread: handleThreadSched, mode: 17 for tid: 28714 is still work
+08-06 20:37:00.894  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :false
+08-06 20:37:00.894  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :true
+08-06 20:37:00.912  2398  3033 D SchedBoost: handleSceneBoost type: 19, active :true
+08-06 20:37:00.912  2398  3033 D SchedBoost: handleSceneBoost type: 18, active :false
+08-06 20:37:01.012  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:01.012  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:01.013  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:01.013  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:01.019  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:192, period8333333
+08-06 20:37:01.034  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:01.034  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:01.135  2398  3306 D GnssDfsManagerImpl: handleSvStatus: svTrackingCount = 2 svHasAuxCount = 28 svCount = 28
+08-06 20:37:01.219  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:01.219  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:01.220  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:01.220  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:01.227  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:186, period8333333
+08-06 20:37:01.242  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:01.242  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:01.427  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:01.427  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:01.427  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:01.427  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:01.435  1146  5722 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9505f0, fence:185, period8333333
+08-06 20:37:01.450  1146  5722 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:01.450  1146  5722 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:01.488  4419  4600 D MiuiFastConnectService_Plugin: handleMessage: MSG_START_BLE_SCAN mode: 0
+08-06 20:37:01.635  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:01.635  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:01.636  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:01.636  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:01.642  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:193, period8333333
+08-06 20:37:01.657  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:01.657  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:01.737  3330  4261 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.738  3330  4268 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.738  3330  4307 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.764  3330  4307 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.765  3330  4268 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.765  3330  4261 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.768  7756 16022 D powerkeeper.dfsobserve: board ready to handle temperature change
+08-06 20:37:01.769  7756 29665 D powerkeeper.dfscpucol: handleTemperatureChange: temp=42330
+08-06 20:37:01.769  3330  3330 D HidDeviceService: handleMessage(): msg.what=8
+08-06 20:37:01.791  1552 11254 D BatteryNotifier: batteryHandler::send audio track volume update msg! 10390, 22785, 161
+08-06 20:37:01.798  1139  1210 W aurisys_controller: lib_name misoundfpsop, scene 1, no active handler!!
+08-06 20:37:01.850  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:01.851  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:01.852  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:01.852  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:01.858  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9520f0, fence:194, period8333333
+08-06 20:37:01.873  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:01.873  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:01.933  1270 29169 D BatteryNotifier: batteryHandler::send audio start msg! 10390, 22785, 161, 2
+08-06 20:37:01.934  1139 15159 V AudioDspStreamManager: getDspOutHandlerEnable flag = 2 ret = 29 device = 0x80 device_support = 0xe retval = 1
+08-06 20:37:01.935  3330  3812 I bt_stack: [INFO:bqr_main.cc(111)] PrintBqrLinkQualityEvtWithoutVendor: connection_handle 52
+08-06 20:37:01.935  3330  3812 W bluetooth: [btif_bqr.cc(945)] AddLinkQualityEventToQueue: Monitoring, Handle: 0x0034, Address: 04:34:c3:6e:9d:39, POLL, Central, PwLv: 1, RSSI: -53, SNR: 0, UnusedCh: 38, UnidealCh: 79, ReTx: 0, NoRX: 0, NAK: 0, FlowOff: 0, OverFlow: 0, UndFlow: 0
+08-06 20:37:01.935  1139 15159 D aurisys_lib_handler: aurisys_arsi_parsing_param_file(), gProductInfo "platform=MT6989,device=rothko,model=2407FRK8EC", file_path "/vendor/etc/audio_param", enhancement_mode 0, param_buf_size 128, data_size 128, custom_info SetAudioCustomScene=;
+08-06 20:37:01.936  3330  4203 I BluetoothQualityReportNativeInterface:     mQualityReportId: Quality monitor(0x01), mPacketType: TYPE_POLL(0x03), mConnectionHandle: 0x0034, mConnectionRole: 0(0), mTxPowerLevel: 1, mRssi: -53, mSnr: 0, mUnusedAfhChannelCount: 38,
+08-06 20:37:01.938  3330  4261 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.938  1139 15159 V AudioDspStreamManager: getDspOutHandlerEnable flag = 2 ret = 29 device = 0x80 device_support = 0xe retval = 1
+08-06 20:37:01.938  1139 15159 V AudioDspStreamManager: getDspOutHandlerEnable flag = 8 ret = 29 device = 0x80 device_support = 0xe retval = 1
+08-06 20:37:01.938  3330  4268 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.938  1139 15159 D AudioDspStreamManager: addPlaybackHandler(), startTasks_l mOutputDeviceCount[1]
+08-06 20:37:01.939  1139 15159 V AudioDspStreamManager: getDspOutHandlerEnable flag = 2 ret = 29 device = 0x80 device_support = 0xe retval = 1
+08-06 20:37:01.939  1139 15159 V AudioDspStreamManager: getDspOutHandlerEnable flag = 8 ret = 29 device = 0x80 device_support = 0xe retval = 1
+08-06 20:37:01.939  1552  1552 D BatteryNotifier: batteryHandler::send audio device update msg! 10390, 22785, 161, 128
+08-06 20:37:01.939  1139 15159 D AudioDspStreamManager: -addPlaybackHandler(), playbackHandler = 12970367437547625008 0xb4000076e951da30
+08-06 20:37:01.939  3330  4307 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.939  1139 15159 D aurisys_lib_handler: aurisys_arsi_parsing_param_file(), gProductInfo "platform=MT6989,device=rothko,model=2407FRK8EC", file_path "/vendor/etc", enhancement_mode 0, param_buf_size 128, data_size 128, custom_info SetAudioCustomScene=;
+08-06 20:37:01.939  1139 15159 D aurisys_lib_handler: aurisys_arsi_create_handler(), lib_name misoundcrossfade, [queried_size] dram:432 [avail_size] dram:4294967295
+08-06 20:37:01.939  1139 15159 I android.hardware.audio.service.mediatek: mi_lrswitch_create_handler entry.
+08-06 20:37:01.939  1139 15159 I android.hardware.audio.service.mediatek: mi_lrswitch_create_handler stream_type : 5
+08-06 20:37:01.939  1139 15159 I android.hardware.audio.service.mediatek: mi_lrswitch_create_handler mi_lrswitch_create_handler 192, device type: 128
+08-06 20:37:01.939  1139 15159 I android.hardware.audio.service.mediatek: mi_lrswitch create handler end. mi_lrswitch_create_handler 268
+08-06 20:37:01.939  1139 15159 D aurisys_lib_handler: aurisys_arsi_create_handler(), lib_name misoundcrossfade, 0xb400007799525b50, process_type 1, arsi_handler 0xb40000778951b010, retval 0x0 
+08-06 20:37:01.939  1139 15159 D aurisys_lib_handler: aurisys_arsi_create_handler(), arsi_query_process_unit_bytes, ul 0, dl 3840, retval 0
+08-06 20:37:01.939  1139 15159 W aurisys_controller: lib_name misound_dsp, scene 3, no active handler!!
+08-06 20:37:01.941  3330  3812 I bt_stack: [INFO:bqr_main.cc(111)] PrintBqrLinkQualityEvtWithoutVendor: connection_handle 51
+08-06 20:37:01.941  3330  4261 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.941  3330  3812 W bluetooth: [btif_bqr.cc(945)] AddLinkQualityEventToQueue: Monitoring, Handle: 0x0033, Address: 74:77:86:32:b0:ee, POLL, Central, PwLv: -7, RSSI: -49, SNR: 0, UnusedCh: 29, UnidealCh: 79, ReTx: 7, NoRX: 5, NAK: 2, FlowOff: 0, OverFlow: 0, UndFlow: 0
+08-06 20:37:01.943  3330  4268 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.943  3330  4203 I BluetoothQualityReportNativeInterface:     mQualityReportId: Quality monitor(0x01), mPacketType: TYPE_POLL(0x03), mConnectionHandle: 0x0033, mConnectionRole: 0(0), mTxPowerLevel: 249, mRssi: -49, mSnr: 0, mUnusedAfhChannelCount: 29,
+08-06 20:37:01.943  3330  4307 W BtAudioPlaybackCallback: handleMessage: MSG_EXECUTE_FUNC
+08-06 20:37:01.961  1270  2003 D BatteryNotifier: batteryHandler::send audio final volume update msg! 10390, 22785, 161
+08-06 20:37:01.963  1139 15159 E AudioALSAPlaybackHandlerBase: -getHardwareBufferInfo(), pcm_get_htimestamp fail, ret = -1, pcm_get_error =  flag = 0x2
+08-06 20:37:01.968 11266 11266 D Magisk  : su: fork handler
+08-06 20:37:01.973  1139 15159 E AudioALSAPlaybackHandlerBase: -getHardwareBufferInfo(), pcm_get_htimestamp fail, ret = -1, pcm_get_error =  flag = 0x2
+08-06 20:37:02.041 11274 11274 D Magisk  : su: fork handler
+08-06 20:37:02.057  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:02.057  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:02.058  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:02.058  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:02.065  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9505f0, fence:183, period8333333
+08-06 20:37:02.081  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:02.081  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:02.118 11281 11281 D Magisk  : su: fork handler
+08-06 20:37:02.124  2398  3306 D GnssDfsManagerImpl: handleSvStatus: svTrackingCount = 2 svHasAuxCount = 28 svCount = 28
+08-06 20:37:02.159 11265 11265 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:37:02.160 11265 11265 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:37:02.192 11299 11299 D Magisk  : su: fork handler
+08-06 20:37:02.234 11273 11273 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:37:02.265  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:02.265  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(18446744073709551615)  
+08-06 20:37:02.265  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(14), client_handle: 1
+08-06 20:37:02.265  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:02.273  1146  1168 D libcomposer_ext: DeviceImplAidl::DeviceClientContextAidl::NotifyDispDumpReady(), client_handle:1, buffer:0xb40000784c9527b0, fence:192, period8333333
+08-06 20:37:02.284 11339 11339 D Magisk  : su: fork handler
+08-06 20:37:02.288  1146  1168 D libcomposer_ext: DeviceImplAidl::syncPerform(13), client_handle: 1
+08-06 20:37:02.288  1146  1168 I hwcomposer: [DISP_DUMP] isAvailable, same client, client(1),                 m_client_handle(1)  
+08-06 20:37:02.304 11280 11280 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:37:02.307 11280 11280 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-06 20:37:02.342 11375 11375 D Magisk  : su: fork handler
+08-06 20:37:02.369 11301 11301 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+08-06 20:37:02.385 11387 11387 D Magisk  : su: fork handler
+08-06 20:37:02.418 11396 11396 D Magisk  : su: fork handler
+08-06 20:37:02.454 11411 11411 D Magisk  : su: fork handler
+
+
+=== System buffer FUSE/vold logs ===
+CMD: su -c 'logcat -d -b system -t 10000 | grep -iE "vold|fuse|storage|mount|remount|volume|emulated|sdcardfs" | tail -200'
+EXIT: 0
+08-06 20:35:51.012  2398  2398 D TwilightService: onLocationChanged: provider=fused accuracy=100.0 time=1786019751006
+08-06 20:36:47.707  2398  2601 E BatteryStatsService: note track volume change AudioToPower BatteryStatsservices 10390 22785 153 0.23333333 0.23333333
+08-06 20:36:47.883  2398  2601 E BatteryStatsService: note final volume change AudioToPower BatteryStatsservices 10390 22785 153 0.036979217
+08-06 20:37:01.791  2398  2601 E BatteryStatsService: note track volume change AudioToPower BatteryStatsservices 10390 22785 161 0.23333333 0.23333333
+08-06 20:37:01.962  2398  2601 E BatteryStatsService: note final volume change AudioToPower BatteryStatsservices 10390 22785 161 0.036979217
+
+
+=== Crash buffer FUSE/vold/Sui logs ===
+CMD: su -c 'logcat -d -b crash -t 10000 | grep -iE "vold|fuse|storage|mount|sui|shizuku|zygisk|sdcardfs|emulated" | tail -200'
+EXIT: 0
+
+
+=== Kernel buffer FUSE/storage logs ===
+CMD: su -c 'logcat -d -b kernel -t 5000 | grep -iE "fuse|vold|storage|sdcardfs|emulated|selinux.*storage|avc.*storage" | tail -100'
+EXIT: 0
+
+
+=== Recent Sui/rish/Shizuku log entries ===
+CMD: su -c 'logcat -d -t 1000 | grep -iE "rish|sui|Sui|Shizuku|REQUEST_BINDER|binder"'
+EXIT: 0
+08-06 20:37:04.037  1296  1969 W BpBinder: Large outgoing transaction of 16416 bytes, interface descriptor android.gui.IWindowInfosListener, code 1 was sent
+08-06 20:37:04.046  1296  1969 W BpBinder: Large outgoing transaction of 16416 bytes, interface descriptor android.gui.IWindowInfosListener, code 1 was sent
+08-06 20:37:04.054  1296  1969 W BpBinder: Large outgoing transaction of 16416 bytes, interface descriptor android.gui.IWindowInfosListener, code 1 was sent
+08-06 20:37:04.088  3442  3740 D MultiTaskingTransitionObserver: onTransitionFinished::transition = android.os.BinderProxy@6da4de2 remoteFreeformTasks = []
+08-06 20:37:04.088  3442  3740 D SoScUtils: monitorTransitionFinished transition:android.os.BinderProxy@6da4de2 transaction: android.view.SurfaceControl$Transaction@6976953 mRequestCloseTransition:null mRequestOpenTransition:null mPairsOpenTransition:null mPairsOpenTransitionNull:null mRequestOpenTriggerTask:-1 mRequestCloseTriggerTask:-1 mOrientationTransition: null mPendingChange:null mMainStartingTask:-1 mSideStartingTask:-1
+08-06 20:37:04.103  3134  3738 W com.miui.home: Binder 0xb400007a7847f460 destroyed after setInheritRt before being parceled.
+08-06 20:37:04.113  6206  6206 W .quicksearchbox: Binder 0xb400007a78408420 destroyed after setInheritRt before being parceled.
+08-06 20:37:04.113  1296  2638 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+08-06 20:37:04.117  6171  6171 W rsonalassistant: Binder 0xb400007a783feee0 destroyed after setInheritRt before being parceled.
+08-06 20:37:04.117  1296  1448 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+08-06 20:37:04.119  1296  1450 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+08-06 20:37:04.200  3442  3442 D NotificationRowContentBinderInjectorImpl: changeToFullAodContext: not need change full aod style
+08-06 20:37:04.408  7552  7718 W scene-daemon: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlinger
+
+
+=== Sui repo recent commits ===
+CMD: cd /data/data/com.termux/files/home/Sui && git log --oneline -10 2>/dev/null
+EXIT: 0
+a510dc9 feat(shell): dual-backend rish — Sui daemon primary, Shizuku service fallback
+0ea839c Fix app list data directory filtering
+b2873e8 Fix app list empty on Android 16/17: fallback to AppGlobals reflection
+66c6ddc Add QUERY_ALL_PACKAGES to ui manifest (Android 11+ package visibility)
+74ccd17 Fix native libs path: AGP 8.10 adds task-name subdir under stripped_native_libs
+a0fcbac Fix native libs path: use flavorLowered/buildTypeLowered, add CI debug step
+674311a Fix missing native libs in module zip: use variant.dirName for stripped_native_libs path
+cf31476 Fix zygisk.hpp: [[gnu::]] attribute position rejected by NDK 29 clang
+a36c467 Drop prefab cxx package, use NDK built-in libc++ (NDK 29 compat)
+75183a7 Use -include cstdint instead of stdint.h (lsposed header search order)
+
+
+=== Sui repo status ===
+CMD: cd /data/data/com.termux/files/home/Sui && git status --short 2>/dev/null
+EXIT: 0
+
+
+=== Sui repo diff stat ===
+CMD: cd /data/data/com.termux/files/home/Sui && git diff --stat HEAD 2>/dev/null | head -50
+EXIT: 0
+
+
+=== Activity services related to storage/Sui ===
+CMD: su -c 'dumpsys activity services 2>/dev/null | grep -iE "storage|vold|fuse|sui|shizuku|Volume" | head -100'
+EXIT: 0
+  * ServiceRecord{d00c317 u0 com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl c:android}
+    intent={cmp=com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl}
+    permission=android.permission.BIND_EXTERNAL_STORAGE_SERVICE
+    infoAllowStartForeground=[callingPackage: android; callingUid: 0; uidState: NONE; uidBFSL: n/a; intent: Intent { xflg=0x4 cmp=com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl }; code:SYSTEM_UID; tempAllowListReason:<null>; allowWiu:51; targetSdkVersion:36; callerTargetSdkVersion:36; startForegroundCount:0; bindFromPackage:null: isBindService:true]
+      intent={xflg=0x4 cmp=com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl}
+          ConnectionRecord{e79bb96 u0 CR IMP com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl:@5175ab1 flags=0x41}
+      ConnectionRecord{e79bb96 u0 CR IMP com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl:@5175ab1 flags=0x41}
+      * Client AppBindRecord{fbcf775 ProcessRecord{1d8dbdf 6476:com.xiaomi.location.fused/1000}}
+  * ServiceRecord{c857c74 u0 com.xiaomi.location.fused/.indoorDetection.IoDetectorService c:com.xiaomi.location.fused}
+    intent={cmp=com.xiaomi.location.fused/.indoorDetection.IoDetectorService}
+    packageName=com.xiaomi.location.fused
+    processName=com.xiaomi.location.fused
+    baseDir=/product/app/FusedLocationProvider/FusedLocationProvider.apk
+    dataDir=/data/user/0/com.xiaomi.location.fused
+    app=ProcessRecord{1d8dbdf 6476:com.xiaomi.location.fused/1000}
+    recentCallingPackage=com.xiaomi.location.fused
+    infoAllowStartForeground=[callingPackage: com.xiaomi.location.fused; callingUid: 1000; uidState: PER ; uidBFSL: [BFSL]; intent: Intent { xflg=0x4 cmp=com.xiaomi.location.fused/.indoorDetection.IoDetectorService }; code:PROC_STATE_PERSISTENT; tempAllowListReason:<fg-service-launch,reasonCode:SERVICE_LAUNCH,duration:30000,callingUid:1000>; allowWiu:10; targetSdkVersion:33; callerTargetSdkVersion:33; startForegroundCount:0; bindFromPackage:null: isBindService:true]
+      intent={xflg=0x4 cmp=com.xiaomi.location.fused/.indoorDetection.IoDetectorService}
+      * Client AppBindRecord{3367baf ProcessRecord{1d8dbdf 6476:com.xiaomi.location.fused/1000}}
+          ConnectionRecord{e343c47 u0 CR com.xiaomi.location.fused/.indoorDetection.IoDetectorService:@bb79b86 flags=0x1}
+      ConnectionRecord{e343c47 u0 CR com.xiaomi.location.fused/.indoorDetection.IoDetectorService:@bb79b86 flags=0x1}
+  * ServiceRecord{9666400 u0 com.xiaomi.location.fused/.FusedLocationService c:android}
+    intent={act=com.android.location.service.FusedLocationProvider cmp=com.xiaomi.location.fused/.FusedLocationService}
+    packageName=com.xiaomi.location.fused
+    processName=com.xiaomi.location.fused
+    baseDir=/product/app/FusedLocationProvider/FusedLocationProvider.apk
+    dataDir=/data/user/0/com.xiaomi.location.fused
+    app=ProcessRecord{1d8dbdf 6476:com.xiaomi.location.fused/1000}
+    recentCallingPackage=com.xiaomi.location.fused
+    infoAllowStartForeground=[callingPackage: com.xiaomi.location.fused; callingUid: 1000; uidState: PER ; uidBFSL: [BFSL]; intent: Intent { xflg=0x4 cmp=com.xiaomi.location.fused/.FusedLocationService }; code:PROC_STATE_PERSISTENT; tempAllowListReason:<fg-service-launch,reasonCode:SERVICE_LAUNCH,duration:30000,callingUid:1000>; allowWiu:10; targetSdkVersion:33; callerTargetSdkVersion:33; startForegroundCount:0; bindFromPackage:null: isBindService:false]
+      intent={act=com.android.location.service.FusedLocationProvider xflg=0x4 cmp=com.xiaomi.location.fused/.FusedLocationService}
+          ConnectionRecord{3a91a83 u0 CR !FG !VIS com.xiaomi.location.fused/.FusedLocationService:@c305d32 flags=0x40000005}
+      ConnectionRecord{3a91a83 u0 CR !FG !VIS com.xiaomi.location.fused/.FusedLocationService:@c305d32 flags=0x40000005}
+  * ConnectionRecord{e79bb96 u0 CR IMP com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl:@5175ab1 flags=0x41}
+    binding=AppBindRecord{b7e3b11 com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl:system}
+    binding=AppBindRecord{fbcf775 com.miui.analytics/.onetrack.OneTrackService:com.xiaomi.location.fused}
+  * ConnectionRecord{e343c47 u0 CR com.xiaomi.location.fused/.indoorDetection.IoDetectorService:@bb79b86 flags=0x1}
+    binding=AppBindRecord{3367baf com.xiaomi.location.fused/.indoorDetection.IoDetectorService:com.xiaomi.location.fused}
+  * ConnectionRecord{3a91a83 u0 CR !FG !VIS com.xiaomi.location.fused/.FusedLocationService:@c305d32 flags=0x40000005}
+    binding=AppBindRecord{72f2f98 com.xiaomi.location.fused/.FusedLocationService:system}
+
+
+=== Activity processes related to storage/Sui/Termux ===
+CMD: su -c 'dumpsys activity processes 2>/dev/null | grep -iE "sui|shizuku|termux|externalstorage|storage" | head -100'
+EXIT: 0
+    manageSpaceActivityName=tv.danmaku.bili.ui.storagemanager.BiliStorageManagerTransActivity
+  *APP* UID 10079 ProcessRecord{591dad3 22138:com.android.externalstorage/u0a79}
+    dir=/system/priv-app/ExternalStorageProvider/ExternalStorageProvider.apk publicDir=/system/priv-app/ExternalStorageProvider/ExternalStorageProvider.apk data=/data/user/0/com.android.externalstorage
+    packageList={com.android.externalstorage}
+      - com.android.externalstorage.ExternalStorageProvider
+        -> ContentProviderRecord{3b82a7f u0 com.android.externalstorage/.ExternalStorageProvider}
+      - fe2c66b/com.android.providers.settings/.SettingsProvider->22138:com.android.externalstorage/u0a79 s1/1 u0/0 +10m23s571ms
+    manageSpaceActivityName=tv.danmaku.bili.ui.storagemanager.BiliStorageManagerTransActivity
+      - com.tencent.mm.plugin.lite.storage.LiteAppContentProvider
+        -> ContentProviderRecord{895609e u0 com.tencent.mm/.plugin.lite.storage.LiteAppContentProvider}
+      - ConnectionRecord{e79bb96 u0 CR IMP com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl:@5175ab1 flags=0x41}
+      - com.tencent.luggage.storage.StandaloneCriticalDataProvider
+        -> ContentProviderRecord{37610d8 u0 com.tencent.mobileqq/com.tencent.luggage.storage.StandaloneCriticalDataProvider}
+    manageSpaceActivityName=tv.danmaku.bili.ui.storagemanager.BiliStorageManagerTransActivity
+      - tv.danmaku.bili.provider.StorageProvider
+        -> ContentProviderRecord{ff14a9d u0 tv.danmaku.bili/.provider.StorageProvider}
+  *APP* UID 10717 ProcessRecord{eb77e94 4798:com.termux/u0a717}
+    class=com.termux.app.TermuxApplication
+    dir=/data/app/~~hzSln5-EPaueto_PEsuQPA==/com.termux-g1QOoHglF2fc3qyY_NQijw==/base.apk publicDir=/data/app/~~hzSln5-EPaueto_PEsuQPA==/com.termux-g1QOoHglF2fc3qyY_NQijw==/base.apk data=/data/user/0/com.termux
+    packageList={com.termux}
+      - ServiceRecord{9f5b7f8 u0 com.termux/.app.TermuxService c:com.termux}
+      - ConnectionRecord{53fbb36 u0 com.termux/.app.TermuxService:@d7d14d1 flags=0x0}
+      - com.termux.filepicker.TermuxDocumentsProvider
+        -> ContentProviderRecord{b3a9a9 u0 com.termux/.filepicker.TermuxDocumentsProvider}
+      - com.termux.app.TermuxOpenReceiver$ContentProvider
+        -> ContentProviderRecord{be6eb2e u0 com.termux/.app.TermuxOpenReceiver$ContentProvider}
+      - fe2c66b/com.android.providers.settings/.SettingsProvider->4798:com.termux/u0a717 s1/1 u0/0 +10m42s802ms
+      - ReceiverList{200dfc8 4798 com.termux/10717/u0 remote:bc4886b}
+      - ReceiverList{ab8100c 4798 com.termux/10717/u0 remote:e7cff3f}
+      - ActivityRecord{71422315 u0 com.termux/.app.TermuxActivity t5130}
+      - Task{82a1947 #5130 type=standard A=10717:com.termux}
+      - ServiceRecord{d00c317 u0 com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl c:android}
+      - com.android.providers.downloads.provider.DownloadStorageProvider
+        -> ContentProviderRecord{af04c50 u0 com.android.providers.downloads/.provider.DownloadStorageProvider}
+      - com.miui.storagepolicy.StoragePolicyProvider
+        -> ContentProviderRecord{f3b35f3 u0 com.lbe.security.miui/com.miui.storagepolicy.StoragePolicyProvider}
+    manageSpaceActivityName=tv.danmaku.bili.ui.storagemanager.BiliStorageManagerTransActivity
+      - com.bilibili.lib.accountsui.AccountFileProvider
+        -> ContentProviderRecord{8d91d1a u0 tv.danmaku.bili/com.bilibili.lib.accountsui.AccountFileProvider}
+      - com.bilibili.fd_service.storage.FreeDataInfoProvider
+        -> ContentProviderRecord{cde36be u0 tv.danmaku.bili/com.bilibili.fd_service.storage.FreeDataInfoProvider}
+    manageSpaceActivityName=tv.danmaku.bili.ui.storagemanager.BiliStorageManagerTransActivity
+      - 3b82a7f/com.android.externalstorage/.ExternalStorageProvider->21306:com.maxmpz.audioplayer/u0a725 s0/17 u1/1 +9m51s964ms
+        com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl<=Proc{2398:system/1000}
+    Proc # 0: fg     T/A/TOP  LCMNFUAT  t: 0 4798:com.termux/u0a717 (top-activity)
+    Proc #92: prev  + 2 b/ /CEM  --------  t: 0 22138:com.android.externalstorage/u0a79 (provider)
+        com.android.externalstorage/.ExternalStorageProvider<=Proc{21306:com.maxmpz.audioplayer/u0a725}
+      proc=ProcessRecord{591dad3 22138:com.android.externalstorage/u0a79}
+      proc=ProcessRecord{eb77e94 4798:com.termux/u0a717}
+    #146: fg     TOP  LCMNFUAT 4798:com.termux/u0a717 act:activities|recents
+    #54: prev  + 2 CEM  -------- 22138:com.android.externalstorage/u0a79
+        com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl<=Proc{2398:system/1000}
+    Proc # 0: fg     T/A/TOP  LCMNFUAT  t: 0 4798:com.termux/u0a717 (top-activity)
+    Proc #92: prev  + 2 b/ /CEM  --------  t: 0 22138:com.android.externalstorage/u0a79 (provider)
+        com.android.externalstorage/.ExternalStorageProvider<=Proc{21306:com.maxmpz.audioplayer/u0a725}
+    PID #4798: ProcessRecord{eb77e94 4798:com.termux/u0a717}
+    PID #22138: ProcessRecord{591dad3 22138:com.android.externalstorage/u0a79}
+
+
+=== dumpsys vold ===
+CMD: su -c 'dumpsys vold 2>/dev/null | head -200'
+EXIT: 0
+vold is happy!
+
+
+=== Dropbox entries related to Sui/FUSE/vold ===
+CMD: su -c 'dumpsys dropbox 2>/dev/null | grep -iE "sui|shizuku|termux|vold|fuse|storage|system_server|zygisk|FUSE|sdcardfs" | head -100'
+EXIT: 0
+Low priority tags: {data_app_wtf, keymaster, system_server_wtf, system_app_strictmode, system_app_wtf, system_server_strictmode, data_app_strictmode, netstats}
+
+
+=== vold process FDs ===
+CMD: su -c 'for p in $(pidof vold); do echo "=== vold PID $p ==="; cat /proc/$p/status 2>/dev/null | head -20; echo "--- fd count ---"; ls /proc/$p/fd 2>/dev/null | wc -l; echo "--- fd fuse/sdcard ---"; ls -la /proc/$p/fd 2>/dev/null | grep -iE "fuse|sdcard|emulated|storage" | head -20; done'
+EXIT: 0
+=== vold PID 504 ===
+Name:	binder:504_2
+Umask:	0077
+State:	S (sleeping)
+Tgid:	504
+Ngid:	0
+Pid:	504
+PPid:	1
+TracerPid:	0
+Uid:	0	0	0	0
+Gid:	0	0	0	0
+FDSize:	64
+Groups:	1065 
+VmPeak:	10964660 kB
+VmSize:	10947572 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	   13492 kB
+VmRSS:	    7692 kB
+RssAnon:	     648 kB
+RssFile:	    6268 kB
+--- fd count ---
+14
+--- fd fuse/sdcard ---
+
+
+=== Sui module bin directory ===
+CMD: su -c 'file /data/adb/modules/zygisk-sui/bin/sui 2>/dev/null; ls -la /data/adb/modules/zygisk-sui/bin/'
+EXIT: 0
+/data/adb/modules/zygisk-sui/bin/sui: ELF shared object, 64-bit LSB arm64, dynamic (/system/bin/linker64), for Android 24, built by NDK r29-beta1 (13113456), BuildID=f1037460249e7d8bf94d14c135a71a95ef7a8390, stripped
+total 38
+drwxr-xr-x 2 root root  3452 2026-08-06 20:25 .
+drwxr-xr-x 5 root root  3452 2026-08-06 20:25 ..
+-rw-r--r-- 1 root root  6048 2026-08-06 19:21 adbd_wrapper
+-rwx------ 1 root root 20808 2026-08-06 19:21 sui
+lrwxrwxrwx 1 root root    36 2026-08-06 20:25 uninstall -> /data/adb/modules/zygisk-sui/bin/sui
+
+
+=== Timestamp correlation summary ===
+CMD: su -c 'echo Boot time: $(date -d @$(awk /btime/{print $2} /proc/stat)); echo Module activation: $(stat -c %y /data/adb/modules/zygisk-sui); echo Sui db WAL: $(stat -c %y /data/adb/sui/sui.db-wal); echo Termux rish: $(stat -c %y /data/data/com.termux/files/usr/bin/rish)'
+EXIT: 0
+Boot time:
+Module activation: 2026-08-06 20:25:48.784000000 +0800
+Sui db WAL: 2026-08-06 19:26:18.668000174 +0800
+Termux rish: 2026-08-06 19:26:03.788000173 +0800
+awk: syntax error at source line 1
+ context is
+	 >>> /btime/{print <<< 
+awk: illegal statement at source line 1
+	missing }
+date: bad date @

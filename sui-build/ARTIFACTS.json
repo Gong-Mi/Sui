@@ -1,0 +1,1432 @@
+{
+  "format": 1,
+  "project": "Sui",
+  "version": "v13.6.0",
+  "variants": [
+    {
+      "directory": "sui-riru-v13.6.0-debug",
+      "id": "riru-sui",
+      "version": "v13.6.0",
+      "versionCode": "341",
+      "file_count": 70,
+      "total_bytes": 17681272,
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "size": 3890,
+          "sha256": "4489d061362207ebeda9b34a4535cca56ce25df72f861efd67a86a9f48097f63"
+        },
+        {
+          "path": "CHANGELOG.md.sha256sum",
+          "size": 64,
+          "sha256": "0d0d703a521e05512334830b50fa6af83cdc331b5e077c84c2fdbb746ccee3c7"
+        },
+        {
+          "path": "META-INF/com/google/android/update-binary",
+          "size": 612,
+          "sha256": "bcf4b1d9913f3af17755569c853e0b5a75b8005f6a18eb3f86dadcc0e968c29d"
+        },
+        {
+          "path": "META-INF/com/google/android/update-binary.sha256sum",
+          "size": 64,
+          "sha256": "ff225d4a4ee6d2f4314e13e8b1999dbf6a80e206415fd222d5f71d2e32b4962f"
+        },
+        {
+          "path": "META-INF/com/google/android/updater-script",
+          "size": 8,
+          "sha256": "d2b8203193a083e43ad076fde01b9c7821e0aa521e1f8077b8628fb1cdb70c60"
+        },
+        {
+          "path": "META-INF/com/google/android/updater-script.sha256sum",
+          "size": 64,
+          "sha256": "e347688e86e8eb6b1b3aac0f3596d8a43dc1f481936a266f5e1240af6c81ecda"
+        },
+        {
+          "path": "customize.sh",
+          "size": 4082,
+          "sha256": "5f1e9f4961efe1731b32c32703ff669d0a78743400ae781a63907c2a5714a99c"
+        },
+        {
+          "path": "customize.sh.sha256sum",
+          "size": 64,
+          "sha256": "84580fd928449c9f340420ef88b6cbeccb34d40b212c42a2237f2ada06918852"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_preload.so",
+          "size": 5664,
+          "sha256": "4b799708301a25274a517e46454743101398cd2dab876d5023c214bc71ce6d52"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "af337d8a9e8ab2e0388649627bee46858dfc97b3331e6b77d9dbafdc053e0bd5"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_wrapper.so",
+          "size": 10560,
+          "sha256": "1869dc79e5a366b755c6a16692a921741489aab9ec515d7685e8d1ce2727cb99"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "bdb08c25e425f2662ff34d0fb3c4ffb108c67cbaad6a088ceb94ebe298e00bd5"
+        },
+        {
+          "path": "lib/arm64-v8a/libmain.so",
+          "size": 35480,
+          "sha256": "3443d6773d9b4238cb79bf48c3c62bcc41e003a90acdccf74d17c7ec03832dec"
+        },
+        {
+          "path": "lib/arm64-v8a/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "b91bfe24e06eedfd4ad03a2e379484d7a3944fdb1b01a6b40d992f4b61ea1775"
+        },
+        {
+          "path": "lib/arm64-v8a/librish.so",
+          "size": 59632,
+          "sha256": "dfd1bd962dc12a58fb7e6dbf5d0728a97eb567e69dc78ce50890e58cf7f533d7"
+        },
+        {
+          "path": "lib/arm64-v8a/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "4d9201d970ad840f6bf9369e69bd2d7cfa6d41c28b7d6eca39145430146a4a95"
+        },
+        {
+          "path": "lib/arm64-v8a/libsui.so",
+          "size": 301800,
+          "sha256": "dc9bc41f7a760227fdb039320abaa2740d871ce67b26894e3e6bb35285add622"
+        },
+        {
+          "path": "lib/arm64-v8a/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "0a153a48b8f575f75f83e8f2c65349c36aa10735b332c6dda7a4917db1132242"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_preload.so",
+          "size": 3896,
+          "sha256": "c01210e49d31d50a61a309217a93020774a3298a59836f16b25a7824d9ddcf59"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "9bcd54bcaee4e38f4b7046daab99859a02524a20a5f709ad222ec7cb83c80b90"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_wrapper.so",
+          "size": 6728,
+          "sha256": "6cdd32274bf6ff8584be5954406f4c72b2e969a76d539916a6ab1735f0234e59"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "a3d7b252b1fa0e10e8763b07729edbc5d99da61273e27fa57a8f39ac5ea1ae02"
+        },
+        {
+          "path": "lib/armeabi-v7a/libmain.so",
+          "size": 22900,
+          "sha256": "d6fe9fb2b3a9af79bc421c33dc697bb7f1991ea5fb7e4b92dd8175a98edd85f6"
+        },
+        {
+          "path": "lib/armeabi-v7a/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "495b0e55c8e352d4c5e9bcfb05c1db6a5cdcfe1b1cfb92a81ac1ef3977be0b33"
+        },
+        {
+          "path": "lib/armeabi-v7a/librish.so",
+          "size": 29380,
+          "sha256": "a17526ff94ace44307822b2bd896d628d4e6140c6340e7bb6b37c28914567c12"
+        },
+        {
+          "path": "lib/armeabi-v7a/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "a71c452f971fa3b9e836de112984f23c89eeaca8c9dcb0ba6fc428201cb88d4e"
+        },
+        {
+          "path": "lib/armeabi-v7a/libsui.so",
+          "size": 177656,
+          "sha256": "50e031281c229518b524b94f2e52f1607144c195c061d766ca1d6b92d848f4c0"
+        },
+        {
+          "path": "lib/armeabi-v7a/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "8663d43c2f9a689e2c7dff0b4d10c492b954197d96b59e92bc5cc9ee721a4ade"
+        },
+        {
+          "path": "lib/x86/libadbd_preload.so",
+          "size": 4376,
+          "sha256": "ca93924aabe0931970289c29197c40897d9395228f698a86e4e84f7f13777a9e"
+        },
+        {
+          "path": "lib/x86/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "c11b6038efdde24b77e2e51c9c01efa324b26512d631bd2e72ce4c272d869256"
+        },
+        {
+          "path": "lib/x86/libadbd_wrapper.so",
+          "size": 8932,
+          "sha256": "9163035f0fcd00a74a88b31f3eaa0d7facfc08564912ca0fca7693ad242c8c16"
+        },
+        {
+          "path": "lib/x86/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "985a25ee02aa4313c994cef0a40e88bd56740cb25cee72c8972abea80e8d91f5"
+        },
+        {
+          "path": "lib/x86/libmain.so",
+          "size": 37164,
+          "sha256": "d2d94ae30ab7ab397b3ef19c71aaa902e3ba8da80f736e69545d9f7c52703e1b"
+        },
+        {
+          "path": "lib/x86/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "85af50c27d0a2e6595309a73aac9a13e591e6ab29f23e2043fe94664c37f4683"
+        },
+        {
+          "path": "lib/x86/librish.so",
+          "size": 54004,
+          "sha256": "c5951a863ebad7b17a106cf96edc1ec1cb36b8ce09e64e40a319c5c3ac8df2a2"
+        },
+        {
+          "path": "lib/x86/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "6471c74a44f59174f6499f577d03e7d6fa9146d061d6af8d917d32bd0e07b4b3"
+        },
+        {
+          "path": "lib/x86/libsui.so",
+          "size": 256172,
+          "sha256": "45e13b2e0420bc322a9dafd00969a36c6310ad94bea918c261d5f47d3efdcc97"
+        },
+        {
+          "path": "lib/x86/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "fae9dcf846b367eb84a810ed5661bd54910c9eb32ed8e1123292325eb8d52a1a"
+        },
+        {
+          "path": "lib/x86_64/libadbd_preload.so",
+          "size": 5600,
+          "sha256": "8d90fb220000ec594aab4703561da2e2a36b2e7830f62b25926fe0e66dd30aca"
+        },
+        {
+          "path": "lib/x86_64/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "1722bb1c96cd80be18682cc08c6c7d833ed57b3c4b077ecea74a998ef826cd2f"
+        },
+        {
+          "path": "lib/x86_64/libadbd_wrapper.so",
+          "size": 10320,
+          "sha256": "efaab4d4ed925978aadbfb3f16c01cef57d5ec50b40dbfd4f819b50d2cf0db94"
+        },
+        {
+          "path": "lib/x86_64/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "ed69cf1b2aa5b47fb130e0c311ed81cafe3cf1d5a4fec2a530a77959041fd7b9"
+        },
+        {
+          "path": "lib/x86_64/libmain.so",
+          "size": 35952,
+          "sha256": "b6e19f2d4795c053d35a0f723d0234f361b62adef33416c78b70cac363f84be1"
+        },
+        {
+          "path": "lib/x86_64/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "d46a6d8d74ef490a945c739dce7b75e0f37e2fc33a0f2d69898b87bb12d25792"
+        },
+        {
+          "path": "lib/x86_64/librish.so",
+          "size": 52216,
+          "sha256": "0676e3143c42d6643d3bb6d93162954460505d9b1d6a27b5eafe87f8106d62a1"
+        },
+        {
+          "path": "lib/x86_64/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "c92a7af31149364119297ac87648817e140aa04fe024fa1384162d8db1cb0be9"
+        },
+        {
+          "path": "lib/x86_64/libsui.so",
+          "size": 294720,
+          "sha256": "2525985cc2d3fbbf0f9a21558ef65a93b797aad2864c7a59f22b99a4eb7703ce"
+        },
+        {
+          "path": "lib/x86_64/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "70487f9cbdffee924daec18ffbbffd9d475b79728c93f98c8f96f946f096baf8"
+        },
+        {
+          "path": "module.prop",
+          "size": 233,
+          "sha256": "eacd302dffeb1c2502670444c6032626d3846e1a55ff2f6becb5ff159728c59c"
+        },
+        {
+          "path": "module.prop.sha256sum",
+          "size": 64,
+          "sha256": "819b68b2a3b73be45c892efa1ba27ebc1e1fccefd3ba763affaac1e831244b81"
+        },
+        {
+          "path": "post-fs-data.sh",
+          "size": 2116,
+          "sha256": "d6d355ceca01bd509f5ad92723292f4efcc1f1bdb29d9b6136ded06c96768685"
+        },
+        {
+          "path": "post-fs-data.sh.sha256sum",
+          "size": 64,
+          "sha256": "ededad8b1308f4f20be60d4fae17004ddb7d53f741c133f211814586651da1ea"
+        },
+        {
+          "path": "post-install.example.sh",
+          "size": 1474,
+          "sha256": "6f10bf09afcb54094e4044cb171f6094159ed8bd587db9fd1e783c742b71e1e4"
+        },
+        {
+          "path": "post-install.example.sh.sha256sum",
+          "size": 64,
+          "sha256": "bf15a28d3eb704a8a07eb97941b542ae407b8631ad0e8d52e2d95018045aa918"
+        },
+        {
+          "path": "riru.sh",
+          "size": 1709,
+          "sha256": "b143dddd26bc09abf769a8f0e6d26b44bfe5b1da6f3658fe24de3401eabe660c"
+        },
+        {
+          "path": "riru.sh.sha256sum",
+          "size": 64,
+          "sha256": "b0a7e33e771f6a15a7fb281fef93c9b49c6c57cdd1e0f7c2afb3b961a5442d0a"
+        },
+        {
+          "path": "rish",
+          "size": 383,
+          "sha256": "459e681db140d35773f2a0a7b002ff4567debff146deccf27c31da98b733c704"
+        },
+        {
+          "path": "rish.sha256sum",
+          "size": 64,
+          "sha256": "1d63aaa26b682c78604873f5f34edb8bb4f85ff3e7ab2b1ee77d5d183d54f6a0"
+        },
+        {
+          "path": "sepolicy.rule",
+          "size": 237,
+          "sha256": "1c3730e8493f76f15d70072db8f72370415307b8019f2623c9c46918ceaf0abc"
+        },
+        {
+          "path": "sepolicy.rule.sha256sum",
+          "size": 64,
+          "sha256": "3bb5feca1ff8fffe2c13aea60bba80b9f120a782facc54c19d657aa8204a5b0c"
+        },
+        {
+          "path": "sui.apk",
+          "size": 4549528,
+          "sha256": "571a57458dc2754e9442f2c1bf1f00a6f3a5a57f66a189843040cbe2060f930c"
+        },
+        {
+          "path": "sui.apk.sha256sum",
+          "size": 64,
+          "sha256": "d6a86ca7ffcc98e54518d591fa4241249d6e0155f4e2550805d82cf329247a54"
+        },
+        {
+          "path": "sui.dex",
+          "size": 11698068,
+          "sha256": "6c1ef0170900693654bd9cb91d12087cbd4d4bb70354a3294b3ecf9bf97dafdb"
+        },
+        {
+          "path": "sui.dex.sha256sum",
+          "size": 64,
+          "sha256": "71ded79663bb60b2c98e44d3ff51d8e6c12b7c93ee4d1f53c55264c3b0b482be"
+        },
+        {
+          "path": "uninstall.sh",
+          "size": 361,
+          "sha256": "b6b4831e3bbca06a715f115962f5497e4c661d9c37f01acff7b25951aa8cbce9"
+        },
+        {
+          "path": "uninstall.sh.sha256sum",
+          "size": 64,
+          "sha256": "1d62d15b20f7a4174af54cbf728a6847c8ffb53f8593d6ff1b8232f28ae27365"
+        },
+        {
+          "path": "util_functions.sh",
+          "size": 2027,
+          "sha256": "ce98ecd4016480f5064ae2df2a54299a901b4daeb6a00a71614409dbe0901c26"
+        },
+        {
+          "path": "util_functions.sh.sha256sum",
+          "size": 64,
+          "sha256": "5978d5794d7e326d00d7f2131e2e97e8a9655e79786be24b78c1538f96e117f9"
+        },
+        {
+          "path": "verify.sh",
+          "size": 1152,
+          "sha256": "ff6cfc26dbfba2c0feeac333300c27a1e3a668b50ae0fb6ce07b245f30f9c5e8"
+        },
+        {
+          "path": "verify.sh.sha256sum",
+          "size": 64,
+          "sha256": "026f8311f466880ba3fc711659c12fc3a3e1d077c25089a43cba1d0ee28058c1"
+        }
+      ]
+    },
+    {
+      "directory": "sui-riru-v13.6.0-release",
+      "id": "riru-sui",
+      "version": "v13.6.0",
+      "versionCode": "341",
+      "file_count": 70,
+      "total_bytes": 3075228,
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "size": 3890,
+          "sha256": "4489d061362207ebeda9b34a4535cca56ce25df72f861efd67a86a9f48097f63"
+        },
+        {
+          "path": "CHANGELOG.md.sha256sum",
+          "size": 64,
+          "sha256": "0d0d703a521e05512334830b50fa6af83cdc331b5e077c84c2fdbb746ccee3c7"
+        },
+        {
+          "path": "META-INF/com/google/android/update-binary",
+          "size": 612,
+          "sha256": "bcf4b1d9913f3af17755569c853e0b5a75b8005f6a18eb3f86dadcc0e968c29d"
+        },
+        {
+          "path": "META-INF/com/google/android/update-binary.sha256sum",
+          "size": 64,
+          "sha256": "ff225d4a4ee6d2f4314e13e8b1999dbf6a80e206415fd222d5f71d2e32b4962f"
+        },
+        {
+          "path": "META-INF/com/google/android/updater-script",
+          "size": 8,
+          "sha256": "d2b8203193a083e43ad076fde01b9c7821e0aa521e1f8077b8628fb1cdb70c60"
+        },
+        {
+          "path": "META-INF/com/google/android/updater-script.sha256sum",
+          "size": 64,
+          "sha256": "e347688e86e8eb6b1b3aac0f3596d8a43dc1f481936a266f5e1240af6c81ecda"
+        },
+        {
+          "path": "customize.sh",
+          "size": 4082,
+          "sha256": "5f1e9f4961efe1731b32c32703ff669d0a78743400ae781a63907c2a5714a99c"
+        },
+        {
+          "path": "customize.sh.sha256sum",
+          "size": 64,
+          "sha256": "84580fd928449c9f340420ef88b6cbeccb34d40b212c42a2237f2ada06918852"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_preload.so",
+          "size": 5000,
+          "sha256": "af7d26ab045314039e679ec99d517e268af7a2f84c82b5bcfd2f6d90df6f2c22"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "414ab47a71e1e284a99d2c4228edd9de68e6af8e43d0e783ac5b99598a19a04a"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_wrapper.so",
+          "size": 6048,
+          "sha256": "898c5e45d6be6106640cc2aca6d65c6f042eda22c25dc49b51b1f50e1e6d8cfd"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "ab3cf4ad1bd2c65a162c2a9a36d84241eeded52cefa4aee139d24012fb356dda"
+        },
+        {
+          "path": "lib/arm64-v8a/libmain.so",
+          "size": 20808,
+          "sha256": "25989310ad2091ee0ef05136b9fa0c29beab4fe69c25117476aa4d76c84af7ae"
+        },
+        {
+          "path": "lib/arm64-v8a/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "38149869584cae5a0751750702ccd3a4f85289adc8496a37ebf4cf2451aca468"
+        },
+        {
+          "path": "lib/arm64-v8a/librish.so",
+          "size": 19512,
+          "sha256": "1ac3bc4f8887d9d4caab79b9fcc7a1effc42173fc8f71c217d62880a75684f85"
+        },
+        {
+          "path": "lib/arm64-v8a/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "758624ce38dcc465f4d4fae2260dd81b34378288adb97fac6605527f6623f52b"
+        },
+        {
+          "path": "lib/arm64-v8a/libsui.so",
+          "size": 229216,
+          "sha256": "f6c672ff02370433717fc63b3b300813ec6c2136c08a3388c54d7ae8413ac956"
+        },
+        {
+          "path": "lib/arm64-v8a/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "404481f19808f74dfebfc795140717cd52e4df90e26c140895b9cc38a335e88c"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_preload.so",
+          "size": 3396,
+          "sha256": "2e79efce23162e1bc7110c584f1f70c6d11f666a194cb4fab4bf140b22f0a8fc"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "ff2b72caa8a920b76aed61289897c5f0b0d169819cf1899efbaa08f9e429f433"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_wrapper.so",
+          "size": 4292,
+          "sha256": "7bdc4750e98618ef77c049851a7cf761a1bb40d320efc6829c5e258f20f9fac3"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "0f031fc0b5de46d07964394e68ad126b0cb91d167b7a36d71e83c9d7937b4e5b"
+        },
+        {
+          "path": "lib/armeabi-v7a/libmain.so",
+          "size": 15236,
+          "sha256": "e6b393d9994aebd2c6f910252a1dbbeca816bb3de29c162b77531a6bde9c3bc9"
+        },
+        {
+          "path": "lib/armeabi-v7a/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "6dfa2683bf31a1f367a9aba3f0be799db8ca578020bfa5ed31a8ec3eacc829e9"
+        },
+        {
+          "path": "lib/armeabi-v7a/librish.so",
+          "size": 11672,
+          "sha256": "4b67ff1ea7327808db903ea2b53ef809419628983b1fe223fba93970368325a6"
+        },
+        {
+          "path": "lib/armeabi-v7a/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "9c1f1f46371ccdcbd1e4f27df96c307b22971422180fc43184c6004cbe9c23ef"
+        },
+        {
+          "path": "lib/armeabi-v7a/libsui.so",
+          "size": 133296,
+          "sha256": "0b9d8f9d5c82a536ff13eda5fd4d7e4bb71db5aca55a6f1bf5c374e23de0e6d1"
+        },
+        {
+          "path": "lib/armeabi-v7a/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "c986c2bf14f46497a647c6acd4c7a513da49c6cd4218015a189f538084b0032f"
+        },
+        {
+          "path": "lib/x86/libadbd_preload.so",
+          "size": 3728,
+          "sha256": "dccb8d1b090af84c7450b077093d3c1f5882d77ef31d6854ff92b159d0c3146e"
+        },
+        {
+          "path": "lib/x86/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "edaf68fd450306f2469d2fb8cb66dc1a68aac21a077eac2f8382a824663ef68c"
+        },
+        {
+          "path": "lib/x86/libadbd_wrapper.so",
+          "size": 4528,
+          "sha256": "5ef9fd274d14f2bbb5fcd0ca13ca69b511466a7a1b43bfa4d427600825b7be6b"
+        },
+        {
+          "path": "lib/x86/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "4f9f8a98c38346b3a22e818c408a8050658f3beffc2bca7868f77cc089ceb13a"
+        },
+        {
+          "path": "lib/x86/libmain.so",
+          "size": 17720,
+          "sha256": "24be7a2d4bc40c866e19f087750e21225fe195632325dca4644842d7a3c3d36d"
+        },
+        {
+          "path": "lib/x86/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "cbcc99699f4bf1b4d0e91e36ff30a015acf140b006992e01259741c8a0e9ef9f"
+        },
+        {
+          "path": "lib/x86/librish.so",
+          "size": 14092,
+          "sha256": "aaf3fa142cf746daedb28e3e4571a710d7cd08a302ae06fef4da677f7e1a7ed4"
+        },
+        {
+          "path": "lib/x86/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "4937090a6b3240ec5b3a1f27e113186edb0d614a9b3a9967ca34b13f72629136"
+        },
+        {
+          "path": "lib/x86/libsui.so",
+          "size": 194900,
+          "sha256": "438c43638690f0a9da529a7487ff8456aa19a1028d3c9f9f936055590316b6b2"
+        },
+        {
+          "path": "lib/x86/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "cbbe656cbca72d4e435df7e8851bd22ba79484571b2964c541a5c1ea99fd9eaa"
+        },
+        {
+          "path": "lib/x86_64/libadbd_preload.so",
+          "size": 4952,
+          "sha256": "5bc2a6061bef847bf112d72c4cf023f7a997fd8a59355fc03402d247d3e14352"
+        },
+        {
+          "path": "lib/x86_64/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "b590527699c5388b58181bf6a39633bf9fb154388a1cfd78f4a61e2a727e5059"
+        },
+        {
+          "path": "lib/x86_64/libadbd_wrapper.so",
+          "size": 5864,
+          "sha256": "87b7d40c599c66145765f9e6efbae198e2f0bc2fe2eecc9a514df32bcb60f379"
+        },
+        {
+          "path": "lib/x86_64/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "dd05deae92fb68b68b43881b2cf314907d7f80c94e6ce383bbca41c444bd5c1b"
+        },
+        {
+          "path": "lib/x86_64/libmain.so",
+          "size": 20496,
+          "sha256": "189c118b4b928574226b18ffb6c4b7962ed684ec2960a832d61c0cf36ba2c522"
+        },
+        {
+          "path": "lib/x86_64/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "7d6d76904d6bc323ea2ec954f38c70f3884a4b64f8fa4f94500d04fe58c31a58"
+        },
+        {
+          "path": "lib/x86_64/librish.so",
+          "size": 16512,
+          "sha256": "d7b94b771c65b6e0df3fc5e1ef071f39e7a3d1d9ecfc05f103a2e9ca2047586f"
+        },
+        {
+          "path": "lib/x86_64/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "6284973f0d339b0d2aa69b2d6837df2c8e199d99a62a9f9fc1da5ecf1772b628"
+        },
+        {
+          "path": "lib/x86_64/libsui.so",
+          "size": 226176,
+          "sha256": "cb67276cdd6592c56dd6a9a0debc4fbc20060706860dbd48d1e5b9833817dcce"
+        },
+        {
+          "path": "lib/x86_64/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "4ee7d8c00ad67e8f91013ffd20a9cdccf49a01aaadbd500b961064bf43957a9e"
+        },
+        {
+          "path": "module.prop",
+          "size": 233,
+          "sha256": "eacd302dffeb1c2502670444c6032626d3846e1a55ff2f6becb5ff159728c59c"
+        },
+        {
+          "path": "module.prop.sha256sum",
+          "size": 64,
+          "sha256": "819b68b2a3b73be45c892efa1ba27ebc1e1fccefd3ba763affaac1e831244b81"
+        },
+        {
+          "path": "post-fs-data.sh",
+          "size": 2116,
+          "sha256": "d6d355ceca01bd509f5ad92723292f4efcc1f1bdb29d9b6136ded06c96768685"
+        },
+        {
+          "path": "post-fs-data.sh.sha256sum",
+          "size": 64,
+          "sha256": "ededad8b1308f4f20be60d4fae17004ddb7d53f741c133f211814586651da1ea"
+        },
+        {
+          "path": "post-install.example.sh",
+          "size": 1474,
+          "sha256": "6f10bf09afcb54094e4044cb171f6094159ed8bd587db9fd1e783c742b71e1e4"
+        },
+        {
+          "path": "post-install.example.sh.sha256sum",
+          "size": 64,
+          "sha256": "bf15a28d3eb704a8a07eb97941b542ae407b8631ad0e8d52e2d95018045aa918"
+        },
+        {
+          "path": "riru.sh",
+          "size": 1709,
+          "sha256": "b143dddd26bc09abf769a8f0e6d26b44bfe5b1da6f3658fe24de3401eabe660c"
+        },
+        {
+          "path": "riru.sh.sha256sum",
+          "size": 64,
+          "sha256": "b0a7e33e771f6a15a7fb281fef93c9b49c6c57cdd1e0f7c2afb3b961a5442d0a"
+        },
+        {
+          "path": "rish",
+          "size": 383,
+          "sha256": "459e681db140d35773f2a0a7b002ff4567debff146deccf27c31da98b733c704"
+        },
+        {
+          "path": "rish.sha256sum",
+          "size": 64,
+          "sha256": "1d63aaa26b682c78604873f5f34edb8bb4f85ff3e7ab2b1ee77d5d183d54f6a0"
+        },
+        {
+          "path": "sepolicy.rule",
+          "size": 237,
+          "sha256": "1c3730e8493f76f15d70072db8f72370415307b8019f2623c9c46918ceaf0abc"
+        },
+        {
+          "path": "sepolicy.rule.sha256sum",
+          "size": 64,
+          "sha256": "3bb5feca1ff8fffe2c13aea60bba80b9f120a782facc54c19d657aa8204a5b0c"
+        },
+        {
+          "path": "sui.apk",
+          "size": 1145628,
+          "sha256": "6773e153e25f62bc8750982af1e1cb773d9a1b9e2567b6a5e0877c3775d9417f"
+        },
+        {
+          "path": "sui.apk.sha256sum",
+          "size": 64,
+          "sha256": "8a210bd9ca32665951fa7d494d467c72cc3265f768d21f67224835a5efa9f692"
+        },
+        {
+          "path": "sui.dex",
+          "size": 951632,
+          "sha256": "12a3654341f59b047dbd1a9e57326b30a4471ec2d49044e6b42d068baa0918f6"
+        },
+        {
+          "path": "sui.dex.sha256sum",
+          "size": 64,
+          "sha256": "4556264ea050df41bf8e7c2e6a37a72ea3111c10a2f139a512fa9fa780b8e837"
+        },
+        {
+          "path": "uninstall.sh",
+          "size": 361,
+          "sha256": "b6b4831e3bbca06a715f115962f5497e4c661d9c37f01acff7b25951aa8cbce9"
+        },
+        {
+          "path": "uninstall.sh.sha256sum",
+          "size": 64,
+          "sha256": "1d62d15b20f7a4174af54cbf728a6847c8ffb53f8593d6ff1b8232f28ae27365"
+        },
+        {
+          "path": "util_functions.sh",
+          "size": 2027,
+          "sha256": "ce98ecd4016480f5064ae2df2a54299a901b4daeb6a00a71614409dbe0901c26"
+        },
+        {
+          "path": "util_functions.sh.sha256sum",
+          "size": 64,
+          "sha256": "5978d5794d7e326d00d7f2131e2e97e8a9655e79786be24b78c1538f96e117f9"
+        },
+        {
+          "path": "verify.sh",
+          "size": 1152,
+          "sha256": "ff6cfc26dbfba2c0feeac333300c27a1e3a668b50ae0fb6ce07b245f30f9c5e8"
+        },
+        {
+          "path": "verify.sh.sha256sum",
+          "size": 64,
+          "sha256": "026f8311f466880ba3fc711659c12fc3a3e1d077c25089a43cba1d0ee28058c1"
+        }
+      ]
+    },
+    {
+      "directory": "sui-zygisk-v13.6.0-debug",
+      "id": "zygisk-sui",
+      "version": "v13.6.0",
+      "versionCode": "341",
+      "file_count": 68,
+      "total_bytes": 17722941,
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "size": 3890,
+          "sha256": "4489d061362207ebeda9b34a4535cca56ce25df72f861efd67a86a9f48097f63"
+        },
+        {
+          "path": "CHANGELOG.md.sha256sum",
+          "size": 64,
+          "sha256": "0d0d703a521e05512334830b50fa6af83cdc331b5e077c84c2fdbb746ccee3c7"
+        },
+        {
+          "path": "META-INF/com/google/android/update-binary",
+          "size": 612,
+          "sha256": "bcf4b1d9913f3af17755569c853e0b5a75b8005f6a18eb3f86dadcc0e968c29d"
+        },
+        {
+          "path": "META-INF/com/google/android/update-binary.sha256sum",
+          "size": 64,
+          "sha256": "ff225d4a4ee6d2f4314e13e8b1999dbf6a80e206415fd222d5f71d2e32b4962f"
+        },
+        {
+          "path": "META-INF/com/google/android/updater-script",
+          "size": 8,
+          "sha256": "d2b8203193a083e43ad076fde01b9c7821e0aa521e1f8077b8628fb1cdb70c60"
+        },
+        {
+          "path": "META-INF/com/google/android/updater-script.sha256sum",
+          "size": 64,
+          "sha256": "e347688e86e8eb6b1b3aac0f3596d8a43dc1f481936a266f5e1240af6c81ecda"
+        },
+        {
+          "path": "customize.sh",
+          "size": 4084,
+          "sha256": "6f35c055dc908c78d4250cb66b1edfd2da56d73e971fbb106631ce042d8027d8"
+        },
+        {
+          "path": "customize.sh.sha256sum",
+          "size": 64,
+          "sha256": "66ff1bd359f511f8d217f0d3f7a3fbf5599cf954f6a37b6b1a1f7202178929dc"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_preload.so",
+          "size": 5664,
+          "sha256": "554f791b7a5ade429182fecbb1b1d52cd2dbd6a97b65a2a23bece9748605a333"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "c440d977bd45cb537163e20fbe0e2b2cf05ce1ba2b2b3e34b96aa9a1596b8776"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_wrapper.so",
+          "size": 10560,
+          "sha256": "e35fa4e56ffa14afaed2d22568a957bcd1158ed6f82325214ace6b8d3fb30a47"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "cae582b7f474e2d76392ea4762ad6b77fe88a27c3e7029c089d9d74040f54b0f"
+        },
+        {
+          "path": "lib/arm64-v8a/libmain.so",
+          "size": 35480,
+          "sha256": "bec1e549e029e32e3cdcc63019937b294678b688e7d6b9ed3646d12059311f3b"
+        },
+        {
+          "path": "lib/arm64-v8a/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "ba27a44d464fd874450624a508ecd94510605a514eef6083b2fe997576851231"
+        },
+        {
+          "path": "lib/arm64-v8a/librish.so",
+          "size": 59632,
+          "sha256": "dfd1bd962dc12a58fb7e6dbf5d0728a97eb567e69dc78ce50890e58cf7f533d7"
+        },
+        {
+          "path": "lib/arm64-v8a/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "4d9201d970ad840f6bf9369e69bd2d7cfa6d41c28b7d6eca39145430146a4a95"
+        },
+        {
+          "path": "lib/arm64-v8a/libsui.so",
+          "size": 314080,
+          "sha256": "f2e4ae44510bdd78af5ce5d4e5bf39eacc6cd223186aef9cb4e4773cb28760c6"
+        },
+        {
+          "path": "lib/arm64-v8a/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "5da9f97c5e752e2ff15a6fb082fd21c0b918638c36e8c884e9aea3fc00e0e90c"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_preload.so",
+          "size": 3896,
+          "sha256": "e73798f267de67870ce5f12001adb381e29b104e8ca3435fbc72698290aa7d6f"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "da21e3116d9285d0a7eebc5dd4333abe25031f18dc4320b5d619e2760a2fe7c7"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_wrapper.so",
+          "size": 6728,
+          "sha256": "16a30fc616c6615102f67bec2dfd9e8d9cac853dd838f4cad91edccdbc104dc8"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "8a138718cdaef4a030a74ea0bffedc0de3ef114c545a8bcc89efed6df1da415d"
+        },
+        {
+          "path": "lib/armeabi-v7a/libmain.so",
+          "size": 22900,
+          "sha256": "d286e9c77c770d157a2906bec930d1535cf84ab2fc12470bc0ab179ed90cdb25"
+        },
+        {
+          "path": "lib/armeabi-v7a/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "35d1ea26d3c148600bd58330aa99269d836cb39afce9bba7a903d52d85e352d9"
+        },
+        {
+          "path": "lib/armeabi-v7a/librish.so",
+          "size": 29380,
+          "sha256": "a17526ff94ace44307822b2bd896d628d4e6140c6340e7bb6b37c28914567c12"
+        },
+        {
+          "path": "lib/armeabi-v7a/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "a71c452f971fa3b9e836de112984f23c89eeaca8c9dcb0ba6fc428201cb88d4e"
+        },
+        {
+          "path": "lib/armeabi-v7a/libsui.so",
+          "size": 185368,
+          "sha256": "9bcfe897ee87c0d3262bbee7b4a59c3ce7608dc0c38bf8c38e915e3d4569d63b"
+        },
+        {
+          "path": "lib/armeabi-v7a/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "92b18a349a7d0d44a79e91d8d894da1ef0e7b77404feacf9d7c7af5c2033047c"
+        },
+        {
+          "path": "lib/x86/libadbd_preload.so",
+          "size": 4376,
+          "sha256": "c2ac3eb9d0d4bfe01b24b77342329d4081652b2b611ea97ed8249324bcbb749e"
+        },
+        {
+          "path": "lib/x86/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "1954339b2ef1ccfbaa7af29c586f0260ac265bb27b5d58b4ca8dbb62a51331cf"
+        },
+        {
+          "path": "lib/x86/libadbd_wrapper.so",
+          "size": 8932,
+          "sha256": "fed43a54a0f4b4f1ef154ef22c84ffc6fb6f801cca5c4c8ad864c1e51f290341"
+        },
+        {
+          "path": "lib/x86/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "d6bcf648b39df842025b1d0f7df0361152e35cea33cd22b1af074104dd3a7152"
+        },
+        {
+          "path": "lib/x86/libmain.so",
+          "size": 37164,
+          "sha256": "3a23ee136dc6297e6953188cba4a533f93e172b10dbf969d4499d305594b826a"
+        },
+        {
+          "path": "lib/x86/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "19e84d39b4b27a0d4359c12c4ec54fb1377bac935fba4e781bcfe38782a4f7f4"
+        },
+        {
+          "path": "lib/x86/librish.so",
+          "size": 54004,
+          "sha256": "c5951a863ebad7b17a106cf96edc1ec1cb36b8ce09e64e40a319c5c3ac8df2a2"
+        },
+        {
+          "path": "lib/x86/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "6471c74a44f59174f6499f577d03e7d6fa9146d061d6af8d917d32bd0e07b4b3"
+        },
+        {
+          "path": "lib/x86/libsui.so",
+          "size": 267788,
+          "sha256": "020d9b7f1c7dc36331e6d30bd1e359b0e957e759ddf02776ff249ed3eb8e7871"
+        },
+        {
+          "path": "lib/x86/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "322907a98c24aeff19ea91bf2544df18179a4ae481856e87cd586537e100d37c"
+        },
+        {
+          "path": "lib/x86_64/libadbd_preload.so",
+          "size": 5600,
+          "sha256": "4179f4d70480d460d0001af4f0db2e2ff0725d02c8271148ea82b3a70dff6526"
+        },
+        {
+          "path": "lib/x86_64/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "dacc02b5461bc4d9c0eeb102536d23dd8202f9bfdcf120c58c8ca42499b47cdf"
+        },
+        {
+          "path": "lib/x86_64/libadbd_wrapper.so",
+          "size": 10320,
+          "sha256": "5f76615d8855b69a00e68f477291e89f86ca6f0bbdddf6f302801991ac50b1ba"
+        },
+        {
+          "path": "lib/x86_64/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "a138190c445f34ab2c826793c5d78c7e726052f718c2494304d7dffa1e045f69"
+        },
+        {
+          "path": "lib/x86_64/libmain.so",
+          "size": 35952,
+          "sha256": "902ee45712df749c0f4f5accb260eff056ca06e0b36ba029bcfebf0399f027e1"
+        },
+        {
+          "path": "lib/x86_64/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "62c0c1ff51b2fc85e91c01c19640a1bf053ca0f3ff6f8ff90790314ea30fa75a"
+        },
+        {
+          "path": "lib/x86_64/librish.so",
+          "size": 52216,
+          "sha256": "0676e3143c42d6643d3bb6d93162954460505d9b1d6a27b5eafe87f8106d62a1"
+        },
+        {
+          "path": "lib/x86_64/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "c92a7af31149364119297ac87648817e140aa04fe024fa1384162d8db1cb0be9"
+        },
+        {
+          "path": "lib/x86_64/libsui.so",
+          "size": 306488,
+          "sha256": "8b4e25d9295d58eb977ff4410d0c72a4a058297db9df5a14686b76283d4a5541"
+        },
+        {
+          "path": "lib/x86_64/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "f42c6b34f39a65c36ef7e302ce74143a8bf40c99c1a7ab4d83056e64fc615386"
+        },
+        {
+          "path": "module.prop",
+          "size": 295,
+          "sha256": "c4b4cd26a2921d20f65aad0d8294e19e5155a763c75ace1241f54f31235cf8cb"
+        },
+        {
+          "path": "module.prop.sha256sum",
+          "size": 64,
+          "sha256": "e0cddccb48c6e7685205fde97750edc1aa226fb8a49f28add621ac84f17fd991"
+        },
+        {
+          "path": "post-fs-data.sh",
+          "size": 2118,
+          "sha256": "fd29d42311bb876eb73efc2a5ec2c1a803d25b30cb924539e06d2a5e58002381"
+        },
+        {
+          "path": "post-fs-data.sh.sha256sum",
+          "size": 64,
+          "sha256": "4f5b8bc1d680cc6dd1ee500ab3527ead4a6dfa269e8d5014d32ec1168331ddd6"
+        },
+        {
+          "path": "post-install.example.sh",
+          "size": 1474,
+          "sha256": "6f10bf09afcb54094e4044cb171f6094159ed8bd587db9fd1e783c742b71e1e4"
+        },
+        {
+          "path": "post-install.example.sh.sha256sum",
+          "size": 64,
+          "sha256": "bf15a28d3eb704a8a07eb97941b542ae407b8631ad0e8d52e2d95018045aa918"
+        },
+        {
+          "path": "rish",
+          "size": 383,
+          "sha256": "459e681db140d35773f2a0a7b002ff4567debff146deccf27c31da98b733c704"
+        },
+        {
+          "path": "rish.sha256sum",
+          "size": 64,
+          "sha256": "1d63aaa26b682c78604873f5f34edb8bb4f85ff3e7ab2b1ee77d5d183d54f6a0"
+        },
+        {
+          "path": "sepolicy.rule",
+          "size": 237,
+          "sha256": "1c3730e8493f76f15d70072db8f72370415307b8019f2623c9c46918ceaf0abc"
+        },
+        {
+          "path": "sepolicy.rule.sha256sum",
+          "size": 64,
+          "sha256": "3bb5feca1ff8fffe2c13aea60bba80b9f120a782facc54c19d657aa8204a5b0c"
+        },
+        {
+          "path": "sui.apk",
+          "size": 4549528,
+          "sha256": "571a57458dc2754e9442f2c1bf1f00a6f3a5a57f66a189843040cbe2060f930c"
+        },
+        {
+          "path": "sui.apk.sha256sum",
+          "size": 64,
+          "sha256": "d6a86ca7ffcc98e54518d591fa4241249d6e0155f4e2550805d82cf329247a54"
+        },
+        {
+          "path": "sui.dex",
+          "size": 11698068,
+          "sha256": "a80b2d03272bac606ff9541e6e04437664c681e38aac55d11b8403c88e35e6e6"
+        },
+        {
+          "path": "sui.dex.sha256sum",
+          "size": 64,
+          "sha256": "ccf470bd7d5623bc420d6285765c65023806ed0a60da9409449b5ea2e9b267e5"
+        },
+        {
+          "path": "uninstall.sh",
+          "size": 361,
+          "sha256": "b6b4831e3bbca06a715f115962f5497e4c661d9c37f01acff7b25951aa8cbce9"
+        },
+        {
+          "path": "uninstall.sh.sha256sum",
+          "size": 64,
+          "sha256": "1d62d15b20f7a4174af54cbf728a6847c8ffb53f8593d6ff1b8232f28ae27365"
+        },
+        {
+          "path": "util_functions.sh",
+          "size": 2027,
+          "sha256": "ce98ecd4016480f5064ae2df2a54299a901b4daeb6a00a71614409dbe0901c26"
+        },
+        {
+          "path": "util_functions.sh.sha256sum",
+          "size": 64,
+          "sha256": "5978d5794d7e326d00d7f2131e2e97e8a9655e79786be24b78c1538f96e117f9"
+        },
+        {
+          "path": "verify.sh",
+          "size": 1152,
+          "sha256": "ff6cfc26dbfba2c0feeac333300c27a1e3a668b50ae0fb6ce07b245f30f9c5e8"
+        },
+        {
+          "path": "verify.sh.sha256sum",
+          "size": 64,
+          "sha256": "026f8311f466880ba3fc711659c12fc3a3e1d077c25089a43cba1d0ee28058c1"
+        }
+      ]
+    },
+    {
+      "directory": "sui-zygisk-v13.6.0-release",
+      "id": "zygisk-sui",
+      "version": "v13.6.0",
+      "versionCode": "341",
+      "file_count": 68,
+      "total_bytes": 3079993,
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "size": 3890,
+          "sha256": "4489d061362207ebeda9b34a4535cca56ce25df72f861efd67a86a9f48097f63"
+        },
+        {
+          "path": "CHANGELOG.md.sha256sum",
+          "size": 64,
+          "sha256": "0d0d703a521e05512334830b50fa6af83cdc331b5e077c84c2fdbb746ccee3c7"
+        },
+        {
+          "path": "META-INF/com/google/android/update-binary",
+          "size": 612,
+          "sha256": "bcf4b1d9913f3af17755569c853e0b5a75b8005f6a18eb3f86dadcc0e968c29d"
+        },
+        {
+          "path": "META-INF/com/google/android/update-binary.sha256sum",
+          "size": 64,
+          "sha256": "ff225d4a4ee6d2f4314e13e8b1999dbf6a80e206415fd222d5f71d2e32b4962f"
+        },
+        {
+          "path": "META-INF/com/google/android/updater-script",
+          "size": 8,
+          "sha256": "d2b8203193a083e43ad076fde01b9c7821e0aa521e1f8077b8628fb1cdb70c60"
+        },
+        {
+          "path": "META-INF/com/google/android/updater-script.sha256sum",
+          "size": 64,
+          "sha256": "e347688e86e8eb6b1b3aac0f3596d8a43dc1f481936a266f5e1240af6c81ecda"
+        },
+        {
+          "path": "customize.sh",
+          "size": 4084,
+          "sha256": "6f35c055dc908c78d4250cb66b1edfd2da56d73e971fbb106631ce042d8027d8"
+        },
+        {
+          "path": "customize.sh.sha256sum",
+          "size": 64,
+          "sha256": "66ff1bd359f511f8d217f0d3f7a3fbf5599cf954f6a37b6b1a1f7202178929dc"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_preload.so",
+          "size": 5000,
+          "sha256": "af7d26ab045314039e679ec99d517e268af7a2f84c82b5bcfd2f6d90df6f2c22"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "414ab47a71e1e284a99d2c4228edd9de68e6af8e43d0e783ac5b99598a19a04a"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_wrapper.so",
+          "size": 6048,
+          "sha256": "898c5e45d6be6106640cc2aca6d65c6f042eda22c25dc49b51b1f50e1e6d8cfd"
+        },
+        {
+          "path": "lib/arm64-v8a/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "ab3cf4ad1bd2c65a162c2a9a36d84241eeded52cefa4aee139d24012fb356dda"
+        },
+        {
+          "path": "lib/arm64-v8a/libmain.so",
+          "size": 20808,
+          "sha256": "25989310ad2091ee0ef05136b9fa0c29beab4fe69c25117476aa4d76c84af7ae"
+        },
+        {
+          "path": "lib/arm64-v8a/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "38149869584cae5a0751750702ccd3a4f85289adc8496a37ebf4cf2451aca468"
+        },
+        {
+          "path": "lib/arm64-v8a/librish.so",
+          "size": 19512,
+          "sha256": "1ac3bc4f8887d9d4caab79b9fcc7a1effc42173fc8f71c217d62880a75684f85"
+        },
+        {
+          "path": "lib/arm64-v8a/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "758624ce38dcc465f4d4fae2260dd81b34378288adb97fac6605527f6623f52b"
+        },
+        {
+          "path": "lib/arm64-v8a/libsui.so",
+          "size": 231080,
+          "sha256": "745625c2083d66bc7eca9623beea4aa2adeb006f0e1696ed09cf007f2cb2a0a3"
+        },
+        {
+          "path": "lib/arm64-v8a/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "63598e9c1c9d3916fe565b274ec60874236480109c8659f16f6a3bca0d659a1a"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_preload.so",
+          "size": 3396,
+          "sha256": "2e79efce23162e1bc7110c584f1f70c6d11f666a194cb4fab4bf140b22f0a8fc"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "ff2b72caa8a920b76aed61289897c5f0b0d169819cf1899efbaa08f9e429f433"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_wrapper.so",
+          "size": 4292,
+          "sha256": "7bdc4750e98618ef77c049851a7cf761a1bb40d320efc6829c5e258f20f9fac3"
+        },
+        {
+          "path": "lib/armeabi-v7a/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "0f031fc0b5de46d07964394e68ad126b0cb91d167b7a36d71e83c9d7937b4e5b"
+        },
+        {
+          "path": "lib/armeabi-v7a/libmain.so",
+          "size": 15236,
+          "sha256": "e6b393d9994aebd2c6f910252a1dbbeca816bb3de29c162b77531a6bde9c3bc9"
+        },
+        {
+          "path": "lib/armeabi-v7a/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "6dfa2683bf31a1f367a9aba3f0be799db8ca578020bfa5ed31a8ec3eacc829e9"
+        },
+        {
+          "path": "lib/armeabi-v7a/librish.so",
+          "size": 11672,
+          "sha256": "4b67ff1ea7327808db903ea2b53ef809419628983b1fe223fba93970368325a6"
+        },
+        {
+          "path": "lib/armeabi-v7a/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "9c1f1f46371ccdcbd1e4f27df96c307b22971422180fc43184c6004cbe9c23ef"
+        },
+        {
+          "path": "lib/armeabi-v7a/libsui.so",
+          "size": 134564,
+          "sha256": "6af094bf744509418a6c045443fb0a893513ff221f97de17c557a4c7aeb28e06"
+        },
+        {
+          "path": "lib/armeabi-v7a/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "d8186622fcda682d2f33c76a5089b659aa2177836cd700fe390e6a6c2795c574"
+        },
+        {
+          "path": "lib/x86/libadbd_preload.so",
+          "size": 3728,
+          "sha256": "dccb8d1b090af84c7450b077093d3c1f5882d77ef31d6854ff92b159d0c3146e"
+        },
+        {
+          "path": "lib/x86/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "edaf68fd450306f2469d2fb8cb66dc1a68aac21a077eac2f8382a824663ef68c"
+        },
+        {
+          "path": "lib/x86/libadbd_wrapper.so",
+          "size": 4528,
+          "sha256": "5ef9fd274d14f2bbb5fcd0ca13ca69b511466a7a1b43bfa4d427600825b7be6b"
+        },
+        {
+          "path": "lib/x86/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "4f9f8a98c38346b3a22e818c408a8050658f3beffc2bca7868f77cc089ceb13a"
+        },
+        {
+          "path": "lib/x86/libmain.so",
+          "size": 17720,
+          "sha256": "24be7a2d4bc40c866e19f087750e21225fe195632325dca4644842d7a3c3d36d"
+        },
+        {
+          "path": "lib/x86/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "cbcc99699f4bf1b4d0e91e36ff30a015acf140b006992e01259741c8a0e9ef9f"
+        },
+        {
+          "path": "lib/x86/librish.so",
+          "size": 14092,
+          "sha256": "aaf3fa142cf746daedb28e3e4571a710d7cd08a302ae06fef4da677f7e1a7ed4"
+        },
+        {
+          "path": "lib/x86/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "4937090a6b3240ec5b3a1f27e113186edb0d614a9b3a9967ca34b13f72629136"
+        },
+        {
+          "path": "lib/x86/libsui.so",
+          "size": 196504,
+          "sha256": "3b7a729f40a10abba75ad562d8f2cd96c399c76cc5a6392e1b46f2f9fc140e64"
+        },
+        {
+          "path": "lib/x86/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "aaf012464cd31cb6d5c137dcbf29ee70745c46ce2bb6505cf0733188648cb9c0"
+        },
+        {
+          "path": "lib/x86_64/libadbd_preload.so",
+          "size": 4952,
+          "sha256": "5bc2a6061bef847bf112d72c4cf023f7a997fd8a59355fc03402d247d3e14352"
+        },
+        {
+          "path": "lib/x86_64/libadbd_preload.so.sha256sum",
+          "size": 64,
+          "sha256": "b590527699c5388b58181bf6a39633bf9fb154388a1cfd78f4a61e2a727e5059"
+        },
+        {
+          "path": "lib/x86_64/libadbd_wrapper.so",
+          "size": 5864,
+          "sha256": "87b7d40c599c66145765f9e6efbae198e2f0bc2fe2eecc9a514df32bcb60f379"
+        },
+        {
+          "path": "lib/x86_64/libadbd_wrapper.so.sha256sum",
+          "size": 64,
+          "sha256": "dd05deae92fb68b68b43881b2cf314907d7f80c94e6ce383bbca41c444bd5c1b"
+        },
+        {
+          "path": "lib/x86_64/libmain.so",
+          "size": 20496,
+          "sha256": "189c118b4b928574226b18ffb6c4b7962ed684ec2960a832d61c0cf36ba2c522"
+        },
+        {
+          "path": "lib/x86_64/libmain.so.sha256sum",
+          "size": 64,
+          "sha256": "7d6d76904d6bc323ea2ec954f38c70f3884a4b64f8fa4f94500d04fe58c31a58"
+        },
+        {
+          "path": "lib/x86_64/librish.so",
+          "size": 16512,
+          "sha256": "d7b94b771c65b6e0df3fc5e1ef071f39e7a3d1d9ecfc05f103a2e9ca2047586f"
+        },
+        {
+          "path": "lib/x86_64/librish.so.sha256sum",
+          "size": 64,
+          "sha256": "6284973f0d339b0d2aa69b2d6837df2c8e199d99a62a9f9fc1da5ecf1772b628"
+        },
+        {
+          "path": "lib/x86_64/libsui.so",
+          "size": 227912,
+          "sha256": "544dabd97584425037e503ef7240ec4cc49b59a46613dca2a42e630d892be414"
+        },
+        {
+          "path": "lib/x86_64/libsui.so.sha256sum",
+          "size": 64,
+          "sha256": "6149f2953212138c48ccbbbf3e31b45200f781df91f317e08350916f247babf0"
+        },
+        {
+          "path": "module.prop",
+          "size": 295,
+          "sha256": "c4b4cd26a2921d20f65aad0d8294e19e5155a763c75ace1241f54f31235cf8cb"
+        },
+        {
+          "path": "module.prop.sha256sum",
+          "size": 64,
+          "sha256": "e0cddccb48c6e7685205fde97750edc1aa226fb8a49f28add621ac84f17fd991"
+        },
+        {
+          "path": "post-fs-data.sh",
+          "size": 2118,
+          "sha256": "fd29d42311bb876eb73efc2a5ec2c1a803d25b30cb924539e06d2a5e58002381"
+        },
+        {
+          "path": "post-fs-data.sh.sha256sum",
+          "size": 64,
+          "sha256": "4f5b8bc1d680cc6dd1ee500ab3527ead4a6dfa269e8d5014d32ec1168331ddd6"
+        },
+        {
+          "path": "post-install.example.sh",
+          "size": 1474,
+          "sha256": "6f10bf09afcb54094e4044cb171f6094159ed8bd587db9fd1e783c742b71e1e4"
+        },
+        {
+          "path": "post-install.example.sh.sha256sum",
+          "size": 64,
+          "sha256": "bf15a28d3eb704a8a07eb97941b542ae407b8631ad0e8d52e2d95018045aa918"
+        },
+        {
+          "path": "rish",
+          "size": 383,
+          "sha256": "459e681db140d35773f2a0a7b002ff4567debff146deccf27c31da98b733c704"
+        },
+        {
+          "path": "rish.sha256sum",
+          "size": 64,
+          "sha256": "1d63aaa26b682c78604873f5f34edb8bb4f85ff3e7ab2b1ee77d5d183d54f6a0"
+        },
+        {
+          "path": "sepolicy.rule",
+          "size": 237,
+          "sha256": "1c3730e8493f76f15d70072db8f72370415307b8019f2623c9c46918ceaf0abc"
+        },
+        {
+          "path": "sepolicy.rule.sha256sum",
+          "size": 64,
+          "sha256": "3bb5feca1ff8fffe2c13aea60bba80b9f120a782facc54c19d657aa8204a5b0c"
+        },
+        {
+          "path": "sui.apk",
+          "size": 1145628,
+          "sha256": "6773e153e25f62bc8750982af1e1cb773d9a1b9e2567b6a5e0877c3775d9417f"
+        },
+        {
+          "path": "sui.apk.sha256sum",
+          "size": 64,
+          "sha256": "8a210bd9ca32665951fa7d494d467c72cc3265f768d21f67224835a5efa9f692"
+        },
+        {
+          "path": "sui.dex",
+          "size": 951632,
+          "sha256": "12a3654341f59b047dbd1a9e57326b30a4471ec2d49044e6b42d068baa0918f6"
+        },
+        {
+          "path": "sui.dex.sha256sum",
+          "size": 64,
+          "sha256": "4556264ea050df41bf8e7c2e6a37a72ea3111c10a2f139a512fa9fa780b8e837"
+        },
+        {
+          "path": "uninstall.sh",
+          "size": 361,
+          "sha256": "b6b4831e3bbca06a715f115962f5497e4c661d9c37f01acff7b25951aa8cbce9"
+        },
+        {
+          "path": "uninstall.sh.sha256sum",
+          "size": 64,
+          "sha256": "1d62d15b20f7a4174af54cbf728a6847c8ffb53f8593d6ff1b8232f28ae27365"
+        },
+        {
+          "path": "util_functions.sh",
+          "size": 2027,
+          "sha256": "ce98ecd4016480f5064ae2df2a54299a901b4daeb6a00a71614409dbe0901c26"
+        },
+        {
+          "path": "util_functions.sh.sha256sum",
+          "size": 64,
+          "sha256": "5978d5794d7e326d00d7f2131e2e97e8a9655e79786be24b78c1538f96e117f9"
+        },
+        {
+          "path": "verify.sh",
+          "size": 1152,
+          "sha256": "ff6cfc26dbfba2c0feeac333300c27a1e3a668b50ae0fb6ce07b245f30f9c5e8"
+        },
+        {
+          "path": "verify.sh.sha256sum",
+          "size": 64,
+          "sha256": "026f8311f466880ba3fc711659c12fc3a3e1d077c25089a43cba1d0ee28058c1"
+        }
+      ]
+    }
+  ],
+  "separately_retained_zip": {
+    "path": "sui-zygisk-v13.6.0-release-flashed.zip",
+    "size": 1657935,
+    "sha256": "ad899ccdfffc80db893e715963c4e430f27417d229464ecd5153a584f4219483"
+  }
+}

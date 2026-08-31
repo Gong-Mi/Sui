@@ -1,0 +1,7 @@
+id=riru-sui
+name=Riru - Sui
+version=v13.6.0
+versionCode=334
+author=Rikka
+description=Modern superuser interface implementation. This module requires Riru v25.0.0 or above.
+updateJson=https://rikkaapps.github.io/release/sui_riru.json
