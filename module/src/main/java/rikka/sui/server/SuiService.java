@@ -508,27 +508,30 @@ public class SuiService extends Service<SuiUserServiceManager, SuiClientManager,
                     continue;
 
                 if (flags == 0) {
-                    // Most ordinary apps have credential-protected storage only. Checking
-                    // deviceProtectedDataDir alone makes every such app look uninstalled.
-                    String dataDir = pi.applicationInfo.dataDir;
-                    String deviceProtectedDataDir = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                            ? pi.applicationInfo.deviceProtectedDataDir : null;
-
-                    boolean hasApk = pi.applicationInfo.sourceDir != null
-                            && MapUtil.getOrPut(existenceCache, pi.applicationInfo.sourceDir,
-                            () -> new File(pi.applicationInfo.sourceDir).exists());
-                    boolean hasData = dataDir != null
-                            && MapUtil.getOrPut(existenceCache, dataDir, () -> new File(dataDir).exists());
-                    if (!hasData && deviceProtectedDataDir != null) {
-                        hasData = MapUtil.getOrPut(existenceCache, deviceProtectedDataDir,
-                                () -> new File(deviceProtectedDataDir).exists());
+                    // ApplicationInfo.FLAG_INSTALLED reflects PackageUserState.isInstalled()
+                    // for *this* user (PackageInfoUtils.updateApplicationInfo ORs it in per
+                    // query user), which is exactly what stat'ing data dirs tried to approximate
+                    // without reading /data at all. FLAG_INSTALLED is only settable since API 26;
+                    // on older releases fall back to the data-dir/source-dir existence check.
+                    boolean installedForUser;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        installedForUser = (pi.applicationInfo.flags & ApplicationInfo.FLAG_INSTALLED) != 0;
+                    } else {
+                        String dataDir = pi.applicationInfo.dataDir;
+                        boolean hasApk = pi.applicationInfo.sourceDir != null
+                                && MapUtil.getOrPut(existenceCache, pi.applicationInfo.sourceDir,
+                                () -> new File(pi.applicationInfo.sourceDir).exists());
+                        boolean hasData = dataDir != null
+                                && MapUtil.getOrPut(existenceCache, dataDir, () -> new File(dataDir).exists());
+                        installedForUser = hasApk && hasData;
                     }
 
-                    // Installed (or hidden): hasApk && hasData
-                    // Uninstalled but keep data: !hasApk && hasData
-                    // Installed in other users only: hasApk && !hasData
-                    if (!(hasApk && hasData)) {
-                        LOGGER.v("skip %d:%s: hasApk=%s, hasData=%s", user, pi.packageName, Boolean.toString(hasApk), Boolean.toString(hasData));
+                    // Installed (or hidden): installedForUser
+                    // Uninstalled but keep data: data-only stub -> FLAG_INSTALLED=0 (ComputerEngine stub
+                    // branch never sets it; updateApplicationInfo ORs state.isInstalled())
+                    // Installed in other users only: FLAG_INSTALLED=0 for this user
+                    if (!installedForUser) {
+                        LOGGER.v("skip %d:%s: installedForUser=false", user, pi.packageName);
                         continue;
                     }
 
